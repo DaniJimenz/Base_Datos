@@ -176,3 +176,163 @@ CREATE TABLE recorridos
     CONSTRAINT fk_reco_linea FOREIGN KEY (linea) REFERENCES linea(nombre),
     CONSTRAINT fk_reco_est FOREIGN KEY (estacion) REFERENCES estacion(id_e),
 );
+CREATE TABLE clientes
+(
+    DNI VARCHAR2(9) PRIMARY KEY,
+    nombre VARCHAR2(50) NOT NULL,
+    fecha_nac DATE NOT NULL,
+    direccion VARCHAR2(100),
+    sexo VARCHAR2(1) CHECK (sexo IN ('H', 'M'))
+);
+
+CREATE TABLE productos
+(
+    cod_prod NUMERIC(5) PRIMARY KEY,
+    nombre VARCHAR2(50) UNIQUE NOT NULL,
+    stock NUMERIC(6) NOT NULL,
+    precio NUMERIC(4,2) NOT NULL,
+    tipo VARCHAR2(20)
+);
+CREATE TABLE compras
+(
+    cliente VARCHAR2(9),
+    producto NUMERIC(5),
+    fecha DATE,
+    cantidad NUMERIC(3) NOT NULL,
+   
+    CONSTRAINT pk_compras PRIMARY KEY (cliente, producto, fecha),
+    CONSTRAINT fk_compras_clientes FOREIGN KEY (cliente) REFERENCES clientes(DNI),
+    CONSTRAINT fk_compras_producto FOREIGN KEY (producto) REFERENCES productos(cod_prod)
+);
+
+CREATE TABLE tienda
+(
+    cod_tienda NUMERIC(2) PRIMARY KEY,
+    metros NUMERIC(4,2) NOT NULL
+);
+
+CREATE TABLE trabajadores
+(
+    cod_trab NUMERIC(3) PRIMARY KEY,
+    nombre VARCHAR2(50) NOT NULL,
+    categoria VARCHAR2(20) NOT NULL,
+    area VARCHAR2(20) NOT NULL,
+    tienda NUMERIC(2),
+   
+    CONSTRAINT fk_trabajadores_tienda FOREIGN KEY (tienda) REFERENCES tienda(cod_tienda)
+);
+
+CREATE TABLE oferta
+(
+    cod_of NUMERIC(2) PRIMARY KEY,
+    tienda NUMERIC(2),
+    producto NUMERIC(5),
+    trabajador NUMERIC(3),
+    tipo VARCHAR2(20) NOT NULL,
+    inicio DATE NOT NULL,
+    fin DATE NOT NULL,
+   
+    CONSTRAINT fk_oferta_tienda FOREIGN KEY (tienda) REFERENCES tienda(cod_tienda),
+    CONSTRAINT fk_oferta_producto FOREIGN KEY (producto) REFERENCES productos(cod_prod),
+    CONSTRAINT fk_oferta_trabajador FOREIGN KEY (trabajador) REFERENCES trabajadores(cod_trab)
+);
+
+ALTER TABLE clientes ADD
+(
+    telefono NUMERIC(9) CHECK (telefono>=600000000)
+);
+
+ALTER TABLE trabajadores ADD
+(
+    telefono NUMERIC(9) CHECK (telefono>=600000000)
+);
+
+ALTER TABLE productos
+    DROP COLUMN stock
+
+ALTER TABLE productos
+    ADD stock NUMERIC(4) CHECK (stock>=0);
+   
+ALTER TABLE tienda ADD
+(
+    nombre VARCHAR2(20),
+    localizacion VARCHAR2(20)
+);
+
+ALTER TABLE productos MODIFY
+(
+    precio DEFAULT(0) CHECK (precio>=0 AND precio<=10)
+);
+AFTER TABLE 
+
+INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
+('11111111Z', 'Lucía', '12/07/2002', 'Granada', 'M');
+INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
+('22222222B', 'Mónica', '18/12/2008', 'Jaén', 'M');
+INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
+('12345678C', 'Luis', '03/01/2005', 'Granada', 'H');
+INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
+('33333333R', 'César', '08/09/2003', 'Granada', 'H');
+INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
+('55555555T', 'Roberto', '24/11/2008', 'Granada', 'H');
+
+ALTER TABLE producto
+MODIFY NUMBER(2,0);
+
+ALTER TABLE producto
+MODIFY precio NULL;
+
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(1, 'Lápiz negro', 100, 0.75, '1');
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(2, 'Bolígrafo azul', 85, NULL, '1');
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(3, 'Libreta A4', 60, 1.75, '2');
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(4, 'Cuaderno rubio', 50, 3.25, '2');
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(5, 'Corrector', 86, NULL, '3');
+INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+(6, 'Goma Borrar', 150, 0.35, '3');
+
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 1, '25/10/2023', 2);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 1, '26/10/2023', 1);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('11111111Z' 2, '25/10/2023', 4);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 2, '26/10/2023', 3);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 2, '26/10/2023', 1);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '26/10/2023', 1);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('33333333R', 2, '25/10/2023', 6);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 1, '30/10/2023', 5);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 3, '2/11/2023', 2);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '30/10/2023', 1);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('33333333R', 1, '25/10/2023', 4);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 2, '30/10/2023', 3);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 3, '30/10/2023', 1);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 3, '02/11/2023', 2);
+INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '02/11/2023', 2);
+
+DELETE FROM compras;
+DELETE FROM cliente WHERE direccion= 'Málaga';
+DELETE FROM productos WHERE precio<1;
+DELETE FROM cliente WHERE sexo= 'H';
+DELETE FROM productos; 
+DELETE FROM clientes;
+
+UPDATE clientes 
+SET precio=0.25,
+
