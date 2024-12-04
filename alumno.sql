@@ -327,12 +327,94 @@ INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
 ('12345678C', 4, '02/11/2023', 2);
 
 DELETE FROM compras;
-DELETE FROM cliente WHERE direccion= 'Málaga';
+DELETE FROM clientes WHERE direccion= 'Málaga';
 DELETE FROM productos WHERE precio<1;
 DELETE FROM cliente WHERE sexo= 'H';
 DELETE FROM productos; 
 DELETE FROM clientes;
 
-UPDATE clientes 
-SET precio=0.25,
+DELETE FROM compra WHERE cantidad<3;
+
+UPDATE clientes
+SET fecha_nac='11/05/2002';
+WHERE dni='11111111Z';
+
+UPDATE producto
+SET precio=1.25
+stock = 125
+WHERE nombre='Bolígrafo azul';
+
+UPDATE clientes
+SET direccion='Malaga'
+WHERE nombre='Monica';
+
+UPDATE producto
+SET precio = precio + 0,25;
+
+UPDATE compra
+SET cantidad = cantidad + 1
+WHERE producto=2;
+
+UPDATE producto
+SET precio=1.25
+WHERE tipo=1 OR tipo=2;
+
+SELECT dni,nombre FROM clientes;
+SELECT direccion FROM clientes;
+SELECT * FROM clientes;
+SELECT dni,nombre,fecha_nac,direccion,sexo FROM clientes;
+
+SELECT nombre FROM cliente WHERE direccion='Granada';
+
+SELECT nombre FROM cliente WHERE sexo='M';
+
+SELECT nombre, dni FROM clientes WHERE direccion != 'Granada';
+
+SELECT * FROM clientes WHERE nombre = 'Lucia';
+
+SELECT nombre FROM productos
+SELECT precio FROM productos
+SELECT cod_prod, precio From productos
+SELECT precio FROM productos WHERE tipo=2
+SELECT * FROM productos WHERE cod_prod=4
+SELECT * FROM productos WHERE precio>0.75
+SELECT nombre FROM productos WHERE precio =<0.75 and >=1.25;
+
+SELECT clientes FROM compras
+SELECT clientes FROM compras WHERE producto=3
+SELECT clientes FROM compras WHERE producto=1 AND cantidad>3
+SELECT clientes, productos FROM compras WHERE cantidad>3
+SELECT nombre, precio*1.21 FROM productos
+SELECT nombre FROM producto WHERE precio IS NOT NULL
+SELECT * FROM cliente WHERE direccion IS NOT NULL
+SELECT direccion FROM cliente WHERE direccion IS NOT NULL
+SELECT DISTINCT direccion FROM cliente WHERE direccion IS NOT NULL
+
+CREATE TABLE duenios
+(
+    DNI VARCHAR2(9) PRIMARY KEY,
+    nom VARCHAR2(50)
+);
+
+CREATE TABLE perros
+(
+    num NUMBER(4) PRIMARY KEY,
+    nom VARCHAR2(20),
+    dni_DUE VARCHAR(9),
+    
+    CONSTRAINT fk_perr_due FOREIGN KEY (dni_DUE) REFERENCES duenios(DNI)
+);
+
+INSERT INTO duenios VALUES ('11111111R', 'Rocio');
+INSERT INTO duenios VALUES ('22222222D', 'Federico');
+INSERT INTO duenios VALUES ('12345678P', 'Erica');
+INSERT INTO duenios VALUES ('11131511R', 'Paloma');
+
+INSERT INTO perros VALUES (1, '11111111Z', 'Coco');
+INSERT INTO perros VALUES (2, '11123411R', 'Rot');
+INSERT INTO perros VALUES (3, '55555555L', 'Moc');
+INSERT INTO perros VALUES (4, '13344111R', 'Loc');
+
+SELECT * FROM duenios ,perros WHERE dni=dni_DUE;
+
 
