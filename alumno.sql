@@ -282,17 +282,17 @@ MODIFY NUMBER(2,0);
 ALTER TABLE producto
 MODIFY precio NULL;
 
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (1, 'Lápiz negro', 100, 0.75, '1');
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (2, 'Bolígrafo azul', 85, NULL, '1');
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (3, 'Libreta A4', 60, 1.75, '2');
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (4, 'Cuaderno rubio', 50, 3.25, '2');
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (5, 'Corrector', 86, NULL, '3');
-INSER INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
+INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (6, 'Goma Borrar', 150, 0.35, '3');
 
 INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
@@ -416,5 +416,59 @@ INSERT INTO perros VALUES (3, '55555555L', 'Moc');
 INSERT INTO perros VALUES (4, '13344111R', 'Loc');
 
 SELECT * FROM duenios ,perros WHERE dni=dni_DUE;
+
+SELECT * FROM compras, productos WHERE cod_prod = producto
+
+SELECT compras.*, clientes.nombre FROM clientes, compras WHERE producto > 4 AND cod_prod = 2
+SELECT compras.*, clientes.nombre FROM clientes, compras WHERE producto < 3
+SELECT compras, clientes.nombre FROM clientes, compras WHERE nombre = 'Monica' 
+
+SELECT compras.*, producto.nombre FROM compras, clientes WHERE dni=cliente;
+
+SELECT * FROM cliente, compra WHERE cantidad > 4 AND producto=2;
+
+SELECT producto.nombre FROM compra, producto WHERE cantidad < 3 AND cod=producto;
+
+SELECT DISTINCT producto.* FROM compra, producto, cliente WHERE compra.cliente=cliente.dni AND compra.producto=producto.cod_prod AND cliente.nombre='Monica'
+
+CREATE TABLE trabajadores
+(
+    codigo NUMERIC(10) PRIMARY KEY,
+    nombre VARCHAR2(50), 
+    categoria VARCHAR2(30),
+    area NUMERIC(4,2) CHECK ( area > 100),
+    tienda VARCHAR2(30)
+);
+
+CREATE TABLE tiendas 
+(
+    cod_tienda NUMERIC(20) PRIMARY KEY,
+    metros NUMBER(4,4) 
+);
+CREATE TABLE ofertas
+(
+    cod_of NUMERIC(20) PRIMARY KEY,
+    tienda VARCHAR2(30),
+    producto  NUMERIC(5),
+    trabajador VARCHAR2(30),
+    tipo_of VARCHAR(20) NOT NULL,
+    inicio VARCHAR2(20),
+    fin VARCHAR2(20)
+);
+
+INSERT INTO trabajadores (codigo, nombre, categoria, area, tienda) VALUES (18, 'Pedro', 'Encargado','cajas', 1);
+INSERT INTO trabajadores (codigo, nombre, categoria, area, tienda) VALUES (21, 'Elena', 'Encargado','reposicion', 1);
+INSERT INTO trabajadores (codigo, nombre, categoria, area, tienda) VALUES (35, 'Manuel', 'suplente','reposicion', 3);
+
+INSERT INTO tiendas (cod_tienda, metros) VALUES (1,500);
+INSERT INTO tiendas (cod_tienda, metros) VALUES (2,800);
+INSERT INTO tiendas (cod_tienda, metros) VALUES (3,250);
+
+INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (1,1,2,18,1,'septiembre','octubre');
+INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (2,2,6,null,1,'octubre','noviembre');
+INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (3,3,6,35,2,'julio','agosto');
+INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (4,3,3,35,3,'octubre','diciembre');
+
+SELECT productos.nombre FROM productos, ofertas WHERE productos.tiendas=ofertas.producto
 
 
