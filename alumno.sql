@@ -469,6 +469,24 @@ INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin)
 INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (3,3,6,35,2,'julio','agosto');
 INSERT INTO ofertas (cod_of, tienda, producto, trabajador, tipo_of, inicio, fin) VALUES (4,3,3,35,3,'octubre','diciembre');
 
-SELECT productos.nombre FROM productos, ofertas WHERE productos.tiendas=ofertas.producto
+SELECT productos.nombre FROM productos, ofertas WHERE productos.oferta=producto.cod WHERE producto.nombre;
+SELECT oferta.cod FROM oferta, producto WHERE producto.nombre='Boligrafo azul' AND oferta.producto=producto.cod;
+SELECT trabajadores.nombre, trabajadores.categoria FROM trabajadores, tienda WHERE trabajadores.tienda=tienda.cod_tienda AND tienda.cod_tienda=1;
+SELECT oferta.* FROM oferta, tienda, trabajadores WHERE oferta.tienda=tienda.cod_tienda AND trabajadores.tienda=tienda.cod_tienda AND trabajadores.nombre='Elena';
 
 
+SELECT nombre.productos FROM ofertas, productos WHERE oferta.producto=productos.cod_prod AND inicio<'septiembre' AND fin>'octubre';
+SELECT nombre.productos FROM tiendas, productos, oferta  WHERE oferta.producto=productos.cod_prod AND oferta.tienda=tienda.cod_tienda AND tienda.metros>500;
+SELECT DISTINCT nombre.productos FROM clientes, productos, compras WHERE productos.cod_prod=productos.compras AND compras.cliente=cliente.DNI AND clientes.direccion='Granada'
+SELECT direccion.clientes FROM clientes, productos, compras WHERE productos.cod_prod=productos.compras AND compras.cliente=cliente.DNI AND compras.cantidad>7 AND productos.nombre='Boligrafo azul';
+
+SELECT nombres.clientes, compras.* FROM clientes, compras WHERE clientes.dni=clientes.compras AND direccion='Granada' ORDER BY clientes.nombre;
+SELECT tienda.* FROM tienda,oferta,producto WHERE precio IS NULL AND tienda.cod=oferta.tienda AND oferta.producto=producto.cod;
+SELECT nombre.productos, productos.precio FROM oferta, productos WHERE productos.cod_prod=producto.oferta AND producto.tipo=2;
+SELECT DISTINCT clientes.* FROM clientes, compras, productos WHERE productos.cod_prod=producto.compras AND compras.clientes=clientes.DNI AND productos.nombre='Boligrafo Azul' ORDER BY clientes.fech_nac;
+SELECT clientes.nombre, precio.cantidad*1.21 FROM clientes, compras, productos WHERE productos.cod_prod= compras.producto AND compras.clientes=clientes.DNI AND clientes.direccion='Málaga'; 
+SELECT DISTINCT cliente.nombre FROM cliente,producto, compra WHERE dni=compra.cliente AND producto.cod=compra.producto AND precio IS NOT NULL;
+SELECT oferta.codigo, oferta.tienda, producto.nombre, trabajador.nombre, oferta.tipo, inicio,fin
+FROM oferta, trabajador, tienda, producto
+WHERE producto.cod=oferta.producto AND trabajador.cod=oferta.trabajador
+AND tienda.codigo=oferta.tienda AND mteros>500;
