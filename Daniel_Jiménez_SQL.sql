@@ -489,4 +489,5 @@ SELECT DISTINCT cliente.nombre FROM cliente,producto, compra WHERE dni=compra.cl
 SELECT oferta.codigo, oferta.tienda, producto.nombre, trabajador.nombre, oferta.tipo, inicio,fin
 FROM oferta, trabajador, tienda, producto
 WHERE producto.cod=oferta.producto AND trabajador.cod=oferta.trabajador
-AND tienda.codigo=oferta.tienda AND mteros>500;
+AND tienda.codigo=oferta.tienda AND ,metros>500;
+
