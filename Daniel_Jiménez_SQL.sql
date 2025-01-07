@@ -491,3 +491,74 @@ FROM oferta, trabajador, tienda, producto
 WHERE producto.cod=oferta.producto AND trabajador.cod=oferta.trabajador
 AND tienda.codigo=oferta.tienda AND ,metros>500;
 
+CREATE TABLE coche
+(
+    matricula VARCHAR2(10) PRIMARY KEY,
+    modelo VARCHAR2(15),
+    marca VARCHAR2(15),
+    color VARCHAR2(15) NOT NULL
+);
+
+CREATE TABLE persona
+(
+    id NUMERIC(3) CHECK (id > 0) PRIMARY KEY, 
+    nombre VARCHAR2(25) NOT NULL,
+    tlf VARCHAR2(10) UNIQUE
+);
+
+CREATE TABLE dueños
+(
+    matricula VARCHAR2(10),
+    persona NUMERIC(3),
+    f_ini DATE NOT NULL,
+    f_fin DATE,
+    
+    CONSTRAINT pk_dueños PRIMARY KEY(matricula, persona),
+    CONSTRAINT fk_dueños_coche FOREIGN KEY (matrícula) REFERENCES coche(matricula),
+    CONSTRAINT fk_dueños_persona FOREIGN KEY (persona) REFERENCES persona(id)
+);
+
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('1111AAA', 'Civic', 'Honda', 'Rojo');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('2222BBB', 'Accord', 'Honda', 'Azul');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('3333CCC', 'Camry', 'Toyota', 'Verde');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('4444DDD', 'Corolla', 'Toyota', 'Negro';
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('5555EEE', 'Fusion', 'Ford', 'Rojo');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('6666FFF', 'Mustang', 'Ford', 'Negro');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('7777GGG', 'Cruze', 'Chevrolet', 'Rojo');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('8888HHH', 'Malibu', 'Chevrolet', 'Blanco';
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('9999III', 'Sentra', 'Nissan', 'Negro');
+INSERT INTO coche (matricula, modelo, marca, color) VALUES ('1010JJJ', 'Altina', 'Nissan', 'Negro');
+
+INSERT INTO persona (id,nombre,tlf) VALUES (1, 'Juan Pérez', 612345678);
+INSERT INTO persona (id,nombre,tlf) VALUES (2, 'María Rodríguez', 655432189);
+INSERT INTO persona (id,nombre,tlf) VALUES (3, 'Carlos López', 699876543);
+INSERT INTO persona (id,nombre,tlf) VALUES (4, 'Ana Martínez', 667123456);
+INSERT INTO persona (id,nombre,tlf) VALUES (5, 'Pedro García', 688987654);
+
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 1, '01/01/2023', '15/05/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 2, '10/05/2022', '28/02/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 3, '15/12/2022', '20/09/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 4, '05/03/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 5, '20/08/2022', '10/01/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('6666FFF', 1, '01/04/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('7777GGG', 2, '25/06/2022', '18/04/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('8888HHH', 3, '30/11/2022', '12/07/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('9999III', 4, '10/02/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('1010JJJ', 5, '15/09/2022', '22/03/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 2, '20/05/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 3, '10/03/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 4, '05/10/2023', null);
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 5, '20/01/2023', '08/11/2023');
+INSERT INTO dueños (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 1, '15/04/2023', null);
+
+SELECT nombre FROM persona;
+SELECT tlf FROM persona WHERE nombre = 'Juan Pérez';
+SELECT persona FROM dueño WHERE matricula = '1111AAA' AND f_fin IS NULL;
+SELECT DISTINCT color FROM coche WHERE marca = 'Honda';
+SELECT marca, modelo FROM coche ORDER BY marca; 
+
+SELECT nombre FROM dueño, persona WHERE dueño.persona=persona.id AND f_fin IS NULL; 
+SELECT matricula, f_ini FROM coche, persona WHERE nombre.persona = 'Carlos Lopez';
+SELECT f_ini FROM coche, dueño WHERE color.coche = 'Rojo';
+SELECT color FROM coche, persona WHERE nombre.persona = 'Ana Martínez';
+SELECT nombre FROM dueño, coche, persona WHERE dueño.matricula=coche.matricula
