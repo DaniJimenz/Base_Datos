@@ -562,3 +562,555 @@ SELECT matricula, f_ini FROM coche, persona WHERE nombre.persona = 'Carlos Lopez
 SELECT f_ini FROM coche, dueño WHERE color.coche = 'Rojo';
 SELECT color FROM coche, persona WHERE nombre.persona = 'Ana Martínez';
 SELECT nombre FROM dueño, coche, persona WHERE dueño.matricula=coche.matricula
+
+CREATE TABLE pokemon
+(
+    id NUMERIC(4) PRIMARY KEY,
+    nombre VARCHAR2(20) NOT NULL,
+    altura NUMERIC(4,1),
+    peso NUMERIC(4, 1),
+    categoria VARCHAR2(70),
+    habilidad VARCHAR2(20)
+);
+
+ALTER TABLE pokemon MODIFY
+(
+    habilidad VARCHAR2(50)
+);
+
+CREATE TABLE tipo
+(
+    id NUMERIC(2) PRIMARY KEY,
+    nombre VARCHAR2(15) NOT NULL
+);
+
+CREATE TABLE pok_tipo
+(
+    pokemon NUMERIC(4),
+    tipo NUMERIC(2),
+   
+    CONSTRAINT pk_pok_tipo PRIMARY KEY (pokemon, tipo),
+    CONSTRAINT fk_pokemon FOREIGN KEY (pokemon) REFERENCES pokemon(id),
+    CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES tipo(id)
+);
+
+INSERT INTO pokemon VALUES (1,'Bulbasur',0.7,6.9,'Semilla','Espesura');
+INSERT INTO pokemon VALUES (2,'Charmander',0.6,8.5,'Lagarto','Mar llamas');
+INSERT INTO pokemon VALUES (3,'Squirtle',0.5,9,'Tortuguita','Torrente');
+INSERT INTO pokemon VALUES (4,'Pikachu',0.4,6,'Raton','Electricidad estatica');
+INSERT INTO pokemon VALUES (5,'Jigglypuff',0.5,5.5,'Globo','Cura');
+INSERT INTO pokemon VALUES (6,'Gengar',1.5,40.5,'Sombra','Levitacion');
+INSERT INTO pokemon VALUES (7,'Onix',8.8,210,'Serpiente roca','Cabeza roca');
+INSERT INTO pokemon VALUES (8,'Machamp',1.6,130,'Super poder','Guts');
+INSERT INTO pokemon VALUES (9,'Lapras',2.5,220,'Transporte','Absorbe agua');
+INSERT INTO pokemon VALUES (10,'Snorlax',2.1,460,'Dormilon','Impasible');
+
+INSERT INTO tipo VALUES (1,'Planta');
+INSERT INTO tipo VALUES (2,'Fuego');
+INSERT INTO tipo VALUES (3,'Agua');
+INSERT INTO tipo VALUES (4,'Electrico');
+INSERT INTO tipo VALUES (5,'Normal');
+INSERT INTO tipo VALUES (6,'Fantasma');
+INSERT INTO tipo VALUES (7,'Roca');
+INSERT INTO tipo VALUES (8,'Lucha');
+INSERT INTO tipo VALUES (9,'Hielo');
+INSERT INTO tipo VALUES (10,'Veneno');
+
+INSERT INTO pok_tipo VALUES (1,1);
+INSERT INTO pok_tipo VALUES (2,2);
+INSERT INTO pok_tipo VALUES (3,3);
+INSERT INTO pok_tipo VALUES (4,4);
+INSERT INTO pok_tipo VALUES (5,5);
+INSERT INTO pok_tipo VALUES (6,6);
+INSERT INTO pok_tipo VALUES (7,7);
+INSERT INTO pok_tipo VALUES (8,8);
+INSERT INTO pok_tipo VALUES (9,3);
+INSERT INTO pok_tipo VALUES (9,9);
+INSERT INTO pok_tipo VALUES (10,5);
+INSERT INTO pok_tipo VALUES (6,10);
+
+SELECT * FROM pokemon;
+SELECT nombre, habilidad FROM pokemon WHERE peso>100;
+SELECT nombre FROM pokemon WHERE habilidad='Levitacion';
+SELECT nombre, categoria FROM pokemon WHERE categoria='Raton';
+SELECT nombre FROM pokemon WHERE altura>1.5;
+SELECT pokemon.nombre, tipo.nombre FROM pokemon, tipo, pok_tipo WHERE pokemon.id=pokemon AND tipo.id=tipo;
+SELECT pokemon.nombre FROM pokemon, tipo, pok_tipo WHERE pokemon.id=pokemon AND tipo.id=tipo AND tipo.nombre='Agua';
+SELECT id FROM pokemon WHERE peso<100 AND peso>50;
+SELECT nombre FROM pokemon WHERE categoria='Semilla' OR categoria='Lagarto';
+SELECT nombre FROM pokemon ORDER BY peso DESC;
+SELECT nombre, peso, altura FROM pokemon ORDER BY peso DESC, altura ASC;
+SELECT tipo.nombre FROM pokemon, tipo, pok_tipo WHERE pokemon.id=pokemon AND tipo.id=tipo AND pokemon.nombre='Lapras';
+SELECT pokemon.nombre, tipo.nombre FROM pokemon, tipo, pok_tipo WHERE pokemon.id=pokemon AND tipo.id=tipo ORDER BY tipo.nombre;
+SELECT pokemon.nombre, tipo.nombre FROM pokemon, tipo, pok_tipo WHERE pokemon.id=pokemon AND tipo.id=tipo AND tipo.nombre NOT IN ('Fuego','Fantasma','Planta');
+
+INSERT INTO pok_tipo VALUES (1,10);
+
+ALTER TABLE pokemon ADD forma VARCHAR2(20) CHECK (forma IN ('Cabeza','Cuadrupedo','Humanoide','Serpiente','Alado'));
+
+UPDATE pokemon SET forma='Humanoide' WHERE id IN (8,10,3,4,6);
+UPDATE pokemon SET forma='Serpiente' WHERE id IN (7);
+UPDATE pokemon SET forma='Cabeza' WHERE id IN (5);
+UPDATE pokemon SET forma='Cuadrupedo' WHERE id IN (1,2,9);
+
+CREATE TABLE ataques
+(
+    id NUMERIC(3) PRIMARY KEY,
+    nombre VARCHAR2(25) NOT NULL,
+    tipo_id NUMERIC(2) NOT NULL,
+    potencia NUMERIC(3),
+    preci NUMERIC(3) CHECK (preci>0 AND preci<101),
+    pp NUMERIC(2) CHECK (pp>0),
+    categoria VARCHAR2(8) CHECK (categoria IN ('Fisico','Especial','Estado')),
+   
+    CONSTRAINT fk_tipo_id FOREIGN KEY (tipo_id) REFERENCES tipo(id)
+);
+CREATE TABLE pokemon_ataques
+(
+    pokemon NUMERIC(4),
+    ataque NUMERIC(3),
+    nivel NUMERIC(2) CHECK (nivel>0),
+    metodo VARCHAR2(5) CHECK (metodo IN ('Nivel','Huevo','MT/MO','Tutor')),
+   
+    CONSTRAINT pk_pok_atq PRIMARY KEY (pokemon, ataque),
+    CONSTRAINT fk_pok_atq_pokemon FOREIGN KEY (pokemon) REFERENCES pokemon(id),
+    CONSTRAINT fk_pok_atq_ataque FOREIGN KEY (ataque) REFERENCES ataques(id)
+);
+
+INSERT INTO ataques VALUES (1,'Lanzallmas',2,90,100,15,'Especial');
+INSERT INTO ataques VALUES (2,'Rayo',4,90,100,15,'Especial');
+INSERT INTO ataques VALUES (3,'Terremoto',7,100,100,10,'Fisico');
+INSERT INTO ataques VALUES (4,'Danza Espada',5,null,100,20,'Estado');
+INSERT INTO ataques VALUES (5,'Surf',3,90,100,15,'Especial');
+INSERT INTO ataques VALUES (6,'Placaje',5,40,100,35,'Fisico');
+INSERT INTO ataques VALUES (7,'Rugido',5,null,100,20,'Estado');
+INSERT INTO ataques VALUES (8,'Puño HIelo',9,75,100,15,'Fisico');
+
+INSERT INTO pokemon_ataques VALUES (2,1,24,'Nivel');
+INSERT INTO pokemon_ataques VALUES (2,4,null,'MT/MO');
+INSERT INTO pokemon_ataques VALUES (3,6,1,'Nivel');
+INSERT INTO pokemon_ataques VALUES (3,8,null,'MT/MO');
+INSERT INTO pokemon_ataques VALUES (3,5,null,'MT/MO');
+INSERT INTO pokemon_ataques VALUES (4,2,36,'Nivel');
+INSERT INTO pokemon_ataques VALUES (4,5,null,'MT/MO');
+INSERT INTO pokemon_ataques VALUES (4,6,10,'Nivel');
+INSERT INTO pokemon_ataques VALUES (4,1,50,'Nivel');
+
+select nombre from ataques where potencia>70 and preci>90;
+select nombre from ataques where categoria='Especial';
+select ataques.nombre from ataques, tipo where tipo.id=ataques.tipo_id and tipo.nombre='Normal' and categoria='Estado';
+select ataques.nombre from ataques, pokemon_ataques where ataques.id=pokemon_ataques.ataque and metodo='MT/MO';
+select pokemon.nombre, pokemon_ataques.nivel from pokemon, ataques, pokemon_ataques where ataques.id=pokemon_ataques.ataque and pokemon.id=pokemon_ataques.pokemon and ataques.nombre='Placaje';
+select ataques.*, pokemon_ataques.nivel from pokemon, ataques, pokemon_ataques where ataques.id=pokemon_ataques.ataque and pokemon.id=pokemon_ataques.pokemon and pokemon.nombre='Charmander';
+select ataques.*, pokemon_ataques.nivel from pokemon, ataques, pokemon_ataques where ataques.id=pokemon_ataques.ataque and pokemon.id=pokemon_ataques.pokemon and pokemon.nombre='Pikachu' and metodo='Nivel';
+select pokemon.nombre from pokemon, ataques, pokemon_ataques, tipo where ataques.id=pokemon_ataques.ataque and pokemon.id=pokemon_ataques.pokemon and ataques.tipo_id=tipo.id and tipo.nombre='Fuego';
+select pokemon.nombre from pokemon, ataques, pokemon_ataques where ataques.id=pokemon_ataques.ataque and pokemon.id=pokemon_ataques.pokemon and ataques.nombre='Lanzallmas' and peso>5;
+INSERT INTO ataques VALUES (9,'Trueno',4,120,70,10,'Especial');
+INSERT INTO pokemon_ataques VALUES (4,9,44,'Nivel');
+INSERT INTO pokemon_ataques VALUES (6,9,null,'MT/MO');
+
+
+CREATE TABLE cliente
+(
+    dni VARCHAR2(9) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    fecha_nac DATE NOT NULL,
+    direccion VARCHAR2(100),
+    sexo VARCHAR2(1) CHECK (sexo IN ('H', 'M'))
+);
+
+CREATE TABLE producto
+(
+    cod NUMBER(5) PRIMARY KEY,
+    nombre VARCHAR2(50) UNIQUE NOT NULL,
+    stock NUMBER(6) NOT NULL CHECK (stock >= 0),
+    precio NUMBER(4, 2) NOT NULL,
+    tipo VARCHAR2(20) NOT NULL
+);
+
+CREATE TABLE compra
+(
+    cliente VARCHAR2(9),
+    producto NUMBER(5),
+    fecha DATE,
+    cantidad NUMBER(3) NOT NULL,
+   
+    CONSTRAINT pk_comp PRIMARY KEY (cliente, producto, fecha),
+    CONSTRAINT fk_comp_cli FOREIGN KEY (cliente) REFERENCES cliente(DNI),
+    CONSTRAINT fk_comp_prod FOREIGN KEY (producto) REFERENCES producto(cod)
+);
+
+CREATE TABLE tienda
+(
+    cod NUMBER(5) PRIMARY KEY,
+    metros NUMBER(4) NOT NULL
+);
+
+CREATE TABLE trabajador
+(
+    cod NUMBER(5) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    categoria VARCHAR(20) NOT NULL,
+    area VARCHAR2(20) NOT NULL,
+    tienda NUMBER(5),
+   
+    CONSTRAINT fk_trab_tien FOREIGN KEY (tienda) REFERENCES tienda(cod)
+);
+
+CREATE TABLE oferta
+(
+    cod NUMBER(5) PRIMARY KEY,
+    tienda NUMBER(5),
+    producto NUMBER(5),
+    trabajador NUMBER(5),
+    tipo VARCHAR2(20) NOT NULL,
+    inicio DATE NOT NULL,
+    fin DATE NOT NULL,
+   
+    CONSTRAINT fk_of_tien FOREIGN KEY (tienda) REFERENCES tienda(cod),
+    CONSTRAINT fk_of_prod FOREIGN KEY (producto) REFERENCES producto(cod),
+    CONSTRAINT fk_of_trab FOREIGN KEY (trabajador) REFERENCES trabajador(cod)
+);
+
+//DROP TABLE cliente CASCADE CONSTRAINTS;
+
+ALTER TABLE compra
+ADD CONSTRAINT fk_comp_cli FOREIGN KEY (cliente) REFERENCES cliente(DNI);
+
+ALTER TABLE cliente
+ADD tlf NUMBER(9);
+
+ALTER TABLE trabajador
+ADD tlf NUMBER(9);
+
+ALTER TABLE producto
+DROP COLUMN stock;
+
+ALTER TABLE cliente
+MODIFY tlf CHECK (tlf >= 600000000);
+
+ALTER TABLE trabajador
+MODIFY tlf CHECK (tlf >= 600000000);
+
+ALTER TABLE producto
+MODIFY precio DEFAULT 0;
+
+ALTER TABLE tienda ADD
+(
+    nombre VARCHAR2(50) NOT NULL,
+    localizacion VARCHAR2(100)
+);
+
+ALTER TABLE producto
+MODIFY precio CHECK (precio >= 0 AND precio <= 10);
+
+ALTER TABLE producto
+ADD stock NUMBER(6);
+
+ALTER TABLE producto
+MODIFY stock CHECK (stock >= 0);
+
+INSERT INTO cliente VALUES ('11111111F', 'ERICA', '01/01/00', 'GRANADA', 'M', NULL);
+INSERT INTO cliente VALUES ('22222222F', 'PEPE', '01/01/00', 'GRANADA', 'H', 611111123);
+INSERT INTO cliente(dni, fecha_nac, sexo, nombre) VALUES ('33333333H', '15/02/03', 'H', 'Manolo');
+
+INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
+('11111111Z', 'Lucía', '12/05/2002', 'Granada', 'M');
+INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
+('22222222B', 'Mónica', '18/12/2008', 'Jaén', 'M');
+INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
+('12345678C', 'Luis', '18/02/2008', 'Granada', 'H');
+INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
+('33333333R', 'César', '08/09/2003', 'Granada', 'H');
+INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
+('55555555T', 'Roberto', '24/11/2008', 'Málaga', 'H');
+
+
+ALTER TABLE producto
+MODIFY tipo NUMBER(2,0);
+
+ALTER TABLE producto
+MODIFY precio NULL;
+
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(1, 'Lápiz negro', 100, 0.75, 1);
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(2, 'Bolígrafo azul', 85, 1.25, 1);
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(3, 'Libreta A4', 60, 1.75, 2);
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(4, 'Cuaderno rubio', 50, 3.25, 2);
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(5, 'Corrector', 86, 0.75, 3);
+INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
+(6, 'Goma borrar', 150, 0.35, 3);
+
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 1, '25/10/2023', 2);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 1, '26/10/2023', 1);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 2, '25/10/2023', 4);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 2, '26/10/2023', 3);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 3, '26/10/2023', 1);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '26/10/2023', 1);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('33333333R', 2, '25/10/2023', 6);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('11111111Z', 1, '30/10/2023', 5);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 3, '02/11/2023', 2);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '30/10/2023', 1);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('33333333R', 1, '25/10/2023', 4);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 2, '30/10/2023', 3);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 3, '30/10/2023', 1);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('55555555T', 3, '02/11/2023', 2);
+INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
+('12345678C', 4, '02/11/2023', 2);
+
+
+DELETE FROM compra;
+DELETE FROM cliente WHERE direccion='Málaga';
+DELETE FROM producto WHERE precio<1;
+DELETE FROM cliente WHERE sexo='H';
+DELETE FROM cliente;
+DELETE FROM producto;
+
+DELETE FROM compra WHERE cantidad<3;
+
+UPDATE cliente
+SET fecha_nac='11/05/2002'
+WHERE dni='11111111Z';
+
+UPDATE producto
+SET precio=1.25,
+stock = 150
+WHERE nombre='Bolígrafo azul';
+
+UPDATE cliente
+SET direccion='Málaga'
+WHERE nombre='Mónica';
+
+UPDATE producto
+SET precio = precio + 0.25;
+
+UPDATE compra
+SET cantidad = cantidad + 1
+WHERE producto=2;
+
+UPDATE producto
+SET precio = 1.25
+WHERE tipo=1 OR tipo=2;
+
+UPDATE cliente SET nombre='césar' WHERE nombre='César';
+
+SELECT dni, nombre FROM cliente;
+
+SELECT direccion FROM cliente;
+
+SELECT * FROM compra;
+
+UPDATE cliente SET direccion='Granada' WHERE direccion='GRANADA';
+
+SELECT dni, nombre FROM cliente WHERE direccion='Granada' ORDER BY nombre ASC;
+
+SELECT nombre FROM cliente WHERE sexo='M';
+
+SELECT dni, nombre FROM cliente WHERE NOT direccion='Granada';
+
+SELECT * FROM cliente WHERE nombre='Lucía';
+
+SELECT precio FROM producto WHERE tipo=2;
+
+SELECT * FROM producto WHERE cod=4;
+
+SELECT * FROM producto WHERE precio >= 0.75 AND precio <= 1.25;
+
+SELECT DISTINCT cliente FROM compra;
+
+SELECT cliente FROM compra WHERE producto=3;
+
+SELECT cliente FROM compra WHERE producto=1 AND cantidad>3;
+
+SELECT DISTINCT cliente,producto FROM compra WHERE cantidad>3;
+
+SELECT nombre, precio*1.21 FROM producto;
+
+SELECT nombre FROM producto WHERE precio IS NOT NULL;
+
+SELECT DISTINCT direccion FROM cliente WHERE direccion IS NOT NULL;
+
+SELECT direccion,nombre FROM cliente ORDER BY direccion DESC, nombre ASC;
+
+CREATE TABLE duenios
+(
+    DNI VARCHAR2(9) PRIMARY KEY,
+    nom VARCHAR2(50)
+);
+
+CREATE TABLE perros
+(
+    num NUMBER(4) PRIMARY KEY,
+    nom VARCHAR2(20),
+    DNI_due VARCHAR2(9),
+   
+    CONSTRAINT fk_perr_due FOREIGN KEY (DNI_due) REFERENCES duenios(DNI)
+);
+
+INSERT INTO duenios VALUES ('11111111S', 'Rocio');
+INSERT INTO duenios VALUES ('33333333E', 'Paloma');
+INSERT INTO duenios VALUES ('66666666B', 'Victor');
+
+INSERT INTO perros VALUES (1, 'Ali', '11111111S');
+INSERT INTO perros VALUES (2, 'Buda', '33333333E');
+INSERT INTO perros VALUES (3, 'Pico', '11111111S');
+INSERT INTO perros VALUES (4, 'Rufo', '66666666B');
+
+SELECT * FROM duenios d, perros p WHERE DNI=DNI_due ORDER BY d.nom;
+
+
+SELECT compra.*, producto.nombre FROM compra, producto WHERE cod=producto;
+
+SELECT compra.*, cliente.nombre FROM compra, cliente WHERE dni=cliente;
+
+SELECT cliente.nombre FROM cliente, compra WHERE cantidad>4 AND producto=2 AND dni=cliente;
+
+SELECT DISTINCT producto.nombre FROM compra, producto WHERE cantidad<3 AND cod=producto;
+
+SELECT DISTINCT producto.* FROM compra, producto, cliente
+WHERE compra.cliente=cliente.dni AND compra.producto=producto.cod AND cliente.nombre='Lucía';
+
+DROP TABLE trabajador CASCADE CONSTRAINTS;
+DROP TABLE tienda CASCADE CONSTRAINTS;
+DROP TABLE oferta CASCADE CONSTRAINTS;
+
+INSERT INTO trabajador VALUES(18, 'Pedro', 'Encargado', 'Cajas', 1);
+INSERT INTO trabajador VALUES(21, 'Elena', 'Encargado', 'Reposición', 1);
+INSERT INTO trabajador VALUES(35, 'Manuel', 'Suplente', 'Reposición', 1);
+
+INSERT INTO tienda VALUES(1, 500);
+INSERT INTO tienda VALUES(2, 800);
+INSERT INTO tienda VALUES(3, 250);
+
+INSERT INTO oferta VALUES(1, 1, 2, 18, 1, '01/09/2024', '01/10/2024');
+INSERT INTO oferta VALUES(2, 2, 6, NULL, 1, '01/10/2024', '01/11/2024');
+INSERT INTO oferta VALUES(3, 3, 6, 35, 2, '01/07/2024', '01/08/2024');
+INSERT INTO oferta VALUES(4, 3, 3, 35, 3, '01/10/2024', '01/12/2024');
+
+SELECT producto.nombre FROM oferta, producto
+WHERE oferta.producto=producto.cod AND oferta.tienda=3;
+
+SELECT oferta.cod FROM oferta, producto
+WHERE producto.nombre='Goma borrar' AND oferta.producto=producto.cod;
+
+SELECT metros FROM tienda, producto, oferta
+WHERE producto.cod=oferta.producto AND tienda.cod=oferta.tienda
+AND producto.nombre='Goma borrar';
+
+SELECT nombre, categoria FROM trabajador WHERE tienda=1;
+
+SELECT oferta.* FROM oferta, trabajador
+WHERE oferta.tienda=trabajador.tienda AND trabajador.nombre='Elena';
+
+SELECT producto.nombre FROM producto, oferta
+WHERE producto.cod=oferta.producto
+AND inicio <= '01/09/2024' AND fin >= '30/09/2024';
+
+SELECT producto.nombre FROM producto, tienda, oferta
+WHERE producto.cod=oferta.producto AND tienda.cod=oferta.tienda
+AND tienda.metros>500;
+
+SELECT DISTINCT producto.nombre FROM producto, compra, cliente
+WHERE producto.cod=compra.producto AND cliente.dni=compra.cliente
+AND direccion='Granada';
+
+SELECT direccion FROM cliente, compra, producto
+WHERE producto.cod=compra.producto AND cliente.dni=compra.cliente
+AND cantidad>=7;
+
+SELECT compra.cliente, compra.producto, cliente.direccion, SUM(compra.cantidad)
+FROM cliente, compra
+WHERE compra.cliente=cliente.dni
+GROUP BY compra.cliente,compra.producto,cliente.direccion;
+
+SELECT nombre, compra.*
+FROM cliente,compra
+WHERE dni=cliente AND direccion='Granada'
+ORDER BY nombre;
+
+SELECT DISTINCT tienda.*
+FROM tienda, oferta, producto
+WHERE tienda.cod=oferta.tienda AND oferta.producto=producto.cod
+AND precio IS NULL;
+
+SELECT nombre, precio
+FROM producto, oferta
+WHERE producto.cod=oferta.producto AND oferta.tipo=2;
+
+SELECT DISTINCT cliente.*
+FROM cliente, producto, compra
+WHERE dni=compra.cliente AND producto.cod=compra.producto AND producto.nombre='Bolígrafo azul'
+ORDER BY fecha_nac ASC;
+
+SELECT DISTINCT cliente.nombre
+FROM cliente, producto, compra
+WHERE dni=compra.cliente AND producto.cod=compra.producto AND precio IS NOT NULL;
+
+SELECT cliente.nombre, ROUND(precio*cantidad*1.21, 2)
+FROM cliente, producto, compra
+WHERE compra.cliente=dni AND producto.cod=compra.producto AND direccion='Málaga';
+
+SELECT oferta.cod, oferta.tienda, producto.nombre, trabajador.nombre, oferta.tipo, inicio, fin
+FROM oferta, trabajador, tienda, producto
+WHERE producto.cod=oferta.producto AND trabajador.cod=oferta.trabajador
+AND tienda.cod=oferta.tienda AND metros>=500;
+
+-- OPERADOR LIKE --
+
+SELECT nombre FROM cliente WHERE nombre LIKE 'M%';
+
+SELECT DISTINCT cli.* FROM cliente cli, compra c, producto p
+WHERE cli.dni=c.cliente AND c.producto=p.cod AND p.nombre LIKE 'L%';
+
+SELECT * FROM trabajador WHERE nombre LIKE '%o%';
+
+SELECT * FROM cliente WHERE nombre LIKE '__n%';
+
+SELECT SUM(metros) FROM tienda;
+
+SELECT nombre, precio FROM producto ORDER BY precio DESC;
+
+SELECT COUNT(*) FROM compra WHERE cliente='11111111Z';
+
+SELECT SUM(precio*cantidad)*1.21 AS Total_Compra 
+FROM clientes, compras, productos 
+WHERE producto = producto.cod AND cliente=cliente.dni
+AND cliente.nombre='Lucía';
+
+SELECT AVG (cantidad) FROM compra, producto 
+WHERE producto=cod AND nombre='Bolígrafo azul';
+
+SELECT COUNT (DISTINCT cliente) FROM  compra, producto
+WHERE producto=cod AND nombre='Lápiz negro';
+
+SELECT MAX (precio) FROM cliente cli, compra c, producto p
+
+SELECT AVG (cantidad) FROM compra, cliente WHERE dni=cliente and nombre='Luis'
+SELECT MAX (metros), MIN (metros), CAST(AVG(metros 
+SELECT AVG(precio) FROM producto;
+
+SELECT producto.nombre COUNT (ofertas*) FROM ofertas, productos WHERE ofertas.producto=cod_prod GROUP BY productos.nombre
+SELECT producto COUNT (cliente) FROM compra GROUP BY producto
+SELECT dirección COUNT (dni) FROM cliente WHERE dirección 
+
+SELECT cliente COUNT (producto) FROM compra GROUP BY cliente
+SELECT tienda  COUNT (cod) FROM oferta GROUP BY tienda
+SELECT producto MAX (cantidad) FROM compra GROUP BY producto;
