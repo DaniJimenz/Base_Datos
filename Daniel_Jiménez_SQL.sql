@@ -708,6 +708,9 @@ select pokemon.nombre from pokemon, ataques, pokemon_ataques where ataques.id=po
 INSERT INTO ataques VALUES (9,'Trueno',4,120,70,10,'Especial');
 INSERT INTO pokemon_ataques VALUES (4,9,44,'Nivel');
 INSERT INTO pokemon_ataques VALUES (6,9,null,'MT/MO');
+SELECT nombre FROM pokemon WHERE nombre LIKE 'Pik'
+SELECT tipo FROM pok_tipo COUNT pokemon GROUP BY tipo ORDER BY tipo
+SELECT ataques FROM pokemon 
 
 
 CREATE TABLE cliente
@@ -1114,3 +1117,12 @@ SELECT dirección COUNT (dni) FROM cliente WHERE dirección
 SELECT cliente COUNT (producto) FROM compra GROUP BY cliente
 SELECT tienda  COUNT (cod) FROM oferta GROUP BY tienda
 SELECT producto MAX (cantidad) FROM compra GROUP BY producto;
+
+SELECT producto FROM compra HAVING AVG(cantidad)>5 GROUP BY producto
+SELECT direccion FROM cliente HAVING AVG(dni)>2 GROUP BY direccion
+SELECT nombre FROM producto, compra WHERE cod=producto HAVING(cantidad)>10 GROUP BY nombre
+
+SELECT dni FROM cliente cl, compra c, producto p WHERE dni=cl.cliente and HAVING AVG (cantidad*precio)>3 GROUP BY dni
+SELECT producto FROM oferta HAVING COUNT(DISTINCT cod)> GROUP BY producto
+SELECT 
+
