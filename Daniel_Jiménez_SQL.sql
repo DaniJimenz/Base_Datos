@@ -1124,5 +1124,30 @@ SELECT nombre FROM producto, compra WHERE cod=producto HAVING(cantidad)>10 GROUP
 
 SELECT dni FROM cliente cl, compra c, producto p WHERE dni=cl.cliente and HAVING AVG (cantidad*precio)>3 GROUP BY dni
 SELECT producto FROM oferta HAVING COUNT(DISTINCT cod)> GROUP BY producto
-SELECT 
 
+//Comparaciones y conjuntos de elementos//
+
+SELECT nombre FROM trabajador 
+WHERE tienda = ANY (SELECT tienda FROM trabajadores WHERE nombre IN ('Pedro','Manuel'));
+SELECT*FROM clientes 
+WHERE fecha_nac <= ALL (SELECT fecha_nac FROM cliente)
+SELECT nombre FROM cliente, compra
+WHERE dni = ANY (SELECT cliente FROM compra WHERE cantidad < 2);
+SELECT nombre FROM cliente
+WHERE nombre != ALL (SELECT nombre FROM cliente, compra WHERE dni = cliente AND (cliente, producto);
+SELECT nombre FROM cliente 
+WHERE dni = ANY (SELECT cliente FROM compra WHERE producto = ANY ( SELECT cod FROM producto WHERE nombre = 'Boligrafo azul')) 
+AND dni = ANY (sSELECT DISTINCT cliente FROM compra);
+SELECT*FROM tienda
+WHERE metros >= ALL (SELECT metros FROM tienda);
+
+
+SELECT e.* FROM envios e, componentes c WHERE c.id=e.comp AND color!='rojo';
+SELECT prov FROM envios WHERE art='t3' and cantidad>250;
+SELECT*FROM proveedores WHERE categoria>20 and ciudad='Sevilla';
+SELECT e.* FROM envios e, componentes c WHERE e.comp=c.id AND peso>15 AND cantidad <200
+SELECT color FROM envios e, componentes c, proveedores p WHERE p.id=e.prov AND c.id=e.comp AND p.id='p1';
+SELECT peso FROM envios e, componentes c, proveedores p WHERE p.id=e.prov AND c.id=e.comp AND p.nombre='JUAN';
+SELECT e.*, a.ciudad FROM articulos a, envios e, proveedores p, componentes c WHERE p.id=e.prov and c.id=e.comp AND a.ciudad=p.ciudad AND a.ciudad=c.ciudad;
+SELECT nombre FROM proveedores WHERE ID != ALL (SELECT DISTINCT prov FROM envios, componentes WHERE comp=id AND nombre like
+ALTER TABLE proveedores ADD edad NUMERIC(2)
