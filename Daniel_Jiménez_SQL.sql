@@ -712,6 +712,19 @@ SELECT nombre FROM pokemon WHERE nombre LIKE 'Pik'
 SELECT tipo FROM pok_tipo COUNT pokemon GROUP BY tipo ORDER BY tipo
 SELECT ataques FROM pokemon 
 
+/*45*//*48*/
+
+SELECT DISTINCT a.nombre FROM pokemon p, pokemon_ataques pa, ataques a, tipo t, pok_tipo pt
+WHERE p.id=pa.pokemon AND pa.ataques=a.id AND p.id=pt.pokemon AND pt.tipo=t.id AND t.nombre = 'Fuego'
+SELECT nombre FROM pokemon WHERE peso > (select max(peso) FROM pokemon p, pok_tipo pt, tipo t WHERE p.id=pt.pokemon AND pt.tipo=t.id AND t.nombre='Eléctrico'
+SELECT a.nombre FROM ataques a WHERE id != ALL (SELECT ataque FROM pokemon_ataques);
+SELECT * FROM pokemon WHERE id IN (SELECT pokemon FROM pok_tipo) HAVING COUNT pokemon=2 GROUP BY pokemon;
+
+/*30*/
+
+
+
+
 
 CREATE TABLE cliente
 (
@@ -1150,4 +1163,12 @@ SELECT color FROM envios e, componentes c, proveedores p WHERE p.id=e.prov AND c
 SELECT peso FROM envios e, componentes c, proveedores p WHERE p.id=e.prov AND c.id=e.comp AND p.nombre='JUAN';
 SELECT e.*, a.ciudad FROM articulos a, envios e, proveedores p, componentes c WHERE p.id=e.prov and c.id=e.comp AND a.ciudad=p.ciudad AND a.ciudad=c.ciudad;
 SELECT nombre FROM proveedores WHERE ID != ALL (SELECT DISTINCT prov FROM envios, componentes WHERE comp=id AND nombre like
-ALTER TABLE proveedores ADD edad NUMERIC(2)
+ALTER TABLE proveedores ADD edad NUMERIC(2);
+ALTER TABLE envios ADD fecha_env DATE AND ADD precio NUMERIC(5);
+DELETE FROM envios WHERE proveedores = 'Inma';
+DELETE FROM proveedores WHERE ciudad = 'Sevilla';
+
+
+
+
+
