@@ -1168,7 +1168,81 @@ ALTER TABLE envios ADD fecha_env DATE AND ADD precio NUMERIC(5);
 DELETE FROM envios WHERE proveedores = 'Inma';
 DELETE FROM proveedores WHERE ciudad = 'Sevilla';
 
+--4
+SELECT t, ciudad FROM articulos WHERE ciudad LIKE '%d' OR ciudad LIKE '%e%';
+--10
+SELECT c FROM envios WHERE p IN (SELECT p FROM proveedores WHERE ciudad= 'Sevilla')
+AND a IN (SELECT t FROM articulos WHERE ciudad='Sevilla');
+--15
+SELECT tnombre FROM articulos WHERE t IN 
+(SELECT t FROM envios WHERE p IN (SELECT p FROM proveedores WHERE ciudad!='Madrid')
+AND ciudad NOT IN (SELECT ciudad 
 
 
+CREATE TABLE superpersona
+(
+    ide NUMBER(3) PRIMARY KEY, 
+    nombre VARCHAR2(25) NOT NULL,
+    mote VARCHAR2(50) NOT NULL,
+    ciudadorigen VARCHAR2 (50),
+    equipo NUMBER(2),
+    composicion VARCHAR2(15) check (composicion in('villano','heroe')),
+    
+    constraint fk_equipo foreign key (equipo) references equipo(ide)
+);
 
+CREATE TABLE equipo
+(
+    ide NUMERIC(2) primary key,
+    nombre VARCHAR2(50)
+);
+
+CREATE TABLE poderes
+(
+    ide NUMBER(3) PRIMARY KEY,
+    nombre VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE tiene
+) 
+    poder NUMBER(3),
+    super NUMBER(3),
+    
+    constraint pk_tiene primary key (super, poder),
+    constraint fk_poder foreign key (poder) references poderes(ide),
+    constraint fk_super foreign key (super) references superheroes(ide)
+);
+
+insert into equipo values (1,'Vengadores');
+insert into equipo values (2,'X-Men');
+insert into equipo values (3,'Guardianes de la galaxia');
+insert into equipo values (4,'X-Force');
+insert into equipo values (5,'Orden negra');
+insert into equipo values (6,'Agentes de Wakanda');
+insert into equipo values (7,'Hydra');
+insert into equipo values (8,'Los 4 fantásticos');
+insert into equipo values (9,'Starforce');
+insert into equipo values (10,'Shield');
+
+insert into poderes values (1,'Telepatia');
+insert into poderes values (2,'Campo de fuerza');
+insert into poderes values (3,'Mimetismo');
+insert into poderes values (4,'Invisibilidad');
+insert into poderes values (5,'Bioeletricidad');
+insert into poderes values (6,'Volar');
+insert into poderes values (7,'Deformación de la realidad');
+insert into poderes values (8,'Sentido arácnido');
+insert into poderes values (9,'Teletransportación');
+insert into poderes values (10,'Control Mental');
+
+insert into superpersona values (1, 'Logan Patch','Lobezno','Canadá');
+insert into superpersona values (2, 'Peter Parker','Spider-man','Nueva York');
+insert into superpersona values (3, 'Steve Rogers','Capitán América','Nueva York');
+insert into superpersona values (4, 'Bruce Banner','Hulk','EEUU');
+insert into superpersona values (5, 'Tony Stark','Ironman','Nueva York');
+insert into superpersona values (6, 'Erik magnus','Magneto','Alemán');
+insert into superpersona values (7, 'Rocket Raccoon','Rocket','Halfworld');
+insert into superpersona values (8, 'TChalla','Black Panther','Wakanda');
+insert into superpersona values (9, 'El titán loco','Thanos','Planeta Titán');
+insert into superpersona values (10, 'Logan Patch','Lobezno','Canadá');
 
