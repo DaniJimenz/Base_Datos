@@ -1204,13 +1204,13 @@ CREATE TABLE poderes
 );
 
 CREATE TABLE tiene
-) 
+( 
     poder NUMBER(3),
-    super NUMBER(3),
+    superP NUMBER(3),
     
-    constraint pk_tiene primary key (super, poder),
+    constraint pk_tiene primary key (poder, superP),
     constraint fk_poder foreign key (poder) references poderes(ide),
-    constraint fk_super foreign key (super) references superheroes(ide)
+    constraint fk_super foreign key (superP) references superpersona(ide)
 );
 
 insert into equipo values (1,'Vengadores');
@@ -1226,23 +1226,81 @@ insert into equipo values (10,'Shield');
 
 insert into poderes values (1,'Telepatia');
 insert into poderes values (2,'Campo de fuerza');
-insert into poderes values (3,'Mimetismo');
+insert into poderes values (3,'Bolas de Fuego');
 insert into poderes values (4,'Invisibilidad');
-insert into poderes values (5,'Bioeletricidad');
-insert into poderes values (6,'Volar');
-insert into poderes values (7,'Deformación de la realidad');
+insert into poderes values (5,'Super Fuerza');
+insert into poderes values (6,'Regeneración');
+insert into poderes values (7,'Deforma Realidad');
 insert into poderes values (8,'Sentido arácnido');
 insert into poderes values (9,'Teletransportación');
-insert into poderes values (10,'Control Mental');
+insert into poderes values (10,'Inteligencia');
 
-insert into superpersona values (1, 'Logan Patch','Lobezno','Canadá');
-insert into superpersona values (2, 'Peter Parker','Spider-man','Nueva York');
-insert into superpersona values (3, 'Steve Rogers','Capitán América','Nueva York');
-insert into superpersona values (4, 'Bruce Banner','Hulk','EEUU');
-insert into superpersona values (5, 'Tony Stark','Ironman','Nueva York');
-insert into superpersona values (6, 'Erik magnus','Magneto','Alemán');
-insert into superpersona values (7, 'Rocket Raccoon','Rocket','Halfworld');
-insert into superpersona values (8, 'TChalla','Black Panther','Wakanda');
-insert into superpersona values (9, 'El titán loco','Thanos','Planeta Titán');
-insert into superpersona values (10, 'Logan Patch','Lobezno','Canadá');
+insert into superpersona values (1,'Logan Patch','Lobezno','Canadá',2,'heroe');
+insert into superpersona values (2,'Peter Parker','Spider-man','Nueva York',1,'heroe');
+insert into superpersona values (3,'Steve Rogers','Capitán América','Nueva York',1,'heroe');
+insert into superpersona values (4,'Bruce Banner','Hulk','EEUU',1,'heroe');
+insert into superpersona values (5,'Tony Stark','Ironman','Nueva York',1,'heroe');
+insert into superpersona values (6,'Erik magnus','Magneto','Alemán',2,'villano');
+insert into superpersona values (7,'Rocket Raccoon','Rocket','Halfworld',3,'heroe');
+insert into superpersona values (8,'TChalla','Black Panther','Wakanda',6,'heroe');
+insert into superpersona values (9,'El titán loco','Thanos','Planeta Titán',5,'villano');
+insert into superpersona values (10,'Johny Storm','Antorcha Humana','EEUU',8,'heroe');
+
+insert into tiene values (6,1);
+insert into tiene values (8,2);
+insert into tiene values (6,3);
+insert into tiene values (5,4);
+insert into tiene values (10,5);
+insert into tiene values (2,6);
+insert into tiene values (10,7);
+insert into tiene values (5,8);
+insert into tiene values (7,9);
+insert into tiene values (3,10);
+
+//1
+alter table superpersona add edad number(4);
+//2
+alter table superpersona modify nombre varchar2(100);
+//3
+alter table superpersona rename to personaje;
+//4
+select*from personaje where composicion='heroe';
+//5
+select nombre, mote from personaje where composicion='heroe' and ciudadorigen='Nueva York';
+//6
+select nombre, equipo from personaje where composicion='heroe' and equipo is not null;
+//7
+select*from personaje where composicion='villano';
+//8
+select mote, p.nombre from personaje, tiene, superP p where personaje.id=tiene.superP and tiene.poder=p.ide and composicion='villano';
+//9
+select personaje.nombre, personaje.mote, e.nombre as equipo, p.nombre as poderes from personaje, tiene, poder where personaje.ide=tiene.super and tiene=super.ide and e.ide=personaje.equipo;
+//10
+select personaje.* from personaje, equipo where equipo.ide=personaje.equipo and equipo.nombre='Vengadores';
+//11
+select personaje.* from personaje, tiene, poderes where 
+//12
+select e.nombre, count(p.ide) from personaje p, equipo e where e.ide=p.equipo and group by e.nombre;
+//13
+select p.nombre, count(poder) as poderes from personaje p, tiene t where p.ide=t.superP group by p.nombre;
+//14
+select p.nombre, avg(poder) from personaje p, tiene t where p.ide=t.superP having avg(count(poder)) group by p.nombre;
+//15
+select superP, count(poder) from tiene, personaje where personaje.ide=tiene.superP group by nombre having count(poder)=(select min(poderes)) from(select count(poder) as poderes from tiene group by t.superP);
+//16
+select nombre, count(superP) from poderes p, tiene t where p.ide=t.poder group by nombre;
+//17
+select 
+//18
+//19
+//20
+//21
+//22
+//23
+//24
+//25
+//26
+//27
+//28
+
 
