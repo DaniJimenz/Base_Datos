@@ -1303,4 +1303,110 @@ select
 //27
 //28
 
+CREATE TABLE videojuegos
+(
+    ide NUMERIC(5) PRIMARY KEY CHECK (ide > 0),
+    titulo VARCHAR2(50) NOT NULL,
+    pegi NUMERIC(3) CHECK (pegi IN (3,7,12,16,18)),
+    id_desarrolladora NUMERIC(5),
+    
+    CONSTRAINT fk_des FOREIGN KEY (desarrollador) REFERENCES desarrolladores(ide)
+);
+
+CREATE TABLE lanzamientos
+(
+    id_juego NUMERIC(5) CHECK (ide > 0),
+    id_consola NUMERIC(5) CHECK (ide > 0),
+    fechaLanzamiento DATE,
+    
+    CONSTRAINT pk_jue PRIMARY KEY (juego, consola), 
+    CONSTRAINT pk_
+);
+
+CREATE TABLE consolas
+(
+    ide NUMERIC(5) PRIMARY KEY CHECK (ide > 0),
+    nombre VARCHAR(25) NOT NULL ,
+    desarrollador NUMERIC(2) CHECK (ide > 0),
+    fechaLanzamiento DATE NOT NULL,
+    generacion NUMERIC(1) NOT NULL,
+    
+    CONSTRAINT fk_des FOREIGN KEY (desarrollador) REFERENCES  desarrolladores(ide)
+);
+
+CREATE TABLE generos
+(
+    ide NUMERIC(4) CHECK (ide > 0),
+    nombre VARCHAR2(25) NOT NULL
+);
+
+CREATE TABLE desarrolladores
+(
+    ide NUMERIC(2) PRIMARY KEY CHECK (ide > 0),
+    nombre VARCHAR2(25) NOT NULL,
+    paisOrigen VARCHAR2(50),
+    añoFundacion NUMERIC(4)
+);
+
+INSERT INTO desarolladores VALUES (1, 'CD Projekt Red', 'Polonia', 1994);
+INSERT INTO desarolladores VALUES (2, 'Nintendo EPD', 'Japón', 1889);
+INSERT INTO desarolladores VALUES (3, 'Rockstar Games', 'Estados Unidos', 1998);
+INSERT INTO desarolladores VALUES (4, 'Mojan Studios', 'Suecia', 2009);
+INSERT INTO desarolladores VALUES (5, 'Sony Interactive', 'Japón', 1993);
+INSERT INTO desarolladores VALUES (6, 'Insomniac Games', 'Estados Unidos', 1994);
+INSERT INTO desarolladores VALUES (7, 'Microsoft', 'Estados Unidos', 1975);
+
+INSERT INTO videojuegos VALUES (1, 'Cyberpunk 2077', 18, 1);
+INSERT INTO videojuegos VALUES (2, 'The Legend of Zelda Breath of the Wild', 12, 2);
+INSERT INTO videojuegos VALUES (3, 'Read Dead Redemption 2', 18, 3);
+INSERT INTO videojuegos VALUES (4, 'Minecraft', 7, 4);
+INSERT INTO videojuegos VALUES (5, 'Spyro the Dragon', 3, 5);
+
+INSERT INTO consolas VALUES (1, 'PalyStation', 5, '03/12/1994', 5);
+INSERT INTO consolas VALUES (2, 'PalyStation 4', 5, '15/11/2013', 8);
+INSERT INTO consolas VALUES (3, 'PalyStation 5', 5, '12/11/2020', 9);
+INSERT INTO consolas VALUES (4, 'Xbox Series X', 7, '10/11/2020', 9);
+INSERT INTO consolas VALUES (5, 'Nintendo Switch', 2, '03/03/2017', 8);
+
+INSERT INTO generos VALUES (1, 'RPG');
+INSERT INTO generos VALUES (2, 'Aventura');
+INSERT INTO generos VALUES (3, 'Acción');
+INSERT INTO generos VALUES (4, 'Sandbox');
+INSERT INTO generos VALUES (5, '3rd Person Shooter');
+
+INSERT INTO juego_genero VALUES (1,1);
+INSERT INTO juego_genero VALUES (1,3);
+INSERT INTO juego_genero VALUES (1,5);
+INSERT INTO juego_genero VALUES (2,2);
+INSERT INTO juego_genero VALUES (2,3);
+INSERT INTO juego_genero VALUES (3,3);
+INSERT INTO juego_genero VALUES (3,4);
+INSERT INTO juego_genero VALUES (3,5);
+INSERT INTO juego_genero VALUES (4,4);
+INSERT INTO juego_genero VALUES (5,2);
+INSERT INTO juego_genero VALUES (5,3);
+
+INSERT INTO lanzamientos VALUES (1,2,'10/12/2020');
+INSERT INTO lanzamientos VALUES (1,3,'14/02/2022');
+INSERT INTO lanzamientos VALUES (1,4,'14/02/2022');
+INSERT INTO lanzamientos VALUES (2,5,'03/03/2017');
+INSERT INTO lanzamientos VALUES (3,2,'26/10/2018');
+INSERT INTO lanzamientos VALUES (4,2,'04/09/2014');
+INSERT INTO lanzamientos VALUES (4,5,'12/05//2017');
+INSERT INTO lanzamientos VALUES (5,1,'09/09/1998');
+
+//Consultas
+
+//5
+SELECT nombre FROM consolas WHERE fech_lanza > ANY {
+SELECT fech_lanza from consola JOIN 
+
+//1
+SELECT titulo FROM videojuegos v JOIN desarrolladores d ON v.desarrollador=d.ide WHERE pais='Japón';
+
+//2
+SELECT 
+
+
+
 
