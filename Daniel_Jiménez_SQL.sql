@@ -1405,7 +1405,45 @@ SELECT fech_lanza from consola JOIN
 SELECT titulo FROM videojuegos v JOIN desarrolladores d ON v.desarrollador=d.ide WHERE pais='Japón';
 
 //2
+SELECT titulo from videojuegos WHERE pegi > (SELECT pegi FROM videojuegos v JOIN desarrolladores d ON v.desarrolladores=d.id WHERE pais= 'Suecia';
+//4
+SELECT titulo FROM videojuego v, lanzamiento l WHERE v.
+
+//6
+SELECT genero.nombre FROM genero JOIN juego_genero ON genero.ide = juego_genero.ide_genero WHERE ide_juego IS NULL;
+
+//7
+
+//8
+SELECT nombre FROM desarolladores WHERE añoFundacion < ANY (SELECT añoFundacion FROM desarrolladores WHERE paisOrigen = 'Estados Unidos';
+
+//10
+SELECT*FROM videojuegos WHERE titulo LIKE 'The%';
+
+//11
+SELECT*FROM generos WHERE LENGTH(nombre) = 8;
+
+//12
+SELECT DISTINCT d.*,c.* FROM desarolladores d JOIN videojuegos v ON d.ide = v.ide_desarrolladora JOIN lanzamientos l ON v.ide = 1.ide_juego JOIN consolas c ON l.ide_consola = c.ide;
+
+//13
+
+//16
+ALTER TABLE consolas DROP COLUMN generacion;
+
+//17
+DELETE FROM lanzamientos WHERE ide_consola = (SELECT ide FROM consolas WHERE nombre = 'Playstation 1');
+
+//15
+SELECT c.nombre, MAX(l.fechaLanzamiento) AS ultimo_lanzamiento FROM consolas c JOIN lanzamientos l ON c.ide = l.ide_consola GROUP BY c.nombre;
+
+//14
+SELECT g.nombre, COUNT(juego) FROM generos g JOIN juego_generacion j ON g.ide=j.genero GROUP BY g.nombre;
+
+//18
 SELECT 
+
+
 
 
 
