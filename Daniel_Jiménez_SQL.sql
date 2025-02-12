@@ -1399,20 +1399,19 @@ INSERT INTO lanzamientos VALUES (5,1,'09/09/1998');
 
 //5
 SELECT nombre FROM consolas WHERE fech_lanza > ANY {
-SELECT fech_lanza from consola JOIN 
+SELECT fech_lanza from consola JOIN;
 
 //1
 SELECT titulo FROM videojuegos v JOIN desarrolladores d ON v.desarrollador=d.ide WHERE pais='Japón';
 
 //2
 SELECT titulo from videojuegos WHERE pegi > (SELECT pegi FROM videojuegos v JOIN desarrolladores d ON v.desarrolladores=d.id WHERE pais= 'Suecia';
+
 //4
 SELECT titulo FROM videojuego v, lanzamiento l WHERE v.
 
 //6
 SELECT genero.nombre FROM genero JOIN juego_genero ON genero.ide = juego_genero.ide_genero WHERE ide_juego IS NULL;
-
-//7
 
 //8
 SELECT nombre FROM desarolladores WHERE añoFundacion < ANY (SELECT añoFundacion FROM desarrolladores WHERE paisOrigen = 'Estados Unidos';
@@ -1427,6 +1426,7 @@ SELECT*FROM generos WHERE LENGTH(nombre) = 8;
 SELECT DISTINCT d.*,c.* FROM desarolladores d JOIN videojuegos v ON d.ide = v.ide_desarrolladora JOIN lanzamientos l ON v.ide = 1.ide_juego JOIN consolas c ON l.ide_consola = c.ide;
 
 //13
+SELECT v.*, COUNT(jg.ide_genero) AS num_generos FROM videojuegos v JOIN juego_genero jg ON v.ide = jg.ide_juego GROUP BY v.ide, v.titulo HAVING COUNT(jg.ide_genero) > 1;
 
 //16
 ALTER TABLE consolas DROP COLUMN generacion;
@@ -1441,7 +1441,134 @@ SELECT c.nombre, MAX(l.fechaLanzamiento) AS ultimo_lanzamiento FROM consolas c J
 SELECT g.nombre, COUNT(juego) FROM generos g JOIN juego_generacion j ON g.ide=j.genero GROUP BY g.nombre;
 
 //18
-SELECT 
+SELECT DISTINCT d.* FROM desarrolladores d JOIN videojuegos v ON d.ID = v.ide_desarrolladora WHERE v.pegi > ( SELECT AVG(v2.pegi) FROM videojuegos v2 JOIN desarrolladores d2 ON v2.ide_desarrolladora = d.ide WHERE d2.paisOrigen = d.paisOrigen );
+
+//19
+SELECT d.* FROM desarrolladores d WHERE NOT EXISTS (SELECT g.ide FROM generos g WHERE NOT EXISTS ( SELECT v.ide FROM videojuegos v JOIN juego_genero jg ON v.ID = jg.ide_juego WHERE jg.ide_genero = g.ID AND v.ide_desarrolladora = d.ide ));
+
+//20
+SELECT g.nombre, COUNT(jg.ide_juego) AS num_juegos FROM juego_genero jg JOIN videojuegos v ON jg.ide_juego = v.ide JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide JOIN generos g ON jg.ide_genero = g.ide WHERE c.generación = 9 GROUP BY g.ide, g.nombre ORDER BY num_juegos DESC;
+
+//21
+SELECT d.* FROM desarrolladores d WHERE NOT EXISTS ( SELECT g.ide FROM generos g WHERE NOT EXISTS ( SELECT v.ide FROM videojuegos v JOIN juego_genero jg ON v.ide = jg.ide_juego WHERE jg.ide_genero = g.ide AND v.ide_desarrolladora = d.ide ));
+
+//22
+SELECT v.* FROM videojuegos v JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide GROUP BY v.ide, v.titulo HAVING COUNT(DISTINCT c.generación) >= 3;
+
+//23
+SELECT v.* FROM videojuegos v WHERE NOT EXISTS (SELECT c.ide FROM consolas c JOIN desarrolladores d ON c.ide_desarrolladora = d.ide WHERE d.nombre LIKE 'Sony%' AND NOT EXISTS (SELECT l.ide_juego FROM lanzamientos l WHERE l.ide_juego = v.ide AND l.ide_consola = c.ide));
+
+//24
+SELECT c.nombre AS consolas, g.nombre AS género,
+       COUNT(jg.ide_juego) * 100.0 / (SELECT COUNT(*) FROM lanzamientos WHERE ide_consola = c.ide) AS porcentaje
+FROM lanzamientos l
+JOIN videojuegos v ON l.ide_juego = v.ide
+JOIN juego_genero jg ON v.ide = jg.ide_juego
+JOIN generos g ON jg.ide_genero = g.ide
+JOIN consolas c ON l.ide_consola = c.ide
+GROUP BY c.nombre, g.nombre;
+
+//25
+SELECT DISTINCT v.*
+FROM videojuegos v
+JOIN lanzamientos l ON v.ide = l.ide_juego
+JOIN consolas c ON l.ide_consola = c.ide
+WHERE c.fechaLanzamiento...()
+
+//26
+SELECT c.nombre AS consola, COUNT(DISTINCT jg.ide_genero) AS num_generos
+FROM consolas c
+JOIN lanzamientos l ON c.ide = l.ide_consola
+JOIN videojuegos v ON l.ide_juego = v.ide
+JOIN juego_genero jg ON v.ide = jg.ide_juego
+WHERE YEAR(l.fechaLanzamiento) = YEAR(c.fechaLanzamiento)
+GROUP BY c.ide, c.nombre;
+
+//27
+SELECT titulo FROM videojuego, desarrolladores WHERE desarrollador=desarrolladores.ide AND pais='Japón'
+UNION
+SELECT titulo FROM videojuego, desarrolladores
+WHERE desarrollador=desarrolladores.ide AND pais='Estados unidos';
+
+//28
+SELECT titulo FROM videojuego, lanzamiento, consola
+WHERE videojuego.ide=juego AND consola=consola.ide AND nombre LIKE '%PS5'
+INTERSECT
+SELECT titulo FROM videojuego, lanzamiento, consola
+WHERE videojuego.ide=juego AND consola=consola.ide AND nombre LIKE '%XBOX X';
+
+//29
+SELECT titulo FROM videojuego, lanzamiento, consola 
+WHERE videojuego.ide=juego AND consola=consola.ide AND nombre LIKE '%PS4'
+MINOS
+SELECT titulo FROM videojuego, lanzamiento, consola 
+WHERE videojuego.ide=juego AND consola=consola.ide AND nombre LIKE '%PS5';
+
+//30
+SELECT nombre FROM generos, juego_genero, videojuego
+WHERE generos.id=genero AND juego=videojuego.ide AND titulo LIKE '%Cyberppunk'
+UNION
+SELECT nombre FROM generos, juego_genero, videojuego
+WHERE generos.id=genero AND juego=videojuego.ide AND titulo LIKE '%RDR2';
+
+//31
+SELECT nombre FROM consola
+MINUS
+SELECT nombre FROM consola c, lanzamiento l, videojuego v
+WHERE c.id=consola AND juego=v.ide AND titulo LIKE '%Minecraft';
+
+//32
+SELECT titulo FROM videojuego v, desarrolladores d
+WHERE desarrollador=ide.d AND nombre LIKE '%Sony'
+UNION
+SELECT titulo FROM videojuego v, desarrolladores d
+WHERE desarrollador=ide.d AND nombre LIKE '%Nintendo';
+
+//33
+SELECT titulo FROM videojuego v, ide_desarrolladora
+WHERE desarrolladora=t.videojuego AND fechaLanzamiento = 2018
+MINUS
+SELECT titulo FROM videojuego v, ide_desarrolladora
+WHERE desarrolladora=t.videojuego AND fechaLanzamiento = 2020;
+
+//34
+SELECT nombre FROM desarrolladores d, lanzamientos l
+WHERE ide.lanzamientos=d.ide AND fechalanzamiento != '%Sandbox'
+MINUS
+
+//35
+SELECT titulo FROM videojuegos, genero, juego_genero
+WHERE videojuegos.ide=juego_genero.ide_juego AND genero.ide=juego_genero.ide_genero
+AND genero.nombre = 'Accion'
+
+UNION
+
+SELECT titulo FROM videojuegos, genero, juego_genero
+WHERE videojuegos.ide=juego_genero.ide_juego AND genero.ide=juego_genero.ide_genero
+AND genero.nombre = 'Aventura'
+
+//37
+SELECT nombres FROM generos MINUS SELECT nombre.
+
+
+//MANIPULACIÓN DE RESULTADOS//
+
+SELECT cli.nombre FROM cliente cli, compra c, productos p
+WHERE cli.dni=cliente AND prod.cod_producto.cliente AND p.nombre='Boligrafo Azul'
+INTERSECT
+SELECT cli.nombre FROM cliente cli, compra com, producto p
+WHERE cli.dni=com.cliente AND co.producto=p.cod AND p.nombre='Lápiz Negro';
+
+SELECT producto FROM oferta WHERE tienda=2 INTERSECT SELECT producto FROM oferta WHERE tienda=3;
+
+SELECT cod FROM tienda WHERE metros > 100 UNION SELECT tienda FROM oferta WHERE cod=3;
+
+SELECT* FROM trabajador 
+WHERE area = 'Caja'
+INTERSECT
+SELECT nombre FROM trabajador 
+WHERE tienda =3;
+
 
 
 
