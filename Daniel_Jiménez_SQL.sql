@@ -1569,6 +1569,123 @@ INTERSECT
 SELECT nombre FROM trabajador 
 WHERE tienda =3;
 
+//PRÁCTICA//
+
+CREATE TABLE salas 
+(
+    s VARCHAR2(3) PRIMARY KEY,
+    nombre VARCHAR2(40) NOT NULL,
+    capacidad NUMERIC(3) CHECK (capacidad BETWEEN 80 AND 300),
+    fila NUMERIC(2) NOT NULL
+);
+
+CREATE TABLE peliculas
+(
+    p VARCHAR2(3) PRIMARY KEY,
+    nombre VARCHAR2(40) NOT NULL,
+    calificacion VARCHAR2(3) CHECK (calificacion IN ('TP', 7, 18)),
+    nacionalidad VARCHAR2(30)
+);
+
+CREATE TABLE proyeccion
+(
+    sala VARCHAR2(3),
+    pelicula VARCHAR2(3),
+    hora VARCHAR2(5),
+    ocupacion NUMERIC(3) CHECK (ocupacion >=0),
+    
+    constraint pk_proyeccion PRIMARY KEY (sala, pelicula,hora),
+    constraint fk_salas_proyeccion FOREIGN KEY (sala) references salas(s),
+    constraint fk_pelicula_proyeccion FOREIGN KEY (pelicula) REFERENCES peliculas(p)
+);
+
+
+//Insertar Datos
+
+INSERT INTO salas VALUES ('S1','África',125,10);
+INSERT INTO salas VALUES ('S2','América',255,24);
+INSERT INTO salas VALUES ('S3','Europa',136,14);
+INSERT INTO salas VALUES ('S4','Asia',85,7);
+INSERT INTO salas VALUES ('S5','Oceania',100,10);
+INSERT INTO salas VALUES ('S6','Antártida',150,15);
+INSERT INTO salas VALUES ('S7','Atlántida',300,30);
+
+INSERT INTO peliculas VALUES ('P1','Minions','TP','EEUU');
+INSERT INTO peliculas VALUES ('P2','Black Panther',18,'EEUU');
+INSERT INTO peliculas VALUES ('P3','Asterix y Obelix',7,'EEUU');
+INSERT INTO peliculas VALUES ('P4','El autor',NULL,'EEUU');
+INSERT INTO peliculas VALUES ('P5','Perfectos desconocidos','18','EEUU');
+INSERT INTO peliculas VALUES ('P6','Resident Evil','18','EEUU');
+INSERT INTO peliculas VALUES ('P7','Tadeo Jones 3','TP','EEUU');
+INSERT INTO peliculas VALUES ('P8','Eiffel','7','EEUU');
+INSERT INTO peliculas VALUES ('P9','Puñales por la espalda 2','18','EEUU');
+INSERT INTO peliculas VALUES ('P10','La abuela',NULL,'EEUU');
+
+INSERT INTO proyeccion VALUES ('S1','P1','12.00',75);
+INSERT INTO proyeccion VALUES ('S1','P1','18.00',84);
+INSERT INTO proyeccion VALUES ('S1','P2','23.00',100);
+INSERT INTO proyeccion VALUES ('S2','P3','12.00',89);
+INSERT INTO proyeccion VALUES ('S2','P3','18.00',104);
+INSERT INTO proyeccion VALUES ('S2','P3','23.00',200);
+INSERT INTO proyeccion VALUES ('S3','P2','17.00',100);
+INSERT INTO proyeccion VALUES ('S3','P2','20.00',120);
+INSERT INTO proyeccion VALUES ('S4','P4','12.00',14);
+INSERT INTO proyeccion VALUES ('S4','P4','17.00',60);
+INSERT INTO proyeccion VALUES ('S4','P4','20.00',78);
+INSERT INTO proyeccion VALUES ('S4','P4','23.00',80);
+INSERT INTO proyeccion VALUES ('S1','P1','23.00',35);
+INSERT INTO proyeccion VALUES ('S5','P4','20.00',16);
+INSERT INTO proyeccion VALUES ('S3','P4','12.00',25);
+INSERT INTO proyeccion VALUES ('S5','P1','12.00',100);
+INSERT INTO proyeccion VALUES ('S5','P8','12.00',152);
+INSERT INTO proyeccion VALUES ('S5','P4','13.00',250);
+INSERT INTO proyeccion VALUES ('S6','P2','20.00',120);
+INSERT INTO proyeccion VALUES ('S6','P10','23.00',68);
+INSERT INTO proyeccion VALUES ('S6','P9','23.00',50);
+INSERT INTO proyeccion VALUES ('S4','P8','12.00',36);
+
+//Consultas
+
+//Calcular el número de entradas vendidas para cada horario de proyección(7)
+SELECT hora, sum (ocupacion) from proyeccion group by hora;
+
+//Mostrar los nombres de las películas que no se proyectan en ninguna sala(8)
+SELECT nombre FROM peliculas WHERE p NOT IN (SELECT DISTINCT pelicula FROM proyeccion); 
+
+//Mostrar la nacionalidad que más películas tiene en cartelera (que se estén proyectando)(9)
+SELECT nacionalidad FROM proyeccion WHERE pelicula ;
+
+//Mostrar todas las películas que se proyectan en horario de mañana(14)
+SELECT nombre FROM peliculas, proyeccion WHERE p=pelicula AND hora IN ('12.00','13.00');
+
+//Mostrar la sala más ocupada en la sesión de las 23.00(16)
+SELECT nombre FROM sala, proyeccion
+WHERE s=sala AND hora = '23.00' and ocupacion = (
+    SELECT MAX(ocupacion) FROM proyeccion
+    WHERE hora = '23.00');
+
+//Mostrar para cada proyección cuantas entradas quedan disponibles(20)
+SELECT ocupacion FROM proyeccion, salas WHERE ocupacion= s AND capacidad=p;
+
+//Mostrar la película con más recaudación, mostrando la recaudación total(22)
+
+//Mostrar la información de aquellas proyecciones en las que todavía hay entradas disponibles(31)
+
+//Añadir una nueva columna a las salas donde se pueda almacenar si la sala se encuentra en la planta baja o en la planta 1(35)
+
+//Cambiar el tipo de dato de la columna capacidad, ya que ahora se le debe permitir almacenar 2 decimales además de los 3 enteros que ya tenía(36)
+
+//Se necesita saber el total de personas que han usado cada sala, mostrar dicha información ordenada de menor a mayor uso(39)
+
+//Mostrar la nacionalidad de aquellas películas para las que se ha recaudado más de 2.000€(43)
+
+
+
+
+
+
+
+
 
 
 
