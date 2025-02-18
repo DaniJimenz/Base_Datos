@@ -1668,7 +1668,7 @@ WHERE s=sala AND hora = '23.00' and ocupacion = (
 SELECT ocupacion FROM proyeccion, salas WHERE ocupacion= s AND capacidad=p;
 
 //Mostrar la película con más recaudación, mostrando la recaudación total(22)
-
+SELECT 
 //Mostrar la información de aquellas proyecciones en las que todavía hay entradas disponibles(31)
 
 //Añadir una nueva columna a las salas donde se pueda almacenar si la sala se encuentra en la planta baja o en la planta 1(35)
