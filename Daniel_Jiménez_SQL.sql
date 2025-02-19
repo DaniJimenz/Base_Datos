@@ -1710,7 +1710,7 @@ SELECT pelicula, hora, ocupacion FROM proyeccion WHERE ocupacion = (SELECT MAX(o
 
 //19
 SELECT nacionalidad, COUNT() AS pelicula
-FROM peliculas                                      //No compila//
+FROM peliculas                                      //NO COMPILA//
 GROUP BY nacionalidad
 HAVING COUNT() > 2;
 //20
@@ -1731,7 +1731,7 @@ SELECT SUM(capacidad) AS capacidad_total
 FROM salas;
 //24
 SELECT t.hora, s.nombre AS sala, t.porcentaje
-FROM (                                              //Buscar como se hace//
+FROM (                                              //BUSCAR COMO SE HACE//
 SELECT pr.hora, pr.sala, pr.ocupacion, s.capacidad,
 //25
 UPDATE salas
@@ -1752,7 +1752,7 @@ SELECT pr.sala, SUM(pr.ocupacion * 6.5) AS recaudacion_sala
 FROM proyeccion pr
 GROUP BY pr.sala;
 //29
-//Mirar como se hace//
+//MIRAR COMO SE HACE//
 //30
 SELECT p.nombre, SUM(pr.ocupacion) AS total_vistas
 FROM peliculas p
@@ -1812,6 +1812,43 @@ GROUP BY sala
 HAVING SUM(ocupacion) > 300
 ) t ON s.s = t.sala;
 //42
+SELECT SUM(pr.ocupacion) AS entradas_vendidas
+FROM proyeccion pr
+JOIN peliculas p ON pr.pelicula = p.p
+WHERE p.calificacion IS NULL;
+//43
+SELECT DISTINCT p.nacionalidad
+FROM (                                  //BUSCAR COMO SE HACE//
+//44
+SELECT p.nombre, SUM(s.capacidad * 6.5) AS recaudacion_potencial
+FROM peliculas p
+JOIN proyeccion pr ON p.p = pr.pelicula
+JOIN salas s ON pr.sala = s.s
+GROUP BY p.nombre;
+//45
+//48
+ALTER TABLE proyeccion
+ADD (hora_fin VARCHAR2(5));
+//49
+ALTER TABLE salas
+MODIFY (fila NUMERIC(5));
+//50
+//51
+ALTER TABLE peliculas
+DROP COLUMN nacionalidad;
+//52
+ALTER TABLE peliculas
+ADD (duracion NUMERIC);
+//53
+UPDATE peliculas
+SET calificacion = 'NR13'
+WHERE calificacion IS NULL;
+//54
+UPDATE proyeccion
+SET hora = '12.30'
+WHERE hora = '12.00';
+
+
 
 
 
