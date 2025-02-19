@@ -1664,6 +1664,25 @@ WHERE s=sala AND hora = '23.00' and ocupacion = (
     SELECT MAX(ocupacion) FROM proyeccion
     WHERE hora = '23.00');
 
+
+//1
+SELECT nombre FROM peliculas;
+//2
+SELECT DISTINCT calificacion FROM peliculas;
+//3
+SELECT*FROM peliculas WHERE calificacion IS NULL;
+//4
+SELECT*FROM salas ORDER BY capacidad;
+//5
+SELECT*FROM salas WHERE s NOT IN (SELECT DISTINCT sala FROM proyeccion);
+//6
+SELECT s, p FROM salas s LEFT JOIN proyeccion pr ON s.S = pr.Sala LEFT JOIN PELICULAS p ON pr.Pelicula = p.P;
+//7
+SELECT ora, SUM(Ocupacion) FROM PROYECCIONES GROUP BY Hora;
+//8
+
+//9
+
 //Mostrar para cada proyección cuantas entradas quedan disponibles(20)
 SELECT ocupacion FROM proyeccion, salas WHERE ocupacion= s AND capacidad=p;
 
@@ -1678,6 +1697,121 @@ SELECT
 //Se necesita saber el total de personas que han usado cada sala, mostrar dicha información ordenada de menor a mayor uso(39)
 
 //Mostrar la nacionalidad de aquellas películas para las que se ha recaudado más de 2.000€(43)
+
+//14
+SELECT DISTINCT p.nombre FROM peliculas p JOIN proyeccion pr ON p.P = pr.pelicula WHERE pr.hora <= '12.00';
+//15
+SELECT * FROM salas WHERE s NOT IN (SELECT sala FROM PROYECCION WHERE hora = '12.00');
+//16
+SELECT sala, ocupacion FROM proyeccion WHERE hora = '23.00' AND ocupacion = (SELECT MAX(ocupacion) FROM proyeccion WHERE hora = '23.00');
+//17
+SELECT pelicula, hora, ocupacion FROM proyeccion WHERE ocupacion = (SELECT MAX(ocupacion) FROM PROYECCION);
+//18
+
+//19
+SELECT nacionalidad, COUNT() AS pelicula
+FROM peliculas                                      //No compila//
+GROUP BY nacionalidad
+HAVING COUNT() > 2;
+//20
+SELECT pr.sala, pr.pelicula, pr.hora, (s.capacidad - pr.ocupacion) AS entradas_disponibles
+FROM proyeccion pr
+JOIN salas s ON pr.sala = s.s;
+//21
+SELECT SUM(Ocupacion * 6.5) AS Beneficio_Total FROM PROYECCIONES;
+//22
+SELECT p.nombre, SUM(pr.ocupacion * 6.5) AS recaudacion_total
+FROM peliculas p
+JOIN proyeccion pr ON p.p = pr.pelicula
+GROUP BY p.nombre
+ORDER BY recaudacion_total DESC
+FETCH FIRST 1 ROW ONLY;
+//23
+SELECT SUM(capacidad) AS capacidad_total
+FROM salas;
+//24
+SELECT t.hora, s.nombre AS sala, t.porcentaje
+FROM (                                              //Buscar como se hace//
+SELECT pr.hora, pr.sala, pr.ocupacion, s.capacidad,
+//25
+UPDATE salas
+SET capacidad = 200
+WHERE s = 'S3';
+//26
+SELECT pr., p.
+FROM proyeccion pr
+JOIN peliculas p ON pr.pelicula = p.p;
+//27
+SELECT p.nombre, COUNT(*) AS veces_proyectada
+FROM peliculas p
+JOIN proyeccion pr ON p.p = pr.pelicula
+GROUP BY p.nombre
+ORDER BY veces_proyectada DESC;
+//28
+SELECT pr.sala, SUM(pr.ocupacion * 6.5) AS recaudacion_sala
+FROM proyeccion pr
+GROUP BY pr.sala;
+//29
+//Mirar como se hace//
+//30
+SELECT p.nombre, SUM(pr.ocupacion) AS total_vistas
+FROM peliculas p
+JOIN proyeccion pr ON p.p = pr.pelicula
+GROUP BY p.nombre
+ORDER BY total_vistas DESC;
+//31
+SELECT pr.*
+FROM proyeccion pr
+JOIN salas s ON pr.sala = s.s
+WHERE (s.capacidad - pr.ocupacion) > 0;
+//32
+SELECT pr.sala, pr.pelicula, pr.hora, (s.capacidad - pr.ocupacion) AS entradas_disponibles
+FROM proyeccion pr
+JOIN salas s ON pr.sala = s.s;
+//33
+SELECT pr.*
+FROM proyeccion pr
+JOIN peliculas p ON pr.pelicula = p.p
+WHERE p.calificacion IS NULL;
+//34
+ALTER TABLE peliculas
+ADD (precio_entrada NUMERIC(5,2));
+//35
+ALTER TABLE salas
+ADD (planta VARCHAR2(20));
+//36
+ALTER TABLE salas
+MODIFY (capacidad NUMERIC(5,2));
+//37
+UPDATE proyeccion
+SET ocupacion = ocupacion + 15
+WHERE sala = 'S1'
+AND pelicula = 'P1'
+AND hora = '12.00';
+//38
+INSERT INTO proyeccion
+VALUES ('S4','P4','00.00',0);
+//39
+SELECT sala, SUM(ocupacion) AS total_uso
+FROM proyeccion
+GROUP BY sala
+ORDER BY total_uso;
+//40
+SELECT pr.sala, pr.pelicula, pr.hora, (s.capacidad - pr.ocupacion) AS entradas_disponibles
+FROM proyeccion pr
+JOIN salas s ON pr.sala = s.s
+WHERE (s.capacidad - pr.ocupacion) > 0
+ORDER BY entradas_disponibles DESC;
+//41
+SELECT s.*
+FROM salas s
+JOIN (
+SELECT sala, SUM(ocupacion) AS total
+FROM proyeccion
+GROUP BY sala
+HAVING SUM(ocupacion) > 300
+) t ON s.s = t.sala;
+//42
 
 
 
