@@ -1849,13 +1849,116 @@ SET hora = '12.30'
 WHERE hora = '12.00';
 
 
+CREATE TABLE jugador
+(
+    id NUMERIC(2) PRIMARY KEY,
+    nombre VARCHAR2(20),
+    nick VARCHAR2(20),
+    edad NUMERIC(3) CHECK (edad >= 18)
+);
+
+CREATE TABLE categoria
+(
+    codigo VARCHAR2(1) PRIMARY KEY,
+    descripcion VARCHAR2(20)
+);
+
+CREATE TABLE personaje
+(
+    id NUMERIC(2) PRIMARY KEY,
+    nombre_pers VARCHAR2(20) NOT NULL,
+    tipo VARCHAR2(1) NOT NULL,
+    nivel NUMERIC(2) DEFAULT(1),
+    fecha_creacion DATE
+);
+
+CREATE TABLE controlan
+(
+    jugador NUMERIC(2),
+    personaje NUMERIC(2),
+    fecha_ini DATE,
+    fecha_fin DATE,
+    
+    CONSTRAINT pk_controla PRIMARY KEY (jugador, personaje),
+    CONSTRAINT fk_jugador FOREIGN KEY (jugador) REFERENCES jugador(id),
+    CONSTRAINT fk_personaje FOREIGN KEY (personaje) REFERENCES personaje(id)
+);
+
+
+INSERT INTO jugador VALUES (1, 'Maria', 'Mari', 18);
+INSERT INTO jugador VALUES (2, 'Maria', 'Juanito', 23;
+INSERT INTO jugador VALUES (3, 'Maria', 'Pepe', 19;
+INSERT INTO jugador VALUES (4, 'Maria', 'Rodri', 21;
+INSERT INTO jugador VALUES (5, 'Maria', 'Feli', 27;
+INSERT INTO jugador VALUES (6 'Maria', 'Helena23', 33)
+INSERT INTO jugador VALUES (8 'Maria', 'Nacho', 25);
+INSERT INTO jugador VALUES (8 'Óscar','Ricto', 25;
+
+INSERT INTO categoria VALUES ('H', 'Humano');
+INSERT INTO categoria VALUES ('E', 'Elfo');
+INSERT INTO categoria VALUES ('N', 'Enano');
+INSERT INTO categoria VALUES ('G', 'Gnomo');
+INSERT INTO categoria VALUES ('M', 'Mediano');
+INSERT INTO categoria VALUES ('S', 'Semielfo');
+INSERT INTO categoria VALUES ('O', 'Orco');
+
+INSERT INTO personaje VALUES (1,'Nhezar Pikei','H',3 , '12/01/2021');
+INSERT INTO personaje VALUES (2 ,'Eikhud Nennein','H',2 , '30/12/2020');
+INSERT INTO personaje VALUES (3 ,'Debrulm Nightsun','H',3 , '21/12/2020');
+INSERT INTO personaje VALUES (5 ,'Noa Farrowslayer','H',5 , '05/01/2021');
+INSERT INTO personaje VALUES (6 ,'Caranthir','E',2 , '23/12/2020');
+INSERT INTO personaje VALUES (7 ,'Curufin','E',1 , '30/11/2020');
+INSERT INTO personaje VALUES (8 ,'Legolas','E',4 , '25/12/2020');
+INSERT INTO personaje VALUES (9 ,'Umnar','N',3 , '12/01/2021');
+INSERT INTO personaje VALUES (10 ,'Toradin','N',3 , '21/12/2020');
+INSERT INTO personaje VALUES (11 ,'Gramkyl','N',1 , '05/01/2021');
+INSERT INTO personaje VALUES (12 ,'Mancryn','G',1 , '23/12/2020');
+INSERT INTO personaje VALUES (13 ,'Kasver','G',5 , '07/01/2021');
+INSERT INTO personaje VALUES (14 ,'Sinfiz','G',7 , '13/01/2021');
+
+INSERT INTO controla VALUES (1 ,1 ,'12/01/2024','14/01/2024');
+INSERT INTO controla VALUES (2 , 1,'15/01/2024','21/01/2024');
+INSERT INTO controla VALUES (8 , 1,'22/01/2024',null);
+INSERT INTO controla VALUES (3 , 2,'30/12/2023','02/01/2024');
+INSERT INTO controla VALUES (4 , 2,'03/01/2024',null);
+INSERT INTO controla VALUES (6 , 3,'21/12/2023','27/12/2023');
+INSERT INTO controla VALUES (7 , 3,'01/01/2024','01/01/2024');
+INSERT INTO controla VALUES (2 , 3,'02/01/2024','15/01/2024');
+INSERT INTO controla VALUES (1 , 3,'16/01/2024',null);
+INSERT INTO controla VALUES (7 , 4,'05/01/2024','06/01/2024');
+INSERT INTO controla VALUES (2 , 4,'07/01/2024','15/01/2024');
+INSERT INTO controla VALUES (3 , 4,'16/01/2024',null);
+INSERT INTO controla VALUES (4 , 5,'23/12/2023','29/12/2023');
+INSERT INTO controla VALUES (8 , 5,'30/11/2023',null);
+INSERT INTO controla VALUES (1 , 6,'30/11/2023','30/12/2023');
+INSERT INTO controla VALUES (3 , 6,'31/12/2023',null);
+INSERT INTO controla VALUES (4 , 7,'12/01/2023',null);
+INSERT INTO controla VALUES (2 , 7,'21/12/2023',null);
+INSERT INTO controla VALUES (2 , 8,'05/01/2023',null);
+INSERT INTO controla VALUES (8 , 9,'23/12/2023','29/12/2023');
+INSERT INTO controla VALUES (1 , 10,'30/12/2023',null);
+INSERT INTO controla VALUES (3 , 11,'07/01/2024','08/01/2024');
+INSERT INTO controla VALUES (6 , 11,'09/01/2024','08/01/2024');
+INSERT INTO controla VALUES (1 , 12,'30/11/2023','25/12/2023');
+INSERT INTO controla VALUES (7 , 12,'30/12/2023',null);
+
+
+// Mostrar por pantalla el Nick de todos los jugadores menores de 20 años
+
+SELECT nombre FROM jugador WHERE edad =< 20;
+
+//Mostrar por pantalla el nombre de los personajes que han sido controlados alguna vez por el jugador con nick “mari”
+
+SELECT nombre_pers FROM jugador WHERE;
+
+//Mostrar por pantalla el Nick de aquellos jugadores que alguna vez han controlado un personaje “enano”
+
+SELECT*FROM nombre.jugador FROM;
 
 
 
 
-
-
-
+SELECT * FROM controlan;
 
 
 
