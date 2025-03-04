@@ -1956,13 +1956,42 @@ SELECT nombre_pers FROM jugador WHERE;
 SELECT*FROM nombre.jugador FROM;
 
 
-
-
 SELECT * FROM controlan;
 
 
 
+DECLARE 
+    nom_sala VARCHAR2(30);
+    cap_sala sala.capacidad%TYPE;
+BEGIN
+    SELECT nombre, capacidad INTO nom_sala, cap_sala FROM sala WHERE s='s3';
+    
+    DBMS_OUTPUT.put_line('Nombre de la sala 3: '||nom_sala)
+    DBMS_OUTPUT.put_line('Capacidad de la sala: '||cap_sala);
+END;
 
+DECLARE 
+    d_pelicula peliculas%ROWTYPE;    
+BEGIN
+    SELECT peliculas.* INTO pelicula FROM peliculas JOIN proyeccion
+    WHERE sala='s4' AND hora ='20.00';
+    
+    DBMS_OUTPUT.put_line('Nombre de la sala: '||sala);
+    DBMS_OUTPUT.put_line('Horario: '||hora);
+END;
 
+DECLARE
+    d_sala salas%ROWTYPE;
+BEGIN
+    SELECT salas.* INTO datos_sala FROM salas JOIN proyecciones ON salas.proyecciones.sala
+    JOIN peliculas ON peliculas.proyecciones.pelicula
+    WHERE peliculas.nombre= 'El autor' AND hora= '17.00';
+    
+    
+    
+    
+    
+    
+    
 
 
