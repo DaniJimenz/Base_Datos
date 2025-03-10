@@ -1613,13 +1613,13 @@ INSERT INTO salas VALUES ('S7','Atlántida',300,30);
 INSERT INTO peliculas VALUES ('P1','Minions','TP','EEUU');
 INSERT INTO peliculas VALUES ('P2','Black Panther',18,'EEUU');
 INSERT INTO peliculas VALUES ('P3','Asterix y Obelix',7,'EEUU');
-INSERT INTO peliculas VALUES ('P4','El autor',NULL,'EEUU');
-INSERT INTO peliculas VALUES ('P5','Perfectos desconocidos','18','EEUU');
+INSERT INTO peliculas VALUES ('P4','El autor',NULL,'ESPAÑA');
+INSERT INTO peliculas VALUES ('P5','Perfectos desconocidos','18','ESPAÑA');
 INSERT INTO peliculas VALUES ('P6','Resident Evil','18','EEUU');
-INSERT INTO peliculas VALUES ('P7','Tadeo Jones 3','TP','EEUU');
+INSERT INTO peliculas VALUES ('P7','Tadeo Jones 3','TP','ESPAÑA');
 INSERT INTO peliculas VALUES ('P8','Eiffel','7','EEUU');
 INSERT INTO peliculas VALUES ('P9','Puñales por la espalda 2','18','EEUU');
-INSERT INTO peliculas VALUES ('P10','La abuela',NULL,'EEUU');
+INSERT INTO peliculas VALUES ('P10','La abuela',NULL,'ESPAÑA');
 
 INSERT INTO proyeccion VALUES ('S1','P1','12.00',75);
 INSERT INTO proyeccion VALUES ('S1','P1','18.00',84);
@@ -1987,9 +1987,72 @@ BEGIN
     JOIN peliculas ON peliculas.proyecciones.pelicula
     WHERE peliculas.nombre= 'El autor' AND hora= '17.00';
     
+DECLARE
+    capacidad salas.capacidad%TYPE;
+    ocupacion proyeccion.ocupacion%TYPE;
+BEGIN
+    SELECT capacidad INTO capacidad
+    FROM salas 
+    WHERE s = 's4';
+
+    SELECT ocupacion INTO ocupacion
+    FROM proyeccion 
+    WHERE sala = 's4' AND pelicula = 'p4' AND hora = '20.00';
     
+    IF ocupacion = capacidad THEN
+    DBMS_OUTPUT.put_line ('LA SALA 4 ESTÁ LLENA PARA LA PELÍCULA P4 A LAS 20.00')
+    ELSE
+    DBMS_OUTPUT.put_line ('LA SALA 4 NO ESTÁ LLENA PARA LA PELÍCULA P4 A LAS 20.00')
+    END IF;
+END;
     
+ACCEPT numero PROMPT ('Introduce un número');
+
+BEGIN 
+    IF(&numero>0) THEN 
+        DBMS_OUTPUT.put_line ('Es positivo');
+    ELSE 
+         DBMS_OUTPUT.put_line ('Es negativo');
+    END IF;
+END;
+
+DECLARE
+    capacidad salas.capacidad%TYPE; 
+    ocupacion proyeccion.ocupacion%TYPE;
+    disponibles NUMBER;
+BEGIN
+    SELECT capacidad INTO capacidad
+    FROM salas s
+    JOIN proyeccion p ON s.s = p.sala
+    WHERE p.pelicula = 'P3' AND p.hora = '18.00';
     
+    SELECT ocupacion INTO ocupacion
+    FROM proyeccion
+    WHERE pelicula = 'P3' AND p.hora = '18.00';
+
+    IF disponibles > 10 THEN 
+    DBMS_OUTPUT.put_line ('Quedan más de 10 entradas')
+    ELSE
+    DBMS_OUTPUT.put_line ('Quedan menos de 10 entradas')
+    END IF;
+END;
+    
+ACCEPT titulo prompt 'Elige una pelicula';
+
+DECLARE
+    pais pelicula.nacionalidad%TYPE;
+    datos_p pelicula%ROWTYPE;
+BEGIN
+    SELECT nacionalidad INTO pais 
+    FROM peliculas
+    WHERE = 'ESPAÑA';
+
+    IF (&nacionalidad = 'ESPAÑA') THEN
+     DBMS_OUTPUT.put_line ('ES NACIONAL')
+    ELSE 
+     DBMS_OUTPUT.put_line ('NO ES NACIONAL')
+    END IF;
+END;
     
     
     
