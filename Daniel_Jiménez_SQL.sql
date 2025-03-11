@@ -2053,8 +2053,30 @@ BEGIN
      DBMS_OUTPUT.put_line ('NO ES NACIONAL')
     END IF;
 END;
+
+
+DECLARE 
+    contador NUMBER(2) := 0  ;
+BEGIN 
+    WHILE (contador < 10) LOOP
+    contador := contador+1;
+    DBMS_OUTPUT.put_line (Contador);
+    END LOOP;
+END;
     
+ACCEPT nume1 PROMPT 'Introduce el primer número';
+ACCEPT nume2 PROMPT 'Introduce el segundo número';
+
+DECLARE 
+    contador NUMBER := &nume1;
+BEGIN
+    WHILE (contador < &nume2)LOOP
+    contador : contador+1;
+    DBMS_OUTPUT.put_line (contador);
+    END LOOP;
+END;
     
+
     
 
 
