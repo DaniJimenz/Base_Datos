@@ -2076,6 +2076,61 @@ BEGIN
     END LOOP;
 END;
     
+ACCEPT nume1 PROMPT 'Numerito 1';
+ACCEPT nume2 PROMPT 'Numerito 2';
+
+DECLARE
+    contador1 NUMBER :=&nume1;
+    contador2 NUMBER :=&nume2;
+BEGIN
+    IF (contador1>contador2) THEN
+    WHILE (contador2<contador1)
+    LOOP
+    contador1 :=contador1 - 1;
+    DBMS_OUTPUT.put_line (contador1);
+    END IF;
+END;
+
+DECLARE
+    datos_s salas%ROWTYPE;
+    n NUMBER;
+    i NUMBER :=1;
+BEGIN
+    SELECT COUNT(s) INTO n 
+    FROM salas;
+    LOOP
+    SELECT*INTO data_s 
+    FROM salas
+    WHERE s = i;
+     DBMS_OUTPUT.put_line ();
+     DBMS_OUTPUT.put_line ();
+    END LOOP;
+END;
+
+DECLARE 
+    datos_s salas%ROWTYPE;
+    n NUMBER;
+BEGIN
+
+ACCEPT sala PROMPT 'salas';
+
+DECLARE 
+    suma NUMBER := 0;
+BEGIN
+    for i IN (SELECT ocupacion INTO i 
+    FROM proyecciones 
+    WHERE sala = &sala)
+    LOOP
+        suma :=suma +i.ocupacion;
+    END LOOP;
+        DBMS_OUTPUT.put_line (suma);
+    END;
+    
+        
+    
+    
+
+
 
     
 
