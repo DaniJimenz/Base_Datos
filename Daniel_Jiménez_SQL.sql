@@ -3287,6 +3287,9 @@ BEGIN
     SELECT nombrecliente INTO nombre FROM clientes
     WHERE codigocliente = '&codigo';
     DBMS_OUTPUT.put_line ('El nombre del cliente con código ' || &codigo || ' es ' || nombre);
+EXCEPTION
+    WHEN no_data_found THEN
+        DBMS_OUTPUT.put_line ('No se ha encontrado  el cliente');
 END;
 
 
@@ -3349,7 +3352,7 @@ BEGIN
 END;
 
 // Mostrar el nombre de un cliente dado su código. Controla en caso de
-que nou se encuentre, mostrando un mensaje por ejemplo //
+//que nou se encuentre, mostrando un mensaje por ejemplo //
 
 
 ACCEPT codigo PROMPT 'Introduce el codigo del pedido';
@@ -3357,9 +3360,63 @@ DECLARE
     precio detallepedidos.preciounidad%TYPE;
     canti detallepedidos.cantidad%TYPE;
 SELECT cantidad, preciounidad FROM detallepedidos   
-    WHERE poch('|| &type || ' es ' || 
+    WHERE poch('|| &type || ' es ' || es ');
+    
+//Realizar una función que devuelva la suma de pagos que ha realizado
+//un cliente. Pasa el código por teclado. Controla en caso de que no se
+//encuentre, en ese caso devuelve un -1.
+
+ACCEPT codigo PROMPT 'Introduce el codigo';
+
+DECLARE
+    suma pagos.cantidad%ROWTYPE;
+SELECT
+    SELECT SUM(cantidad) INTO 
+    
+//Muestra todos los clientes que no hayan hecho pagos. Hazlo con un loop.
+
+DECLARE 
+    FOR i IN(SELECT nombrecliente FROM clientes WHERE codigocliente NOT IN (SELECT codigocliente FROM pagos) LOOP
+    DBMS_OUTPUT.put_line ( 'Los clientes que nou han pagado' || &codigo || 'son ' || i);  
+    END LOOP;
+END;
+
+//Haz un procedimiento para modificar el precio de venta de los productos.
+//Se le pedirá al usuario un precio. En caso de que el producto tenga su
+//precio a nulo, se actualizará asignándole la cantidad introducida. En
+//caso contrario se le sumará al precio existente.
+
+ACCEPT precio PROMPT 'Introduce el ID del producto';
+ACCEPT precio PROMPT 'Introduce el precio del producto';
+
+DECLARE
+    p productos.precioventa%TYPE;
+BEGIN
+    SELECT precioventa INTO p FROM productos WHERE codigoproducto LIKE '%produc%';
+    IF (p IS NULL) THEN
+    UPDATE productos SET precioventa = &precio WHERE codigoproducto LIKE '%produc%';
+    ELSE
+    UPDATE productos SET precioventa = precioventa + &precio WHERE codigoproducto LIKE '%produc%';
+    END IF;
+END;
+
+
+//Haz un procedimiento para insertar nuevos productos. Se le pedirá al usuario una
+//cantidad y un proveedor. Se insertarán nuevos productos en la tabla,
+//insertando los códigos desde el último utilizado hasta la cantidad
+//indicada por el usuario.
+
+
+
+
+
+
     
 
+     
+
+
+    
 
 
 
