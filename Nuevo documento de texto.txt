@@ -1,0 +1,7 @@
+1. 1010 - 10		1.1101			1.1011			1.Hola
+2. 11011 - 27		2.111111		2.11001			2.Code
+3. 100101 - 37		3.10000000		3.10101			3.Hello
+4. 111111 - 63		4.11111111		4.110000		4.Binary
+5. 1010101 - 85		5.10.000.000.000	5.1011101		5.Test
+
+Binario a Decimal	Decimal a Binario	Sumas de Binario	Binario a ASCII  

@@ -3407,6 +3407,34 @@ END;
 //indicada por el usuario.
 
 
+//12.Haz un para insertar nuevos productos. Se le pedirá al usuario una
+//cantidad y un proveedor. Se insertarán nuevos productos en la tabla,
+//insertando los códigos desde el último utilizado hasta la cantidad
+//indicada por el usuario.
+ACCEPT nom PROMPT "Introduce el nombre del cliente"
+ACCEPT prod1 PROMPT "Introduce el nombre del primer producto"
+ACCEPT prod2 PROMPT "Introduce el nombre del segundo producto"
+ACCEPT prod3 PROMPT "Introduce el nombre del tercer producto"
+
+DECLARE 
+    codp pedidos.codigopedido%TYPE;
+    nump NUMBER(1) >= 0;
+    codcli clientes.codigocliente%TYPE;
+    codpr1 productos.codigoproducto%TYPE;
+    codpr2 productos.codigoproducto%TYPE;
+    codpr3 productos.codigoproducto%TYPE;
+BEGIN
+    SELECT MAX(codigopedido)+1 INTO codp FROM pedidos;
+    SELECT codigocliente INTO codcli FROM clientes WHERE nombrecliente LIKE '&nomcli&' ON nombre JOIN '&nomcli&';
+
+END;
+    
+    INSERT INTO productos VALUES (
+    
+    
+    
+    
+    
 
 
 
