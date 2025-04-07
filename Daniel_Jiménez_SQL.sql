@@ -1,7 +1,7 @@
 CREATE TABLE Estrella 
 (
     Nombre VARCHAR2(50) PRIMARY KEY,
-    DirecciÛn VARCHAR2(100) NOT NULL UNIQUE,
+    DirecciÔøΩn VARCHAR2(100) NOT NULL UNIQUE,
     Sexo VARCHAR2(1) CHECK (Sexo IN ('H', 'M')),
     Fecha_Nacimiento Date 
 );
@@ -9,14 +9,14 @@ CREATE TABLE Estrella
 CREATE TABLE Estudio
 (
   Nombre VARCHAR2(50) PRIMARY KEY,
-  DirecciÛn VARCHAR2(100) NOT NULL UNIQUE
+  DirecciÔøΩn VARCHAR2(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE PelÌcula
+CREATE TABLE PelÔøΩcula
 (
     Titulo VARCHAR2(50),
     Anio NUMBER(4,0), CHECK (anio > 1900),
-    DuraciÛn NUMERIC(3,0),
+    DuraciÔøΩn NUMERIC(3,0),
     Nombre_Estudio VARCHAR2(50),
     
     CONSTRAINT pk_peli PRIMARY KEY(Titulo, anio),
@@ -164,7 +164,7 @@ CREATE TABLE estacion
 (
     id_estacion NUMBER (5) PRIMARY KEY,
     horario VARCHAR2 (5) NOT NULL,
-    direcciÛn VARCHAR (20) NOT NULL
+    direcciÔøΩn VARCHAR (20) NOT NULL
 );
 CREATE TABLE recorridos
 (
@@ -266,13 +266,13 @@ ALTER TABLE productos MODIFY
 AFTER TABLE 
 
 INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
-('11111111Z', 'LucÌa', '12/07/2002', 'Granada', 'M');
+('11111111Z', 'LucÔøΩa', '12/07/2002', 'Granada', 'M');
 INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
-('22222222B', 'MÛnica', '18/12/2008', 'JaÈn', 'M');
+('22222222B', 'MÔøΩnica', '18/12/2008', 'JaÔøΩn', 'M');
 INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
 ('12345678C', 'Luis', '03/01/2005', 'Granada', 'H');
 INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
-('33333333R', 'CÈsar', '08/09/2003', 'Granada', 'H');
+('33333333R', 'CÔøΩsar', '08/09/2003', 'Granada', 'H');
 INSERT INTO clientes (dni, nombre, fecha_nac, direccion, sexo) VALUES 
 ('55555555T', 'Roberto', '24/11/2008', 'Granada', 'H');
 
@@ -283,9 +283,9 @@ ALTER TABLE producto
 MODIFY precio NULL;
 
 INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
-(1, 'L·piz negro', 100, 0.75, '1');
+(1, 'LÔøΩpiz negro', 100, 0.75, '1');
 INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
-(2, 'BolÌgrafo azul', 85, NULL, '1');
+(2, 'BolÔøΩgrafo azul', 85, NULL, '1');
 INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
 (3, 'Libreta A4', 60, 1.75, '2');
 INSERT INTO productos (cod_prod, nombre, stock, precio, tipo) VALUES
@@ -327,7 +327,7 @@ INSERT INTO compras (cliente, producto, fecha, cantidad) VALUES
 ('12345678C', 4, '02/11/2023', 2);
 
 DELETE FROM compras;
-DELETE FROM clientes WHERE direccion= 'M·laga';
+DELETE FROM clientes WHERE direccion= 'MÔøΩlaga';
 DELETE FROM productos WHERE precio<1;
 DELETE FROM cliente WHERE sexo= 'H';
 DELETE FROM productos; 
@@ -342,7 +342,7 @@ WHERE dni='11111111Z';
 UPDATE producto
 SET precio=1.25
 stock = 125
-WHERE nombre='BolÌgrafo azul';
+WHERE nombre='BolÔøΩgrafo azul';
 
 UPDATE clientes
 SET direccion='Malaga'
@@ -484,7 +484,7 @@ SELECT nombres.clientes, compras.* FROM clientes, compras WHERE clientes.dni=cli
 SELECT tienda.* FROM tienda,oferta,producto WHERE precio IS NULL AND tienda.cod=oferta.tienda AND oferta.producto=producto.cod;
 SELECT nombre.productos, productos.precio FROM oferta, productos WHERE productos.cod_prod=producto.oferta AND producto.tipo=2;
 SELECT DISTINCT clientes.* FROM clientes, compras, productos WHERE productos.cod_prod=producto.compras AND compras.clientes=clientes.DNI AND productos.nombre='Boligrafo Azul' ORDER BY clientes.fech_nac;
-SELECT clientes.nombre, precio.cantidad*1.21 FROM clientes, compras, productos WHERE productos.cod_prod= compras.producto AND compras.clientes=clientes.DNI AND clientes.direccion='M·laga'; 
+SELECT clientes.nombre, precio.cantidad*1.21 FROM clientes, compras, productos WHERE productos.cod_prod= compras.producto AND compras.clientes=clientes.DNI AND clientes.direccion='MÔøΩlaga'; 
 SELECT DISTINCT cliente.nombre FROM cliente,producto, compra WHERE dni=compra.cliente AND producto.cod=compra.producto AND precio IS NOT NULL;
 SELECT oferta.codigo, oferta.tienda, producto.nombre, trabajador.nombre, oferta.tipo, inicio,fin
 FROM oferta, trabajador, tienda, producto
@@ -506,16 +506,16 @@ CREATE TABLE persona
     tlf VARCHAR2(10) UNIQUE
 );
 
-CREATE TABLE dueÒos
+CREATE TABLE dueÔøΩos
 (
     matricula VARCHAR2(10),
     persona NUMERIC(3),
     f_ini DATE NOT NULL,
     f_fin DATE,
     
-    CONSTRAINT pk_dueÒos PRIMARY KEY(matricula, persona),
-    CONSTRAINT fk_dueÒos_coche FOREIGN KEY (matrÌcula) REFERENCES coche(matricula),
-    CONSTRAINT fk_dueÒos_persona FOREIGN KEY (persona) REFERENCES persona(id)
+    CONSTRAINT pk_dueÔøΩos PRIMARY KEY(matricula, persona),
+    CONSTRAINT fk_dueÔøΩos_coche FOREIGN KEY (matrÔøΩcula) REFERENCES coche(matricula),
+    CONSTRAINT fk_dueÔøΩos_persona FOREIGN KEY (persona) REFERENCES persona(id)
 );
 
 INSERT INTO coche (matricula, modelo, marca, color) VALUES ('1111AAA', 'Civic', 'Honda', 'Rojo');
@@ -529,39 +529,39 @@ INSERT INTO coche (matricula, modelo, marca, color) VALUES ('8888HHH', 'Malibu',
 INSERT INTO coche (matricula, modelo, marca, color) VALUES ('9999III', 'Sentra', 'Nissan', 'Negro');
 INSERT INTO coche (matricula, modelo, marca, color) VALUES ('1010JJJ', 'Altina', 'Nissan', 'Negro');
 
-INSERT INTO persona (id,nombre,tlf) VALUES (1, 'Juan PÈrez', 612345678);
-INSERT INTO persona (id,nombre,tlf) VALUES (2, 'MarÌa RodrÌguez', 655432189);
-INSERT INTO persona (id,nombre,tlf) VALUES (3, 'Carlos LÛpez', 699876543);
-INSERT INTO persona (id,nombre,tlf) VALUES (4, 'Ana MartÌnez', 667123456);
-INSERT INTO persona (id,nombre,tlf) VALUES (5, 'Pedro GarcÌa', 688987654);
+INSERT INTO persona (id,nombre,tlf) VALUES (1, 'Juan PÔøΩrez', 612345678);
+INSERT INTO persona (id,nombre,tlf) VALUES (2, 'MarÔøΩa RodrÔøΩguez', 655432189);
+INSERT INTO persona (id,nombre,tlf) VALUES (3, 'Carlos LÔøΩpez', 699876543);
+INSERT INTO persona (id,nombre,tlf) VALUES (4, 'Ana MartÔøΩnez', 667123456);
+INSERT INTO persona (id,nombre,tlf) VALUES (5, 'Pedro GarcÔøΩa', 688987654);
 
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 1, '01/01/2023', '15/05/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 2, '10/05/2022', '28/02/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 3, '15/12/2022', '20/09/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 4, '05/03/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 5, '20/08/2022', '10/01/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('6666FFF', 1, '01/04/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('7777GGG', 2, '25/06/2022', '18/04/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('8888HHH', 3, '30/11/2022', '12/07/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('9999III', 4, '10/02/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('1010JJJ', 5, '15/09/2022', '22/03/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 2, '20/05/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 3, '10/03/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 4, '05/10/2023', null);
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 5, '20/01/2023', '08/11/2023');
-INSERT INTO dueÒos (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 1, '15/04/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 1, '01/01/2023', '15/05/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 2, '10/05/2022', '28/02/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 3, '15/12/2022', '20/09/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 4, '05/03/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 5, '20/08/2022', '10/01/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('6666FFF', 1, '01/04/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('7777GGG', 2, '25/06/2022', '18/04/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('8888HHH', 3, '30/11/2022', '12/07/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('9999III', 4, '10/02/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('1010JJJ', 5, '15/09/2022', '22/03/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('1111AAA', 2, '20/05/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('2222BBB', 3, '10/03/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('3333CCC', 4, '05/10/2023', null);
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('4444DDD', 5, '20/01/2023', '08/11/2023');
+INSERT INTO dueÔøΩos (matricula, persona, f_ini, f_fin) VALUES ('5555EEE', 1, '15/04/2023', null);
 
 SELECT nombre FROM persona;
-SELECT tlf FROM persona WHERE nombre = 'Juan PÈrez';
-SELECT persona FROM dueÒo WHERE matricula = '1111AAA' AND f_fin IS NULL;
+SELECT tlf FROM persona WHERE nombre = 'Juan PÔøΩrez';
+SELECT persona FROM dueÔøΩo WHERE matricula = '1111AAA' AND f_fin IS NULL;
 SELECT DISTINCT color FROM coche WHERE marca = 'Honda';
 SELECT marca, modelo FROM coche ORDER BY marca; 
 
-SELECT nombre FROM dueÒo, persona WHERE dueÒo.persona=persona.id AND f_fin IS NULL; 
+SELECT nombre FROM dueÔøΩo, persona WHERE dueÔøΩo.persona=persona.id AND f_fin IS NULL; 
 SELECT matricula, f_ini FROM coche, persona WHERE nombre.persona = 'Carlos Lopez';
-SELECT f_ini FROM coche, dueÒo WHERE color.coche = 'Rojo';
-SELECT color FROM coche, persona WHERE nombre.persona = 'Ana MartÌnez';
-SELECT nombre FROM dueÒo, coche, persona WHERE dueÒo.matricula=coche.matricula
+SELECT f_ini FROM coche, dueÔøΩo WHERE color.coche = 'Rojo';
+SELECT color FROM coche, persona WHERE nombre.persona = 'Ana MartÔøΩnez';
+SELECT nombre FROM dueÔøΩo, coche, persona WHERE dueÔøΩo.matricula=coche.matricula
 
 CREATE TABLE pokemon
 (
@@ -684,7 +684,7 @@ INSERT INTO ataques VALUES (4,'Danza Espada',5,null,100,20,'Estado');
 INSERT INTO ataques VALUES (5,'Surf',3,90,100,15,'Especial');
 INSERT INTO ataques VALUES (6,'Placaje',5,40,100,35,'Fisico');
 INSERT INTO ataques VALUES (7,'Rugido',5,null,100,20,'Estado');
-INSERT INTO ataques VALUES (8,'PuÒo HIelo',9,75,100,15,'Fisico');
+INSERT INTO ataques VALUES (8,'PuÔøΩo HIelo',9,75,100,15,'Fisico');
 
 INSERT INTO pokemon_ataques VALUES (2,1,24,'Nivel');
 INSERT INTO pokemon_ataques VALUES (2,4,null,'MT/MO');
@@ -716,7 +716,7 @@ SELECT ataques FROM pokemon
 
 SELECT DISTINCT a.nombre FROM pokemon p, pokemon_ataques pa, ataques a, tipo t, pok_tipo pt
 WHERE p.id=pa.pokemon AND pa.ataques=a.id AND p.id=pt.pokemon AND pt.tipo=t.id AND t.nombre = 'Fuego'
-SELECT nombre FROM pokemon WHERE peso > (select max(peso) FROM pokemon p, pok_tipo pt, tipo t WHERE p.id=pt.pokemon AND pt.tipo=t.id AND t.nombre='ElÈctrico'
+SELECT nombre FROM pokemon WHERE peso > (select max(peso) FROM pokemon p, pok_tipo pt, tipo t WHERE p.id=pt.pokemon AND pt.tipo=t.id AND t.nombre='ElÔøΩctrico'
 SELECT a.nombre FROM ataques a WHERE id != ALL (SELECT ataque FROM pokemon_ataques);
 SELECT * FROM pokemon WHERE id IN (SELECT pokemon FROM pok_tipo) HAVING COUNT pokemon=2 GROUP BY pokemon;
 
@@ -831,15 +831,15 @@ INSERT INTO cliente VALUES ('22222222F', 'PEPE', '01/01/00', 'GRANADA', 'H', 611
 INSERT INTO cliente(dni, fecha_nac, sexo, nombre) VALUES ('33333333H', '15/02/03', 'H', 'Manolo');
 
 INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
-('11111111Z', 'LucÌa', '12/05/2002', 'Granada', 'M');
+('11111111Z', 'LucÔøΩa', '12/05/2002', 'Granada', 'M');
 INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
-('22222222B', 'MÛnica', '18/12/2008', 'JaÈn', 'M');
+('22222222B', 'MÔøΩnica', '18/12/2008', 'JaÔøΩn', 'M');
 INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
 ('12345678C', 'Luis', '18/02/2008', 'Granada', 'H');
 INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
-('33333333R', 'CÈsar', '08/09/2003', 'Granada', 'H');
+('33333333R', 'CÔøΩsar', '08/09/2003', 'Granada', 'H');
 INSERT INTO cliente (dni, nombre, fecha_nac, direccion, sexo) VALUES
-('55555555T', 'Roberto', '24/11/2008', 'M·laga', 'H');
+('55555555T', 'Roberto', '24/11/2008', 'MÔøΩlaga', 'H');
 
 
 ALTER TABLE producto
@@ -849,9 +849,9 @@ ALTER TABLE producto
 MODIFY precio NULL;
 
 INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
-(1, 'L·piz negro', 100, 0.75, 1);
+(1, 'LÔøΩpiz negro', 100, 0.75, 1);
 INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
-(2, 'BolÌgrafo azul', 85, 1.25, 1);
+(2, 'BolÔøΩgrafo azul', 85, 1.25, 1);
 INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
 (3, 'Libreta A4', 60, 1.75, 2);
 INSERT INTO producto (cod, nombre, stock, precio, tipo) VALUES
@@ -894,7 +894,7 @@ INSERT INTO compra (cliente, producto, fecha, cantidad) VALUES
 
 
 DELETE FROM compra;
-DELETE FROM cliente WHERE direccion='M·laga';
+DELETE FROM cliente WHERE direccion='MÔøΩlaga';
 DELETE FROM producto WHERE precio<1;
 DELETE FROM cliente WHERE sexo='H';
 DELETE FROM cliente;
@@ -909,11 +909,11 @@ WHERE dni='11111111Z';
 UPDATE producto
 SET precio=1.25,
 stock = 150
-WHERE nombre='BolÌgrafo azul';
+WHERE nombre='BolÔøΩgrafo azul';
 
 UPDATE cliente
-SET direccion='M·laga'
-WHERE nombre='MÛnica';
+SET direccion='MÔøΩlaga'
+WHERE nombre='MÔøΩnica';
 
 UPDATE producto
 SET precio = precio + 0.25;
@@ -926,7 +926,7 @@ UPDATE producto
 SET precio = 1.25
 WHERE tipo=1 OR tipo=2;
 
-UPDATE cliente SET nombre='cÈsar' WHERE nombre='CÈsar';
+UPDATE cliente SET nombre='cÔøΩsar' WHERE nombre='CÔøΩsar';
 
 SELECT dni, nombre FROM cliente;
 
@@ -942,7 +942,7 @@ SELECT nombre FROM cliente WHERE sexo='M';
 
 SELECT dni, nombre FROM cliente WHERE NOT direccion='Granada';
 
-SELECT * FROM cliente WHERE nombre='LucÌa';
+SELECT * FROM cliente WHERE nombre='LucÔøΩa';
 
 SELECT precio FROM producto WHERE tipo=2;
 
@@ -1002,15 +1002,15 @@ SELECT cliente.nombre FROM cliente, compra WHERE cantidad>4 AND producto=2 AND d
 SELECT DISTINCT producto.nombre FROM compra, producto WHERE cantidad<3 AND cod=producto;
 
 SELECT DISTINCT producto.* FROM compra, producto, cliente
-WHERE compra.cliente=cliente.dni AND compra.producto=producto.cod AND cliente.nombre='LucÌa';
+WHERE compra.cliente=cliente.dni AND compra.producto=producto.cod AND cliente.nombre='LucÔøΩa';
 
 DROP TABLE trabajador CASCADE CONSTRAINTS;
 DROP TABLE tienda CASCADE CONSTRAINTS;
 DROP TABLE oferta CASCADE CONSTRAINTS;
 
 INSERT INTO trabajador VALUES(18, 'Pedro', 'Encargado', 'Cajas', 1);
-INSERT INTO trabajador VALUES(21, 'Elena', 'Encargado', 'ReposiciÛn', 1);
-INSERT INTO trabajador VALUES(35, 'Manuel', 'Suplente', 'ReposiciÛn', 1);
+INSERT INTO trabajador VALUES(21, 'Elena', 'Encargado', 'ReposiciÔøΩn', 1);
+INSERT INTO trabajador VALUES(35, 'Manuel', 'Suplente', 'ReposiciÔøΩn', 1);
 
 INSERT INTO tienda VALUES(1, 500);
 INSERT INTO tienda VALUES(2, 800);
@@ -1073,7 +1073,7 @@ WHERE producto.cod=oferta.producto AND oferta.tipo=2;
 
 SELECT DISTINCT cliente.*
 FROM cliente, producto, compra
-WHERE dni=compra.cliente AND producto.cod=compra.producto AND producto.nombre='BolÌgrafo azul'
+WHERE dni=compra.cliente AND producto.cod=compra.producto AND producto.nombre='BolÔøΩgrafo azul'
 ORDER BY fecha_nac ASC;
 
 SELECT DISTINCT cliente.nombre
@@ -1082,7 +1082,7 @@ WHERE dni=compra.cliente AND producto.cod=compra.producto AND precio IS NOT NULL
 
 SELECT cliente.nombre, ROUND(precio*cantidad*1.21, 2)
 FROM cliente, producto, compra
-WHERE compra.cliente=dni AND producto.cod=compra.producto AND direccion='M·laga';
+WHERE compra.cliente=dni AND producto.cod=compra.producto AND direccion='MÔøΩlaga';
 
 SELECT oferta.cod, oferta.tienda, producto.nombre, trabajador.nombre, oferta.tipo, inicio, fin
 FROM oferta, trabajador, tienda, producto
@@ -1109,13 +1109,13 @@ SELECT COUNT(*) FROM compra WHERE cliente='11111111Z';
 SELECT SUM(precio*cantidad)*1.21 AS Total_Compra 
 FROM clientes, compras, productos 
 WHERE producto = producto.cod AND cliente=cliente.dni
-AND cliente.nombre='LucÌa';
+AND cliente.nombre='LucÔøΩa';
 
 SELECT AVG (cantidad) FROM compra, producto 
-WHERE producto=cod AND nombre='BolÌgrafo azul';
+WHERE producto=cod AND nombre='BolÔøΩgrafo azul';
 
 SELECT COUNT (DISTINCT cliente) FROM  compra, producto
-WHERE producto=cod AND nombre='L·piz negro';
+WHERE producto=cod AND nombre='LÔøΩpiz negro';
 
 SELECT MAX (precio) FROM cliente cli, compra c, producto p
 
@@ -1125,7 +1125,7 @@ SELECT AVG(precio) FROM producto;
 
 SELECT producto.nombre COUNT (ofertas*) FROM ofertas, productos WHERE ofertas.producto=cod_prod GROUP BY productos.nombre
 SELECT producto COUNT (cliente) FROM compra GROUP BY producto
-SELECT direcciÛn COUNT (dni) FROM cliente WHERE direcciÛn 
+SELECT direcciÔøΩn COUNT (dni) FROM cliente WHERE direcciÔøΩn 
 
 SELECT cliente COUNT (producto) FROM compra GROUP BY cliente
 SELECT tienda  COUNT (cod) FROM oferta GROUP BY tienda
@@ -1220,7 +1220,7 @@ insert into equipo values (4,'X-Force');
 insert into equipo values (5,'Orden negra');
 insert into equipo values (6,'Agentes de Wakanda');
 insert into equipo values (7,'Hydra');
-insert into equipo values (8,'Los 4 fant·sticos');
+insert into equipo values (8,'Los 4 fantÔøΩsticos');
 insert into equipo values (9,'Starforce');
 insert into equipo values (10,'Shield');
 
@@ -1229,21 +1229,21 @@ insert into poderes values (2,'Campo de fuerza');
 insert into poderes values (3,'Bolas de Fuego');
 insert into poderes values (4,'Invisibilidad');
 insert into poderes values (5,'Super Fuerza');
-insert into poderes values (6,'RegeneraciÛn');
+insert into poderes values (6,'RegeneraciÔøΩn');
 insert into poderes values (7,'Deforma Realidad');
-insert into poderes values (8,'Sentido ar·cnido');
-insert into poderes values (9,'TeletransportaciÛn');
+insert into poderes values (8,'Sentido arÔøΩcnido');
+insert into poderes values (9,'TeletransportaciÔøΩn');
 insert into poderes values (10,'Inteligencia');
 
-insert into superpersona values (1,'Logan Patch','Lobezno','Canad·',2,'heroe');
+insert into superpersona values (1,'Logan Patch','Lobezno','CanadÔøΩ',2,'heroe');
 insert into superpersona values (2,'Peter Parker','Spider-man','Nueva York',1,'heroe');
-insert into superpersona values (3,'Steve Rogers','Capit·n AmÈrica','Nueva York',1,'heroe');
+insert into superpersona values (3,'Steve Rogers','CapitÔøΩn AmÔøΩrica','Nueva York',1,'heroe');
 insert into superpersona values (4,'Bruce Banner','Hulk','EEUU',1,'heroe');
 insert into superpersona values (5,'Tony Stark','Ironman','Nueva York',1,'heroe');
-insert into superpersona values (6,'Erik magnus','Magneto','Alem·n',2,'villano');
+insert into superpersona values (6,'Erik magnus','Magneto','AlemÔøΩn',2,'villano');
 insert into superpersona values (7,'Rocket Raccoon','Rocket','Halfworld',3,'heroe');
 insert into superpersona values (8,'TChalla','Black Panther','Wakanda',6,'heroe');
-insert into superpersona values (9,'El tit·n loco','Thanos','Planeta Tit·n',5,'villano');
+insert into superpersona values (9,'El titÔøΩn loco','Thanos','Planeta TitÔøΩn',5,'villano');
 insert into superpersona values (10,'Johny Storm','Antorcha Humana','EEUU',8,'heroe');
 
 insert into tiene values (6,1);
@@ -1345,14 +1345,14 @@ CREATE TABLE desarrolladores
     ide NUMERIC(2) PRIMARY KEY CHECK (ide > 0),
     nombre VARCHAR2(25) NOT NULL,
     paisOrigen VARCHAR2(50),
-    aÒoFundacion NUMERIC(4)
+    aÔøΩoFundacion NUMERIC(4)
 );
 
 INSERT INTO desarolladores VALUES (1, 'CD Projekt Red', 'Polonia', 1994);
-INSERT INTO desarolladores VALUES (2, 'Nintendo EPD', 'JapÛn', 1889);
+INSERT INTO desarolladores VALUES (2, 'Nintendo EPD', 'JapÔøΩn', 1889);
 INSERT INTO desarolladores VALUES (3, 'Rockstar Games', 'Estados Unidos', 1998);
 INSERT INTO desarolladores VALUES (4, 'Mojan Studios', 'Suecia', 2009);
-INSERT INTO desarolladores VALUES (5, 'Sony Interactive', 'JapÛn', 1993);
+INSERT INTO desarolladores VALUES (5, 'Sony Interactive', 'JapÔøΩn', 1993);
 INSERT INTO desarolladores VALUES (6, 'Insomniac Games', 'Estados Unidos', 1994);
 INSERT INTO desarolladores VALUES (7, 'Microsoft', 'Estados Unidos', 1975);
 
@@ -1370,7 +1370,7 @@ INSERT INTO consolas VALUES (5, 'Nintendo Switch', 2, '03/03/2017', 8);
 
 INSERT INTO generos VALUES (1, 'RPG');
 INSERT INTO generos VALUES (2, 'Aventura');
-INSERT INTO generos VALUES (3, 'AcciÛn');
+INSERT INTO generos VALUES (3, 'AcciÔøΩn');
 INSERT INTO generos VALUES (4, 'Sandbox');
 INSERT INTO generos VALUES (5, '3rd Person Shooter');
 
@@ -1402,7 +1402,7 @@ SELECT nombre FROM consolas WHERE fech_lanza > ANY {
 SELECT fech_lanza from consola JOIN;
 
 //1
-SELECT titulo FROM videojuegos v JOIN desarrolladores d ON v.desarrollador=d.ide WHERE pais='JapÛn';
+SELECT titulo FROM videojuegos v JOIN desarrolladores d ON v.desarrollador=d.ide WHERE pais='JapÔøΩn';
 
 //2
 SELECT titulo from videojuegos WHERE pegi > (SELECT pegi FROM videojuegos v JOIN desarrolladores d ON v.desarrolladores=d.id WHERE pais= 'Suecia';
@@ -1414,7 +1414,7 @@ SELECT titulo FROM videojuego v, lanzamiento l WHERE v.
 SELECT genero.nombre FROM genero JOIN juego_genero ON genero.ide = juego_genero.ide_genero WHERE ide_juego IS NULL;
 
 //8
-SELECT nombre FROM desarolladores WHERE aÒoFundacion < ANY (SELECT aÒoFundacion FROM desarrolladores WHERE paisOrigen = 'Estados Unidos';
+SELECT nombre FROM desarolladores WHERE aÔøΩoFundacion < ANY (SELECT aÔøΩoFundacion FROM desarrolladores WHERE paisOrigen = 'Estados Unidos';
 
 //10
 SELECT*FROM videojuegos WHERE titulo LIKE 'The%';
@@ -1447,19 +1447,19 @@ SELECT DISTINCT d.* FROM desarrolladores d JOIN videojuegos v ON d.ID = v.ide_de
 SELECT d.* FROM desarrolladores d WHERE NOT EXISTS (SELECT g.ide FROM generos g WHERE NOT EXISTS ( SELECT v.ide FROM videojuegos v JOIN juego_genero jg ON v.ID = jg.ide_juego WHERE jg.ide_genero = g.ID AND v.ide_desarrolladora = d.ide ));
 
 //20
-SELECT g.nombre, COUNT(jg.ide_juego) AS num_juegos FROM juego_genero jg JOIN videojuegos v ON jg.ide_juego = v.ide JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide JOIN generos g ON jg.ide_genero = g.ide WHERE c.generaciÛn = 9 GROUP BY g.ide, g.nombre ORDER BY num_juegos DESC;
+SELECT g.nombre, COUNT(jg.ide_juego) AS num_juegos FROM juego_genero jg JOIN videojuegos v ON jg.ide_juego = v.ide JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide JOIN generos g ON jg.ide_genero = g.ide WHERE c.generaciÔøΩn = 9 GROUP BY g.ide, g.nombre ORDER BY num_juegos DESC;
 
 //21
 SELECT d.* FROM desarrolladores d WHERE NOT EXISTS ( SELECT g.ide FROM generos g WHERE NOT EXISTS ( SELECT v.ide FROM videojuegos v JOIN juego_genero jg ON v.ide = jg.ide_juego WHERE jg.ide_genero = g.ide AND v.ide_desarrolladora = d.ide ));
 
 //22
-SELECT v.* FROM videojuegos v JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide GROUP BY v.ide, v.titulo HAVING COUNT(DISTINCT c.generaciÛn) >= 3;
+SELECT v.* FROM videojuegos v JOIN lanzamientos l ON v.ide = l.ide_juego JOIN consolas c ON l.ide_consola = c.ide GROUP BY v.ide, v.titulo HAVING COUNT(DISTINCT c.generaciÔøΩn) >= 3;
 
 //23
 SELECT v.* FROM videojuegos v WHERE NOT EXISTS (SELECT c.ide FROM consolas c JOIN desarrolladores d ON c.ide_desarrolladora = d.ide WHERE d.nombre LIKE 'Sony%' AND NOT EXISTS (SELECT l.ide_juego FROM lanzamientos l WHERE l.ide_juego = v.ide AND l.ide_consola = c.ide));
 
 //24
-SELECT c.nombre AS consolas, g.nombre AS gÈnero,
+SELECT c.nombre AS consolas, g.nombre AS gÔøΩnero,
        COUNT(jg.ide_juego) * 100.0 / (SELECT COUNT(*) FROM lanzamientos WHERE ide_consola = c.ide) AS porcentaje
 FROM lanzamientos l
 JOIN videojuegos v ON l.ide_juego = v.ide
@@ -1485,7 +1485,7 @@ WHERE YEAR(l.fechaLanzamiento) = YEAR(c.fechaLanzamiento)
 GROUP BY c.ide, c.nombre;
 
 //27
-SELECT titulo FROM videojuego, desarrolladores WHERE desarrollador=desarrolladores.ide AND pais='JapÛn'
+SELECT titulo FROM videojuego, desarrolladores WHERE desarrollador=desarrolladores.ide AND pais='JapÔøΩn'
 UNION
 SELECT titulo FROM videojuego, desarrolladores
 WHERE desarrollador=desarrolladores.ide AND pais='Estados unidos';
@@ -1551,13 +1551,13 @@ AND genero.nombre = 'Aventura'
 SELECT nombres FROM generos MINUS SELECT nombre.
 
 
-//MANIPULACI”N DE RESULTADOS//
+//MANIPULACIÔøΩN DE RESULTADOS//
 
 SELECT cli.nombre FROM cliente cli, compra c, productos p
 WHERE cli.dni=cliente AND prod.cod_producto.cliente AND p.nombre='Boligrafo Azul'
 INTERSECT
 SELECT cli.nombre FROM cliente cli, compra com, producto p
-WHERE cli.dni=com.cliente AND co.producto=p.cod AND p.nombre='L·piz Negro';
+WHERE cli.dni=com.cliente AND co.producto=p.cod AND p.nombre='LÔøΩpiz Negro';
 
 SELECT producto FROM oferta WHERE tienda=2 INTERSECT SELECT producto FROM oferta WHERE tienda=3;
 
@@ -1569,7 +1569,7 @@ INTERSECT
 SELECT nombre FROM trabajador 
 WHERE tienda =3;
 
-//PR¡CTICA//
+//PRÔøΩCTICA//
 
 CREATE TABLE salas 
 (
@@ -1602,24 +1602,24 @@ CREATE TABLE proyeccion
 
 //Insertar Datos
 
-INSERT INTO salas VALUES ('S1','¡frica',125,10);
-INSERT INTO salas VALUES ('S2','AmÈrica',255,24);
+INSERT INTO salas VALUES ('S1','ÔøΩfrica',125,10);
+INSERT INTO salas VALUES ('S2','AmÔøΩrica',255,24);
 INSERT INTO salas VALUES ('S3','Europa',136,14);
 INSERT INTO salas VALUES ('S4','Asia',85,7);
 INSERT INTO salas VALUES ('S5','Oceania',100,10);
-INSERT INTO salas VALUES ('S6','Ant·rtida',150,15);
-INSERT INTO salas VALUES ('S7','Atl·ntida',300,30);
+INSERT INTO salas VALUES ('S6','AntÔøΩrtida',150,15);
+INSERT INTO salas VALUES ('S7','AtlÔøΩntida',300,30);
 
 INSERT INTO peliculas VALUES ('P1','Minions','TP','EEUU');
 INSERT INTO peliculas VALUES ('P2','Black Panther',18,'EEUU');
 INSERT INTO peliculas VALUES ('P3','Asterix y Obelix',7,'EEUU');
-INSERT INTO peliculas VALUES ('P4','El autor',NULL,'ESPA—A');
-INSERT INTO peliculas VALUES ('P5','Perfectos desconocidos','18','ESPA—A');
+INSERT INTO peliculas VALUES ('P4','El autor',NULL,'ESPAÔøΩA');
+INSERT INTO peliculas VALUES ('P5','Perfectos desconocidos','18','ESPAÔøΩA');
 INSERT INTO peliculas VALUES ('P6','Resident Evil','18','EEUU');
-INSERT INTO peliculas VALUES ('P7','Tadeo Jones 3','TP','ESPA—A');
+INSERT INTO peliculas VALUES ('P7','Tadeo Jones 3','TP','ESPAÔøΩA');
 INSERT INTO peliculas VALUES ('P8','Eiffel','7','EEUU');
-INSERT INTO peliculas VALUES ('P9','PuÒales por la espalda 2','18','EEUU');
-INSERT INTO peliculas VALUES ('P10','La abuela',NULL,'ESPA—A');
+INSERT INTO peliculas VALUES ('P9','PuÔøΩales por la espalda 2','18','EEUU');
+INSERT INTO peliculas VALUES ('P10','La abuela',NULL,'ESPAÔøΩA');
 
 INSERT INTO proyeccion VALUES ('S1','P1','12.00',75);
 INSERT INTO proyeccion VALUES ('S1','P1','18.00',84);
@@ -1646,19 +1646,19 @@ INSERT INTO proyeccion VALUES ('S4','P8','12.00',36);
 
 //Consultas
 
-//Calcular el n˙mero de entradas vendidas para cada horario de proyecciÛn(7)
+//Calcular el nÔøΩmero de entradas vendidas para cada horario de proyecciÔøΩn(7)
 SELECT hora, sum (ocupacion) from proyeccion group by hora;
 
-//Mostrar los nombres de las pelÌculas que no se proyectan en ninguna sala(8)
+//Mostrar los nombres de las pelÔøΩculas que no se proyectan en ninguna sala(8)
 SELECT nombre FROM peliculas WHERE p NOT IN (SELECT DISTINCT pelicula FROM proyeccion); 
 
-//Mostrar la nacionalidad que m·s pelÌculas tiene en cartelera (que se estÈn proyectando)(9)
+//Mostrar la nacionalidad que mÔøΩs pelÔøΩculas tiene en cartelera (que se estÔøΩn proyectando)(9)
 SELECT nacionalidad FROM proyeccion WHERE pelicula ;
 
-//Mostrar todas las pelÌculas que se proyectan en horario de maÒana(14)
+//Mostrar todas las pelÔøΩculas que se proyectan en horario de maÔøΩana(14)
 SELECT nombre FROM peliculas, proyeccion WHERE p=pelicula AND hora IN ('12.00','13.00');
 
-//Mostrar la sala m·s ocupada en la sesiÛn de las 23.00(16)
+//Mostrar la sala mÔøΩs ocupada en la sesiÔøΩn de las 23.00(16)
 SELECT nombre FROM sala, proyeccion
 WHERE s=sala AND hora = '23.00' and ocupacion = (
     SELECT MAX(ocupacion) FROM proyeccion
@@ -1683,20 +1683,20 @@ SELECT ora, SUM(Ocupacion) FROM PROYECCIONES GROUP BY Hora;
 
 //9
 
-//Mostrar para cada proyecciÛn cuantas entradas quedan disponibles(20)
+//Mostrar para cada proyecciÔøΩn cuantas entradas quedan disponibles(20)
 SELECT ocupacion FROM proyeccion, salas WHERE ocupacion= s AND capacidad=p;
 
-//Mostrar la pelÌcula con m·s recaudaciÛn, mostrando la recaudaciÛn total(22)
+//Mostrar la pelÔøΩcula con mÔøΩs recaudaciÔøΩn, mostrando la recaudaciÔøΩn total(22)
 SELECT 
-//Mostrar la informaciÛn de aquellas proyecciones en las que todavÌa hay entradas disponibles(31)
+//Mostrar la informaciÔøΩn de aquellas proyecciones en las que todavÔøΩa hay entradas disponibles(31)
 
-//AÒadir una nueva columna a las salas donde se pueda almacenar si la sala se encuentra en la planta baja o en la planta 1(35)
+//AÔøΩadir una nueva columna a las salas donde se pueda almacenar si la sala se encuentra en la planta baja o en la planta 1(35)
 
-//Cambiar el tipo de dato de la columna capacidad, ya que ahora se le debe permitir almacenar 2 decimales adem·s de los 3 enteros que ya tenÌa(36)
+//Cambiar el tipo de dato de la columna capacidad, ya que ahora se le debe permitir almacenar 2 decimales ademÔøΩs de los 3 enteros que ya tenÔøΩa(36)
 
-//Se necesita saber el total de personas que han usado cada sala, mostrar dicha informaciÛn ordenada de menor a mayor uso(39)
+//Se necesita saber el total de personas que han usado cada sala, mostrar dicha informaciÔøΩn ordenada de menor a mayor uso(39)
 
-//Mostrar la nacionalidad de aquellas pelÌculas para las que se ha recaudado m·s de 2.000Ä(43)
+//Mostrar la nacionalidad de aquellas pelÔøΩculas para las que se ha recaudado mÔøΩs de 2.000ÔøΩ(43)
 
 //14
 SELECT DISTINCT p.nombre FROM peliculas p JOIN proyeccion pr ON p.P = pr.pelicula WHERE pr.hora <= '12.00';
@@ -1892,7 +1892,7 @@ INSERT INTO jugador VALUES (4, 'Maria', 'Rodri', 21;
 INSERT INTO jugador VALUES (5, 'Maria', 'Feli', 27;
 INSERT INTO jugador VALUES (6 'Maria', 'Helena23', 33)
 INSERT INTO jugador VALUES (8 'Maria', 'Nacho', 25);
-INSERT INTO jugador VALUES (8 '”scar','Ricto', 25;
+INSERT INTO jugador VALUES (8 'ÔøΩscar','Ricto', 25;
 
 INSERT INTO categoria VALUES ('H', 'Humano');
 INSERT INTO categoria VALUES ('E', 'Elfo');
@@ -1943,15 +1943,15 @@ INSERT INTO controla VALUES (1 , 12,'30/11/2023','25/12/2023');
 INSERT INTO controla VALUES (7 , 12,'30/12/2023',null);
 
 
-// Mostrar por pantalla el Nick de todos los jugadores menores de 20 aÒos
+// Mostrar por pantalla el Nick de todos los jugadores menores de 20 aÔøΩos
 
 SELECT nombre FROM jugador WHERE edad =< 20;
 
-//Mostrar por pantalla el nombre de los personajes que han sido controlados alguna vez por el jugador con nick ìmariî
+//Mostrar por pantalla el nombre de los personajes que han sido controlados alguna vez por el jugador con nick ÔøΩmariÔøΩ
 
 SELECT nombre_pers FROM jugador WHERE;
 
-//Mostrar por pantalla el Nick de aquellos jugadores que alguna vez han controlado un personaje ìenanoî
+//Mostrar por pantalla el Nick de aquellos jugadores que alguna vez han controlado un personaje ÔøΩenanoÔøΩ
 
 SELECT*FROM nombre.jugador FROM;
 
@@ -2000,13 +2000,13 @@ BEGIN
     WHERE sala = 's4' AND pelicula = 'p4' AND hora = '20.00';
     
     IF ocupacion = capacidad THEN
-    DBMS_OUTPUT.put_line ('LA SALA 4 EST¡ LLENA PARA LA PELÕCULA P4 A LAS 20.00')
+    DBMS_OUTPUT.put_line ('LA SALA 4 ESTÔøΩ LLENA PARA LA PELÔøΩCULA P4 A LAS 20.00')
     ELSE
-    DBMS_OUTPUT.put_line ('LA SALA 4 NO EST¡ LLENA PARA LA PELÕCULA P4 A LAS 20.00')
+    DBMS_OUTPUT.put_line ('LA SALA 4 NO ESTÔøΩ LLENA PARA LA PELÔøΩCULA P4 A LAS 20.00')
     END IF;
 END;
     
-ACCEPT numero PROMPT ('Introduce un n˙mero');
+ACCEPT numero PROMPT ('Introduce un nÔøΩmero');
 
 BEGIN 
     IF(&numero>0) THEN 
@@ -2031,7 +2031,7 @@ BEGIN
     WHERE pelicula = 'P3' AND p.hora = '18.00';
 
     IF disponibles > 10 THEN 
-    DBMS_OUTPUT.put_line ('Quedan m·s de 10 entradas')
+    DBMS_OUTPUT.put_line ('Quedan mÔøΩs de 10 entradas')
     ELSE
     DBMS_OUTPUT.put_line ('Quedan menos de 10 entradas')
     END IF;
@@ -2045,9 +2045,9 @@ DECLARE
 BEGIN
     SELECT nacionalidad INTO pais 
     FROM peliculas
-    WHERE = 'ESPA—A';
+    WHERE = 'ESPAÔøΩA';
 
-    IF (&nacionalidad = 'ESPA—A') THEN
+    IF (&nacionalidad = 'ESPAÔøΩA') THEN
      DBMS_OUTPUT.put_line ('ES NACIONAL')
     ELSE 
      DBMS_OUTPUT.put_line ('NO ES NACIONAL')
@@ -2064,8 +2064,8 @@ BEGIN
     END LOOP;
 END;
     
-ACCEPT nume1 PROMPT 'Introduce el primer n˙mero';
-ACCEPT nume2 PROMPT 'Introduce el segundo n˙mero';
+ACCEPT nume1 PROMPT 'Introduce el primer nÔøΩmero';
+ACCEPT nume2 PROMPT 'Introduce el segundo nÔøΩmero';
 
 DECLARE 
     contador NUMBER := &nume1;
@@ -2344,7 +2344,7 @@ Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACT
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (29,'Top Campo','Joseluis','Sanchez','685746512','974315924','C/Ibiza 32',null,'Humanes','Madrid','Espa?a','28574',5,5500);
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (30,'Jardineria Sara','Sara','Marquez','675124537','912475843','C/Lima 1',null,'Fenlabrada','Madrid','Espa?a','27584',5,7500);
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (31,'Campohermoso','Luis','Jimenez','645925376','916159116','C/Peru 78',null,'Fuenlabrada','Madrid','Espa?a','28945',30,3250);
-Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (32,'france telecom','FraÁois','Toulou','(33)5120578961','(33)5120578961','6 place d Alleray 15Ëme',null,'Paris',null,'France','75010',16,10000);
+Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (32,'france telecom','FraÔøΩois','Toulou','(33)5120578961','(33)5120578961','6 place d Alleray 15ÔøΩme',null,'Paris',null,'France','75010',16,10000);
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (33,'Mus?e du Louvre','Pierre','Delacroux','(33)0140205050','(33)0140205442','Quai du Louvre',null,'Paris',null,'France','75058',16,30000);
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (35,'Tutifruti S.A','Jacob','Jones','2 9261-2433','2 9283-1695','level 24, St. Martins Tower.-31 Market St.',null,'Sydney','Nueva Gales del Sur','Australia','2000',31,10000);
 Insert into CLIENTES (CODIGOCLIENTE,NOMBRECLIENTE,NOMBRECONTACTO,APELLIDOCONTACTO,TELEFONO,FAX,LINEADIRECCION1,LINEADIRECCION2,CIUDAD,REGION,PAIS,CODIGOPOSTAL,CODIGOEMPLEADOREPVENTAS,LIMITECREDITO) values (36,'FLORES S.L.','Antonio','Romero','654352981','685249700','Avenida Espa?a',null,'Madrid','Fuenlabrada','Espa?a','29643',18,6000);
@@ -2850,7 +2850,7 @@ Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDAD
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-14','Calamondin Mini','Frutales',null,'Frutales Talavera S.A',15,10,8);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-15','Calamondin Copa ','Frutales',null,'Frutales Talavera S.A',15,25,20);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-16','Calamondin Copa EXTRA Con FRUTA','Frutales','100-120','Frutales Talavera S.A',15,45,36);
-Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-17','Rosal bajo 1™ -En maceta-inicio brotaci?n','Frutales',null,'Frutales Talavera S.A',15,2,1);
+Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-17','Rosal bajo 1ÔøΩ -En maceta-inicio brotaci?n','Frutales',null,'Frutales Talavera S.A',15,2,1);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-18','ROSAL TREPADOR','Frutales',null,'Frutales Talavera S.A',350,4,3);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-19','Camelia Blanco, Chrysler Rojo, Soraya Naranja, ','Frutales',null,'NaranjasValencianas.com',350,4,3);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('FR-2','Naranjo -Plant?n joven 1 a?o injerto','Frutales',null,'NaranjasValencianas.com',15,6,4);
@@ -2978,7 +2978,7 @@ Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDAD
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-141','Pitimini rojo','Ornamentales',null,'Viveros EL OASIS',100,4,3);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-142','Solanum Jazminoide','Ornamentales','150-160','Viveros EL OASIS',100,2,1);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-143','Wisteria Sinensis  azul, rosa, blanca','Ornamentales',null,'Viveros EL OASIS',100,9,7);
-Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-144','Wisteria Sinensis INJERTADAS DEC”','Ornamentales','140-150','Viveros EL OASIS',100,12,9);
+Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-144','Wisteria Sinensis INJERTADAS DECÔøΩ','Ornamentales','140-150','Viveros EL OASIS',100,12,9);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-145','Bougamvillea Sanderiana Tutor','Ornamentales','80-100','Viveros EL OASIS',100,2,1);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-146','Bougamvillea Sanderiana Tutor','Ornamentales','125-150','Viveros EL OASIS',100,4,3);
 Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDADENSTOCK,PRECIOVENTA,PRECIOPROVEEDOR) values ('OR-147','Bougamvillea Sanderiana Tutor','Ornamentales','180-200','Viveros EL OASIS',100,7,5);
@@ -3277,25 +3277,25 @@ Insert into PRODUCTOS (CODIGOPRODUCTO,NOMBRE,GAMA,DIMENSIONES,PROVEEDOR,CANTIDAD
 
 /PL/SQUIL
 
-// Mostrar el nombre de un cliente dado su cÛdigo //
+// Mostrar el nombre de un cliente dado su cÔøΩdigo //
 
-ACCEPT codigo PROMPT 'Introduce el cÛdigo del cliente';
+ACCEPT codigo PROMPT 'Introduce el cÔøΩdigo del cliente';
 
 DECLARE
     nombre clientes.nombrecliente%TYPE;
 BEGIN
     SELECT nombrecliente INTO nombre FROM clientes
     WHERE codigocliente = '&codigo';
-    DBMS_OUTPUT.put_line ('El nombre del cliente con cÛdigo ' || &codigo || ' es ' || nombre);
+    DBMS_OUTPUT.put_line ('El nombre del cliente con cÔøΩdigo ' || &codigo || ' es ' || nombre);
 EXCEPTION
     WHEN no_data_found THEN
         DBMS_OUTPUT.put_line ('No se ha encontrado  el cliente');
 END;
 
 
-// Mostrar el precioVenta y la gama de un producto dado su cÛdigo //
+// Mostrar el precioVenta y la gama de un producto dado su cÔøΩdigo //
 
-ACCEPT codigo PROMPT 'Introduce el cÛdigo del producto';
+ACCEPT codigo PROMPT 'Introduce el cÔøΩdigo del producto';
 
 DECLARE
     p productos.precioventa%TYPE;
@@ -3307,7 +3307,7 @@ BEGIN
     WHERE codigoproduco LIKE '&codigo';
     DBMS_OUTPUT.put_line ('El precio del producto con codigo ' || &codigo || ' es ' || p || ' y su gama es ' || g);
     
-// Mostrar toda la informacion de un pedido dado su cÛdigo
+// Mostrar toda la informacion de un pedido dado su cÔøΩdigo
 (fechaEsperada, fechaEntrega, fechapedido, estado, comentarios) //
 
 ACCEPT codigo PROMPT 'Introduce el codigo del pedido';
@@ -3339,10 +3339,10 @@ BEGIN
     WHERE codigopedido LIKE '&codigo';
     DBMS_OUTPUT.put_line ('La fecha esperada es ' || &codigo || ' es ' || );
     
-// Realizar una funciÛn que devuelva la suma de pagos que ha realizado
-un cliente. Pasa el cÛdigo por teclado. //
+// Realizar una funciÔøΩn que devuelva la suma de pagos que ha realizado
+un cliente. Pasa el cÔøΩdigo por teclado. //
 
-ACCEPT codigo PROMPT 'Introduce el cÛdigo del cliente';
+ACCEPT codigo PROMPT 'Introduce el cÔøΩdigo del cliente';
 DECLARE
     suma pagos.cantidad%TYPE;
 BEGIN
@@ -3351,7 +3351,7 @@ BEGIN
     DBMS_OUTPUT.put_line ('La suma de pagos es ' || &codigo || ' es ' || suma);
 END;
 
-// Mostrar el nombre de un cliente dado su cÛdigo. Controla en caso de
+// Mostrar el nombre de un cliente dado su cÔøΩdigo. Controla en caso de
 //que nou se encuentre, mostrando un mensaje por ejemplo //
 
 
@@ -3362,8 +3362,8 @@ DECLARE
 SELECT cantidad, preciounidad FROM detallepedidos   
     WHERE poch('|| &type || ' es ' || es ');
     
-//Realizar una funciÛn que devuelva la suma de pagos que ha realizado
-//un cliente. Pasa el cÛdigo por teclado. Controla en caso de que no se
+//Realizar una funciÔøΩn que devuelva la suma de pagos que ha realizado
+//un cliente. Pasa el cÔøΩdigo por teclado. Controla en caso de que no se
 //encuentre, en ese caso devuelve un -1.
 
 ACCEPT codigo PROMPT 'Introduce el codigo';
@@ -3382,9 +3382,9 @@ DECLARE
 END;
 
 //Haz un procedimiento para modificar el precio de venta de los productos.
-//Se le pedir· al usuario un precio. En caso de que el producto tenga su
-//precio a nulo, se actualizar· asign·ndole la cantidad introducida. En
-//caso contrario se le sumar· al precio existente.
+//Se le pedirÔøΩ al usuario un precio. En caso de que el producto tenga su
+//precio a nulo, se actualizarÔøΩ asignÔøΩndole la cantidad introducida. En
+//caso contrario se le sumarÔøΩ al precio existente.
 
 ACCEPT precio PROMPT 'Introduce el ID del producto';
 ACCEPT precio PROMPT 'Introduce el precio del producto';
@@ -3401,15 +3401,15 @@ BEGIN
 END;
 
 
-//Haz un procedimiento para insertar nuevos productos. Se le pedir· al usuario una
-//cantidad y un proveedor. Se insertar·n nuevos productos en la tabla,
-//insertando los cÛdigos desde el ˙ltimo utilizado hasta la cantidad
+//Haz un procedimiento para insertar nuevos productos. Se le pedirÔøΩ al usuario una
+//cantidad y un proveedor. Se insertarÔøΩn nuevos productos en la tabla,
+//insertando los cÔøΩdigos desde el ÔøΩltimo utilizado hasta la cantidad
 //indicada por el usuario.
 
 
-//12.Haz un para insertar nuevos productos. Se le pedir· al usuario una
-//cantidad y un proveedor. Se insertar·n nuevos productos en la tabla,
-//insertando los cÛdigos desde el ˙ltimo utilizado hasta la cantidad
+//12.Haz un para insertar nuevos productos. Se le pedirÔøΩ al usuario una
+//cantidad y un proveedor. Se insertarÔøΩn nuevos productos en la tabla,
+//insertando los cÔøΩdigos desde el ÔøΩltimo utilizado hasta la cantidad
 //indicada por el usuario.
 ACCEPT nom PROMPT "Introduce el nombre del cliente"
 ACCEPT prod1 PROMPT "Introduce el nombre del primer producto"
@@ -3439,8 +3439,6 @@ DROP TABLE pedidos CASCADE CONSTRAINT;
 DROP TABLE direccion CASCADE CONSTRAINT;
 DROP TABLE productos CASCADE CONSTRAINT;
 DROP TABLE pagos CASCADE CONSTRAINT;
-
-//PR¡CTICA BASE DE DATOS "Restaurante en casa S.A."//
 
 CREATE TABLE restaurante 
 (
@@ -3495,7 +3493,7 @@ CREATE TABLE clientes
     apellidos VARCHAR2(50) NOT NULL,
     direcclie NUMERIC(5),
     usuario VARCHAR2(50) NOT NULL,
-    contraseÒa VARCHAR2(50) NOT NULL,
+    clave VARCHAR2(50) NOT NULL,
     telef NUMERIC(10) NOT NULL,
     
     CONSTRAINT fk_direc_clie FOREIGN KEY (direcclie) REFERENCES direccion(codirec)
@@ -3533,84 +3531,75 @@ CREATE TABLE cupones
 );
 
 
-//DIRECCION
+--CATEGOR√çA
+INSERT INTO categoria (codcategor, numcategor) VALUES (1, 'Ensaladas');
+INSERT INTO categoria (codcategor, numcategor) VALUES (2, 'Platos principales');
+INSERT INTO categoria (codcategor, numcategor) VALUES (3, 'Postres');
 
+--DIRECCION
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(1,'Calle Mayor', 10, '3A', 'Madrid', 28013);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(2,'Avenida AndalucÌa', 45, NULL, 'Sevilla', 41010);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(3,'Gran VÌa', 13, '2B', 'Barcelona', 08010);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(4,'Calle Reina SofÌa', 6, NULL, 'Granada', 18630);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(2,'Avenida Andalucia', 45, NULL, 'Sevilla', 41010);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(3,'Gran Via', 13, '2B', 'Barcelona', 08010);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(4,'Calle Reina Sofia', 6, NULL, 'Granada', 18630);
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(5,'Calle Keops', 25, '4C', 'Madrid', 17625);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(6,'Avenida M·laga', 1, NULL, 'La Rioja', 21300);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(6,'Avenida Malaga', 1, NULL, 'La Rioja', 21300);
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(7,'Puerta del Sol', 37, '1A', 'Girona', 09267);
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(8,'Calle Huertas', 23, '5C', 'Granada', 28772);
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(9,'Avenida de la Albufera', 67, '4B', 'Alicante', 16382);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(10,'Calle Mayor', 2, NULL, 'JaÈn', 01292);
-INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(11,'Avenida de AmÈrica', 30, '2A', 'Badajoz', 92300);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(10,'Calle Mayor', 2, NULL, 'Jaen', 01292);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(11,'Avenida de America', 30, '2A', 'Badajoz', 92300);
 INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(12,'Calle Granada', 29, NULL, 'Murcia', 48065);
 
-//PLATOS
+--RESTAURANTE
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (1, 'Don Pepe', 'Calle Mayor 10, Madrid', 'Lunes a Domingo: 12:00-23:00', 'Madrid, Barajas');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (2, 'Bar Paco', 'Calle Reina Sofia 6, Granada', 'Miercoles a Domingo: 13:00-22:00', 'Granada, Alhendin');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (3, 'Restaurante Manolo', 'Puerta del Sol 37, Girona', 'Lunes a Sabado: 12:00-23:30', 'Girona, Lloret de mar');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (4, 'Camino de Santiago', 'Avda. de la Albufera 67, Alicante', 'Jueves a Domingo: 13:00-22:00', 'Alicante, Orihuela');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (5, 'Repica', 'Gran Via 13, Barcelona', 'Martes a Domingo: 14:00-23:00', 'Barcelona, Badalona');
 
-INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(1,'Ensalada CÈsar', 'Lechuga, Pollo, Salsa CÈsar', 8.50, 1);
+--PLATOS
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(1,'Ensalada Cesar', 'Lechuga, Pollo, Salsa Cesar', 8.50, 1);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(2,'Pizza Margarita', 'Tomate, queso mozzarella, albahaca', 12.00, 2);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(3,'Tarta de queso', 'Tarta de queso casera', 6.00, 3);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(4,'Callos', 'Ternera, Chorizo, Panceta, Guindilla, Morcilla, Laurel', 10.00, 3);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(5,'Rosca de Lomo', 'Huevo, Lechuga, Tomate, Lomo, Pimientos Verdes', 11.00, 2);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(6,'Pollo a la brasa', 'Pollo de Corral', 13.50, 1);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(7,'Almejas a la Marinera', 'Almejas, Ajo', 11.50, 3);
-INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(8,'Tarta de Pistacho', 'Tarta de queso casera', 6.50, 1);
-INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(9,'Hamburguesa Completa', 'Tarta de pistacho casera', 7.00, 2);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(8,'Tarta de Pistacho', 'Tarta de pistacho casera', 6.50, 1);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(9,'Hamburguesa Completa', 'Hamburguesa con lechuga, tomate y queso', 7.00, 2);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(10,'Calamares', 'Calamares Fritos', 12.00, 3);
 INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(11,'Pulpo a la Brasa', 'Pata de pulpo', 18.00, 2);
-INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(12,'Redondo de Ternera', 'Cebolla, Ternera, Laurel, ChampiÒones, Zanahoria', 13.00, 1);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(12,'Redondo de Ternera', 'Cebolla, Ternera, Laurel, Champinones, Zanahoria', 13.00, 1);
 
-//RESTAURANTE
-
-INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (1, 'Don Pepe', 'Calle Mayor 10, Madrid', 'Lunes a Domingo: 12:00-23:00', 'Madrid, Barajas');
-INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (2, 'Bar Paco', 'Calle Reina SofÌa 6, Granada', 'MiÈrcoles a Domingo: 13:00-22:00', 'Granada, Alhendin');
-INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (3, 'Restaurante Manolo', 'Puerta del Sol 37, Girona', 'Lunes a S·bado: 12:00-23:30', 'Girona, Lloret de mar');
-INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (4, 'Camino de Santiago', 'Avda. de la Albufera 67, Alicante', 'Jueves a Domingo: 13:00-22:00', 'Alicante, Orihuela');
-INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (5, 'Repica', 'Gran VÌa 13, Barcelona', 'Martes a Domingo: 14:00-23:00', 'Barcelona, Badalona');
-
-//CUPONES
-
+--CUPONES
 INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('PRIMER10', '2025-12-31', 10.00);
 INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('ENVIOGRATIS', '2025-07-31', 100.00);
 INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('CENA2X1', '2025-05-15', 50.00);
 INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('FINDESABOR', '2025-08-30', 20.00);
 INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('REBAJA5', '2025-06-15', 5.00);
 
-//CLIENTES
+--CLIENTES
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, clave, telef) VALUES ('12345678A', 'Ana', 'Lopez Garcia', 1, 'analopez', 'clave123', 612345678);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, clave, telef) VALUES ('23456789B', 'Carlos', 'Martin Perez', 2, 'cmartin', 'segura456', 622345679);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, clave, telef) VALUES ('34567890C', 'Lucia', 'Fernandez Ruiz', 3, 'luciafr', 'password789', 632345680);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, clave, telef) VALUES ('45678901D', 'Laura', 'Gomez Torres', 4, 'lauragt', 'pass789', 645678901);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, clave, telef) VALUES ('75575532Q', 'David', 'Ruiz Alba', 5, 'davidruiz', 'clave123', 656789012);
 
-INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseÒa, telef) VALUES ('12345678A', 'Ana', 'LÛpez GarcÌa', 1, 'analopez', 'clave123', 612345678);
-INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseÒa, telef) VALUES ('23456789B', 'Carlos', 'MartÌn PÈrez', 2, 'cmartin', 'segura456', 622345679);
-INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseÒa, telef) VALUES ('34567890C', 'LucÌa', 'Fern·ndez Ruiz', 3, 'luciafr', 'password789', 632345680);
-INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseÒa, telef) VALUES ('45678901D', 'Laura', 'GÛmez Torres', 4, 'lauragt', 'pass789', 645678901);
-INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseÒa, telef) VALUES ('75575532Q', 'David', 'Ruiz Alba', 5, 'davidruiz', 'clave123', 656789012);
-
-//CARTA
-
+--CARTA
 INSERT INTO carta (cartarest, cartaplat) VALUES (1, 1);
 INSERT INTO carta (cartarest, cartaplat) VALUES (1, 2);
 INSERT INTO carta (cartarest, cartaplat) VALUES (2, 3);
 INSERT INTO carta (cartarest, cartaplat) VALUES (3, 4);
 INSERT INTO carta (cartarest, cartaplat) VALUES (4, 5);
 
-//CATEGORÕA
-
-INSERT INTO categoria (codcategor, numcategor) VALUES (1, 'Ensaladas');
-INSERT INTO categoria (codcategor, numcategor) VALUES (2, 'Platos principales');
-INSERT INTO categoria (codcategor, numcategor) VALUES (3, 'Postres');
-
-//PEDIDOS
-
+--PEDIDOS
 INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (1, '12345678A', '2025-04-01', '2025-04-01', 'ENTREGADO', 20.00, 'PRIMER10');
 INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (2, '23456789B','2025-04-02','2025-04-02', 'ENTREGADO', 15.00, 'ENVIOGRATIS');
 INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (3, '34567890C', '2025-04-03', NULL, 'RUTA', 18.50, NULL);
 INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (4, '45678901D', '2025-04-06', '2025-04-06', 'ENTREGADO', 26.00, NULL);
-INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (5, '56789012E', '2025-04-07', NULL, 'REST', 15.50, 'CENA2X1');
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (5, '75575532Q', '2025-04-07', NULL, 'REST', 15.50, 'CENA2X1');
 
-//TIENE
-
+--TIENE
 INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (1, 1, 1, 0.50);
 INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (2, 2, 1, 0.80);
 INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (3, 3, 2, 0.40);
