@@ -3426,7 +3426,6 @@ DECLARE
 BEGIN
     SELECT MAX(codigopedido)+1 INTO codp FROM pedidos;
     SELECT codigocliente INTO codcli FROM clientes WHERE nombrecliente LIKE '&nomcli&' ON nombre JOIN '&nomcli&';
-
 END;
     
     INSERT INTO productos VALUES ;
@@ -3534,35 +3533,105 @@ CREATE TABLE cupones
 );
 
 
-INSERT INTO direccion (calle, numero, piso, localidad, codipostal) VALUES
-('Calle Mayor', 10, '3A', 'Madrid', 28013);
-('Avenida Andalucía', 45, NULL, 'Sevilla', 41010);
-('Gran Vía', 13, '2B', 'Barcelona', 08010);
-('Calle Reina Sofía', 6, NULL, 'Granada', 18630);
-('Calle Keops', 25, '4C', 'Madrid', 17625);
-('Avenida Málaga', 1, NULL, 'La Rioja', 21300);
-('Puerta del Sol', 37, '1A', 'Girona', 09267);
-('Calle Huertas', 23, '5C', 'Granada', 28772);
-('Avenida de la Albufera', 67, '4B', 'Alicante', 16382);
-('Calle Mayor', 2, NULL, 'Jaén', 01292);
-('Avenida de América', 30, '2A', 'Badajoz', 92300);
-('Calle Granada', 29, NULL, 'Murcia', 48065);
+//DIRECCION
 
-INSERT INTO platos (nombreplato, descriplato, precio, categoriapla) VALUES
-('Ensalada César', 'Lechuga, Pollo, Salsa César', 8.50, 1);
-('Pizza Margarita', 'Tomate, queso mozzarella, albahaca', 12.00, 2);
-('Tarta de queso', 'Tarta de queso casera', 6.00, 3);
-('Callos', 'Ternera, Chorizo, Panceta, Guindilla, Morcilla, Laurel', 10.00, 3);
-('Rosca de Lomo', 'Huevo, Lechuga, Tomate, Lomo, Pimientos Verdes', 11.00, 3);
-('Pollo a la brasa', 'Pollo de Corral', 13.50, 3);
-('Almejas a la Marinera', 'Almejas, Ajo', 11.50, 3);
-('Tarta de Pistacho', 'Tarta de queso casera', 6.50, 3);
-('Hamburguesa Completa', 'Tarta de pistacho casera', 7.00, 3);
-('Calamares', 'Calamares Fritos', 12.00, 3);
-('Pulpo a la Brasa', 'Pata de pulpo', 18.00, 3);
-('Redondo de Ternera', 'Cebolla, Ternera, Laurel, Champiñones, Zanahoria', 13.00, 3);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(1,'Calle Mayor', 10, '3A', 'Madrid', 28013);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(2,'Avenida Andalucía', 45, NULL, 'Sevilla', 41010);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(3,'Gran Vía', 13, '2B', 'Barcelona', 08010);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(4,'Calle Reina Sofía', 6, NULL, 'Granada', 18630);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(5,'Calle Keops', 25, '4C', 'Madrid', 17625);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(6,'Avenida Málaga', 1, NULL, 'La Rioja', 21300);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(7,'Puerta del Sol', 37, '1A', 'Girona', 09267);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(8,'Calle Huertas', 23, '5C', 'Granada', 28772);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(9,'Avenida de la Albufera', 67, '4B', 'Alicante', 16382);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(10,'Calle Mayor', 2, NULL, 'Jaén', 01292);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(11,'Avenida de América', 30, '2A', 'Badajoz', 92300);
+INSERT INTO direccion (codirec, calle, numero, piso, localidad, codipostal) VALUES(12,'Calle Granada', 29, NULL, 'Murcia', 48065);
 
+//PLATOS
 
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(1,'Ensalada César', 'Lechuga, Pollo, Salsa César', 8.50, 1);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(2,'Pizza Margarita', 'Tomate, queso mozzarella, albahaca', 12.00, 2);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(3,'Tarta de queso', 'Tarta de queso casera', 6.00, 3);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(4,'Callos', 'Ternera, Chorizo, Panceta, Guindilla, Morcilla, Laurel', 10.00, 3);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(5,'Rosca de Lomo', 'Huevo, Lechuga, Tomate, Lomo, Pimientos Verdes', 11.00, 2);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(6,'Pollo a la brasa', 'Pollo de Corral', 13.50, 1);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(7,'Almejas a la Marinera', 'Almejas, Ajo', 11.50, 3);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(8,'Tarta de Pistacho', 'Tarta de queso casera', 6.50, 1);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(9,'Hamburguesa Completa', 'Tarta de pistacho casera', 7.00, 2);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(10,'Calamares', 'Calamares Fritos', 12.00, 3);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(11,'Pulpo a la Brasa', 'Pata de pulpo', 18.00, 2);
+INSERT INTO platos (codipla, nombreplato, descriplato, precio, categoriapla) VALUES(12,'Redondo de Ternera', 'Cebolla, Ternera, Laurel, Champiñones, Zanahoria', 13.00, 1);
+
+//RESTAURANTE
+
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (1, 'Don Pepe', 'Calle Mayor 10, Madrid', 'Lunes a Domingo: 12:00-23:00', 'Madrid, Barajas');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (2, 'Bar Paco', 'Calle Reina Sofía 6, Granada', 'Miércoles a Domingo: 13:00-22:00', 'Granada, Alhendin');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (3, 'Restaurante Manolo', 'Puerta del Sol 37, Girona', 'Lunes a Sábado: 12:00-23:30', 'Girona, Lloret de mar');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (4, 'Camino de Santiago', 'Avda. de la Albufera 67, Alicante', 'Jueves a Domingo: 13:00-22:00', 'Alicante, Orihuela');
+INSERT INTO restaurante (codires, nombre, direccion, horariosem, localidades) VALUES (5, 'Repica', 'Gran Vía 13, Barcelona', 'Martes a Domingo: 14:00-23:00', 'Barcelona, Badalona');
+
+//CUPONES
+
+INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('PRIMER10', '2025-12-31', 10.00);
+INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('ENVIOGRATIS', '2025-07-31', 100.00);
+INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('CENA2X1', '2025-05-15', 50.00);
+INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('FINDESABOR', '2025-08-30', 20.00);
+INSERT INTO cupones (codcupon, fechacaduc, descuento) VALUES ('REBAJA5', '2025-06-15', 5.00);
+
+//CLIENTES
+
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseña, telef) VALUES ('12345678A', 'Ana', 'López García', 1, 'analopez', 'clave123', 612345678);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseña, telef) VALUES ('23456789B', 'Carlos', 'Martín Pérez', 2, 'cmartin', 'segura456', 622345679);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseña, telef) VALUES ('34567890C', 'Lucía', 'Fernández Ruiz', 3, 'luciafr', 'password789', 632345680);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseña, telef) VALUES ('45678901D', 'Laura', 'Gómez Torres', 4, 'lauragt', 'pass789', 645678901);
+INSERT INTO clientes (dni, nombrecli, apellidos, direcclie, usuario, contraseña, telef) VALUES ('75575532Q', 'David', 'Ruiz Alba', 5, 'davidruiz', 'clave123', 656789012);
+
+//CARTA
+
+INSERT INTO carta (cartarest, cartaplat) VALUES (1, 1);
+INSERT INTO carta (cartarest, cartaplat) VALUES (1, 2);
+INSERT INTO carta (cartarest, cartaplat) VALUES (2, 3);
+INSERT INTO carta (cartarest, cartaplat) VALUES (3, 4);
+INSERT INTO carta (cartarest, cartaplat) VALUES (4, 5);
+
+//CATEGORÍA
+
+INSERT INTO categoria (codcategor, numcategor) VALUES (1, 'Ensaladas');
+INSERT INTO categoria (codcategor, numcategor) VALUES (2, 'Platos principales');
+INSERT INTO categoria (codcategor, numcategor) VALUES (3, 'Postres');
+
+//PEDIDOS
+
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (1, '12345678A', '2025-04-01', '2025-04-01', 'ENTREGADO', 20.00, 'PRIMER10');
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (2, '23456789B','2025-04-02','2025-04-02', 'ENTREGADO', 15.00, 'ENVIOGRATIS');
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (3, '34567890C', '2025-04-03', NULL, 'RUTA', 18.50, NULL);
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (4, '45678901D', '2025-04-06', '2025-04-06', 'ENTREGADO', 26.00, NULL);
+INSERT INTO pedidos (codipedido, dniclien, fechapedi, fechaentre, estado, importotal, codicupon) VALUES (5, '56789012E', '2025-04-07', NULL, 'REST', 15.50, 'CENA2X1');
+
+//TIENE
+
+INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (1, 1, 1, 0.50);
+INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (2, 2, 1, 0.80);
+INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (3, 3, 2, 0.40);
+INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (4, 4, 1, 0.60);
+INSERT INTO tiene (codipedido, codipla, cantidad, comision) VALUES (5, 5, 3, 0.25);
+
+//PROGRAMAS EN PL/SQL
+//PROCEDIMIENTO1
+
+ACCEPT dni PROMPT 'Introduce tu dni';
+DECLARE
+    dnicli clientes.dniclientes%TYPE;
+    pedidos INT;
+BEGIN
+    SELECT*FROM clientes WHERE dniclientes LIKE '&dni';
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.put_line ('No existe ningun cliente que tenga ese DNI');
+END;
+        
+    
 
 
 
