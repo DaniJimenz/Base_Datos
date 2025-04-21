@@ -3531,7 +3531,7 @@ CREATE TABLE cupones
 );
 
 
---CATEGOR√çA
+--CATEGOR√?A
 INSERT INTO categoria (codcategor, numcategor) VALUES (1, 'Ensaladas');
 INSERT INTO categoria (codcategor, numcategor) VALUES (2, 'Platos principales');
 INSERT INTO categoria (codcategor, numcategor) VALUES (3, 'Postres');
@@ -3619,13 +3619,124 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN 
         DBMS_OUTPUT.put_line ('No existe ningun cliente que tenga ese DNI');
 END;
+
+
+//CURSORES
         
-    
+CREATE TABLE cliente (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL
+);
 
+-- Tabla trabajador
+CREATE TABLE trabajador (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    sueldo NUMBER(10,2) NOT NULL
+);
 
+-- Tabla tratamiento
+CREATE TABLE tratamiento (
+    id NUMBER PRIMARY KEY,
+    descripcion VARCHAR2(200),
+    precio NUMBER(10,2) NOT NULL
+);
 
+-- Tabla cita
+CREATE TABLE cita (
+    id_cli NUMBER NOT NULL,
+    id_tra NUMBER NOT NULL,
+    id_trat NUMBER NOT NULL,
+    fecha DATE NOT NULL,
+    PRIMARY KEY (id_cli, id_tra, id_trat, fecha),
+    FOREIGN KEY (id_cli) REFERENCES cliente(id),
+    FOREIGN KEY (id_tra) REFERENCES trabajador(id),
+    FOREIGN KEY (id_trat) REFERENCES tratamiento(id)
+);
 
+-- Clientes
+INSERT INTO cliente (id, nombre) VALUES (1, 'Laura MÈndez');
+INSERT INTO cliente (id, nombre) VALUES (2, 'Carlos Ruiz');
+INSERT INTO cliente (id, nombre) VALUES (3, 'Ana Torres');
+INSERT INTO cliente (id, nombre) VALUES (4, 'Javier LÛpez');
+INSERT INTO cliente (id, nombre) VALUES (5, 'SofÌa GarcÌa');
 
+-- Trabajadores
+INSERT INTO trabajador (id, nombre, sueldo) VALUES (101, 'Marcos PÈrez', 2850.00);
+INSERT INTO trabajador (id, nombre, sueldo) VALUES (102, 'Clara DÌaz', 1750.50);
+INSERT INTO trabajador (id, nombre, sueldo) VALUES (103, 'Elena Vargas', 2950.75);
+INSERT INTO trabajador (id, nombre, sueldo) VALUES (104, 'Pedro GÛmez', 1550.00);
+INSERT INTO trabajador (id, nombre, sueldo) VALUES (105, 'Marta Rojas', 1850.00);
+
+-- Tratamientos
+INSERT INTO tratamiento (id, descripcion, precio) VALUES (10, 'Limpieza dental', 50.00);
+INSERT INTO tratamiento (id, descripcion, precio) VALUES (20, 'Empaste composite', 85.50);
+INSERT INTO tratamiento (id, descripcion, precio) VALUES (30, 'Ortodoncia inicial', 1200.00);
+INSERT INTO tratamiento (id, descripcion, precio) VALUES (40, 'Blanqueamiento', 150.00);
+INSERT INTO tratamiento (id, descripcion, precio) VALUES (50, 'ExtracciÛn muela', 200.00);
+
+-- Citas
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (1, 101, 10, DATE '2024-03-01');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (2, 103, 30, DATE '2024-03-02');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (3, 105, 10, DATE '2024-03-03');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (4, 101, 20, DATE '2024-03-04');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (5, 103, 40, DATE '2024-03-05');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (1, 102, 50, DATE '2024-03-06');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (2, 105, 10, DATE '2024-03-07');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (3, 101, 30, DATE '2024-03-08');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (4, 103, 40, DATE '2024-03-09');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (5, 102, 20, DATE '2024-03-10');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (1, 105, 50, DATE '2024-03-11');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (2, 101, 10, DATE '2024-03-12');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (3, 103, 20, DATE '2024-03-13');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (4, 105, 30, DATE '2024-03-14');
+INSERT INTO cita (id_cli, id_tra, id_trat, fecha) VALUES (5, 101, 40, DATE '2024-03-15');
+
+DECLARE 
+    CURSOR sueldos IS SELECT nombre FOR trabajador ORDER BY sueldo;
+    nomTrab trabajador.nombre%TYPE;
+BEGIN
+    OPEN sueldos;
+    FETCH sueldos INTO nomTrab;
+    DBMS_OUTPUT.put_line 
+
+DECLARE 
+    CURSOR cu IS SELECT fecha, nombre, descripcion FROM cita, tratamiento, cliente 
+    WHEN id_cli = cliente.id AND id_trat = tratamiento.id;
+    fecha cita.fecha%TYPE;
+    nomb cliente.nombre%TYPE;
+    trat tratamiento.descripcion%TYPE;
+BEGIN
+    OPEN cu;
+    FOR i IN 1..2 LOOP
+    FETCH cu INTO fecha, nomb, trat;
+    DBMS_OUTPUT.put_line('Fecha:|| el cliente || nomCl');
+END LOOP;
+
+//Ejercicio 3
+
+DECLARE
+    CURSOR cur_trat IS SELECT descripcion, precio AND tratamiento;
+    descrip tratamiento%TYPE;
+    preci tratamiento%TYPE;
+BEGIN
+    OPEN cur_trat;
+    LOOP
+    FETCH cur_trat INTO descrip, preci;
+    END WHEN cur_trat%NOTFOUND;
+    DBMS_OUTPUT.put_line('Nombre: ' ||trat.descripcion);
+    DBMS_OUTPUT.put_line('Precio: ' ||trat.precio);
+END LOOP;
+CLOSE cur_trat;
+EXIT;
+
+//Ejercicio 4
+
+DECLARE
+    CURSOR cur_trat IS SELECT DISTINCT tratamiento.id, descripcion FROM 
+BEGIN
+
+END;
 
 
 
