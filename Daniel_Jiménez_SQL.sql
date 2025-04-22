@@ -3739,6 +3739,50 @@ BEGIN
 END;
 
 
+SELECT nombre CONT (id_tra) FROM tr
+
+DECLARE 
+    CURSOR tra IS SELECT descripcion, COUNT (id_trat) FROM trabajadores JOIN cita ON id_trat = id GROUP BY descripcion;
+    desc tratamiento.descripcion%TYPE;
+    num NUMBER;
+BEGIN
+    OPEN tra;
+    LOOP
+    FETCH tra INTO desc, num;
+    EXIT WHEN tra%NOTFOUND;
+    DBMS_OUTPUT.put_line('El tratamiento ' || desc || ' se ha hecho ' || num || ' veces ');
+    END LOOP;
+    CLOSE tra;
+END;
+
+DECLARE 
+    CURSOR sueldo_trabajador IS SELECT nombre, sueldo+4 COUNT(cita.*)
+    FROM trabajador
+    JOIN cita ON id_tra = id
+    GROUP BY nombre;
+nom nombre%TYPE;
+suel NUMBER
+BEGIN
+    OPEN sueldo_trabajador
+    LOOP
+    FETCH sueldo_trabajador INTO nom, suel;
+    DBMS_OUTPUT.put_line('A ' || nom || ' se deben pagar ' || suel );
+END LOOP;
+CLOSE sueldo_trabajador;
+END;
+
+
+accep nomCli PROMPT 'Nombre del cliente';
+DECLARE 
+    CURSOR nomClase IS SELECT fecha, descripcion
+    FROM cita
+    JOIN tratamiento ON tratamiento.id = id_trat 
+    JOIN cliente ON cliente.id = i_cli;
+    fech cita.fecha%TYPE;
+    trat tratamiento.descripcion%TYPE;
+BEGIN
+
+END;
 
 
     
