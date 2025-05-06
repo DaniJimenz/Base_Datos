@@ -111,4 +111,48 @@ traIde trabajador.id%TYPE;
 trataIde tratamiento.id%TYPE;
 fech cita.fecha%TYPE;
 BEGIN
+ OPEN nuevaCita
+ LOOP
+ FETCH nuevaCita INTO 
 END;
+
+//Ejercicio 4//
+
+ACCEPT cliNom PROMPT 'Introduce el nombre del cliente';
+ACCEPT cliApe PROMPT 'Introduce el apellido del cliente';
+ACCEPT traNom PROMPT 'Introduce el nombre del trabajador';
+ACCEPT tratNom PROMPT 'Introduce el nombre del tratamiento';
+ACCEPT fecha PROMPT 'Introduce la fecha de la cita';
+ACCEPT dura PROMPT 'Introduce la duración de la cita en minutos';
+DECLARE
+cliIde cliente.id%TYPE;
+traIde trabajador.id%TYPE;
+trataIde tratamiento.id%TYPE;
+BEGIN
+SELECT id INTO cliIde FROM cliente WHERE nombre = '&cliNom' AND apellidos = '&cliApe';
+SELECT id INTO traIde FROM trabajador WHERE nombre = '&traNom';
+SELECT id INTO trataIde FROM tratamiento WHERE nombre = '&trataNom';
+UPDATE cita
+SET direccion = &dura
+WHERE id_cli = cliIde AND id_tra = traIde AND id_trata = trataIde AND fecha = '&fecha';
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+dbms_output.put_line ('No existen citas con esos datos');
+END;
+
+//Ejercicio 5//
+
+DECLARE 
+CURSOR curCitas IS SELECT DISTINCT nombre, COUNT(id_trat)*precio
+FROM cita
+JOIN tratamiento ON id_trat = tratamiento.id
+tratNom tratamiento.nombre%TYPE;
+total tratamiento.precio%TYPE;
+sumTotal tratamiento.precio%TYPE := 0;
+BEGIN
+OPEN curCitas;
+LOOP
+FETCH curCitas INTO tratNom, total;
+EXIT WHEN curCitas%NOTFOUND
+
+
