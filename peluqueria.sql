@@ -37,12 +37,12 @@ CREATE TABLE cita(
 
 INSERT INTO cliente VALUES (1, 'Ana', 'Morales');
 INSERT INTO cliente VALUES (2, 'Pilar', 'Jimenez');
-INSERT INTO cliente VALUES (3, 'Juan', 'Pérez');
-INSERT INTO cliente VALUES (4, 'Luis', 'López');
-INSERT INTO cliente VALUES (5, 'Manu', 'García');
+INSERT INTO cliente VALUES (3, 'Juan', 'Pï¿½rez');
+INSERT INTO cliente VALUES (4, 'Luis', 'Lï¿½pez');
+INSERT INTO cliente VALUES (5, 'Manu', 'Garcï¿½a');
 
 INSERT INTO trabajador VALUES (1, 'Paloma', 'Cuesta');
-INSERT INTO trabajador VALUES (2, 'Belén', 'López');
+INSERT INTO trabajador VALUES (2, 'Belï¿½n', 'Lï¿½pez');
 INSERT INTO trabajador VALUES (3, 'Emilio', 'Delgado');
 
 INSERT INTO tratamiento VALUES (1, 'Corte', 15);
@@ -98,6 +98,44 @@ END LOOP;
 CLOSE nomCitas;
 END;
 
+//Ejercicio 2//
+
+ACCEPT cliNom PROMPT 'Introduce el nombre del cliente: ';
+ACCEPT cliApe PROMPT 'Introduce los apellidos del cliente: ';
+
+DECLARE
+    CURSOR curFactura IS 
+    SELECT tratamiento.nombre tratamiento_nombre, tratamiento.precio, cita.fecha
+    FROM cita 
+    JOIN cliente ON id_cli = cliente.id
+    JOIN tratamiento ON id_trat = tratamiento.id
+    WHERE cliente.nombre = '&cliNom' AND cliente.apellidos = '&cliApe'
+    ORDER BY cita.fecha;
+    trataNom tratamiento.nombre%TYPE;
+    preci tratamiento.precio%TYPE;
+    fech cita.fecha%TYPE;
+    totalFactura NUMBER(8,2);
+    existeCliente NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO existeCliente
+    FROM cliente
+    WHERE nombre = '&cliNom' AND apellidos = '&cliApe';
+    IF existeCliente = 0 THEN
+        dbms_output.put_line('No existe un cliente con nombre ' || '&cliNom' || ' ' || '&cliApe');
+        RETURN;
+    END IF;
+    dbms_output.put_line('FACTURA DE CLIENTE: ' || '&cliNom' || ' ' || '&cliApe');
+OPEN curFactura;
+    LOOP
+    FETCH curFactura INTO trataNom, preci, fech;
+    EXIT WHEN curFactura%NOTFOUND; 
+    dbms_output.put_line(trataNom || ' ' || TO_CHAR(fech, 'DD/MM/YYYY') || ' ' || TO_CHAR(preci, '999.99') || ' â‚¬');
+        totalFactura := totalFactura + preci;
+    END LOOP;
+    CLOSE curFactura;
+    dbms_output.put_line('TOTAL A PAGAR: ' || TO_CHAR(totalFactura, '999.99') || ' â‚¬');
+END;
+
 //Ejercicio 3//
 
 ACCEPT cliNom PROMPT 'Introduce el nombre del cliente';
@@ -109,12 +147,22 @@ DECLARE
 cliIde cliente.id%TYPE;
 traIde trabajador.id%TYPE;
 trataIde tratamiento.id%TYPE;
-fech cita.fecha%TYPE;
 BEGIN
- OPEN nuevaCita
- LOOP
- FETCH nuevaCita INTO 
+    SELECT id INTO cliIde FROM cliente WHERE nombre = '&cliNom' AND apellidos = '&cliApe';
+    SELECT id INTO traIde FROM trabajador WHERE nombre = '&traNom';
+    SELECT id INTO trataIde FROM tratamiento WHERE nombre = '&tratNom';
+    INSERT INTO cita (id_cli, id_tra, id_trat, fecha)
+    VALUES (cliIde, traIde, trataIde, TO_DATE('&fecha', 'AA-MM-XXXX'));
+    dbms_output.put_line('Cita creada correctamente para el ' || '&fecha');
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        dbms_output.put_line('Error: Alguno de los datos introducidos no existe en la base de datos');
+    WHEN DUP_VAL_ON_INDEX THEN
+        dbms_output.put_line('Error: Ya existe una cita con esos datos');
+    WHEN OTHERS THEN
+        dbms_output.put_line('Error al crear la cita: ' || SQLERRM);
 END;
+/
 
 //Ejercicio 4//
 
@@ -123,11 +171,13 @@ ACCEPT cliApe PROMPT 'Introduce el apellido del cliente';
 ACCEPT traNom PROMPT 'Introduce el nombre del trabajador';
 ACCEPT tratNom PROMPT 'Introduce el nombre del tratamiento';
 ACCEPT fecha PROMPT 'Introduce la fecha de la cita';
-ACCEPT dura PROMPT 'Introduce la duración de la cita en minutos';
+ACCEPT dura PROMPT 'Introduce la duraciï¿½n de la cita en minutos';
 DECLARE
 cliIde cliente.id%TYPE;
 traIde trabajador.id%TYPE;
 trataIde tratamiento.id%TYPE;
+citaExiste NUMBER;
+duracionActual cita.duracion%TYPE;
 BEGIN
 SELECT id INTO cliIde FROM cliente WHERE nombre = '&cliNom' AND apellidos = '&cliApe';
 SELECT id INTO traIde FROM trabajador WHERE nombre = '&traNom';
@@ -143,16 +193,30 @@ END;
 //Ejercicio 5//
 
 DECLARE 
-CURSOR curCitas IS SELECT DISTINCT nombre, COUNT(id_trat)*precio
-FROM cita
-JOIN tratamiento ON id_trat = tratamiento.id
-tratNom tratamiento.nombre%TYPE;
-total tratamiento.precio%TYPE;
-sumTotal tratamiento.precio%TYPE := 0;
+    CURSOR curCitas IS 
+        SELECT tratamiento.nombre tratamiento_nombre, 
+               COUNT(id_trat) cantidad, 
+               tratamiento.precio precio_unitario,
+               COUNT(id_trat) * tratamiento.precio total
+        FROM cita
+        JOIN tratamiento ON id_trat = tratamiento.id
+        GROUP BY tratamiento.nombre, tratamiento.precio
+        ORDER BY tratamiento.nombre;
+    tratNom tratamiento.nombre%TYPE;
+    cantidad NUMBER;
+    precioUnitario tratamiento.precio%TYPE;
+    total tratamiento.precio%TYPE;
+    sumTotal tratamiento.precio%TYPE := 0;
 BEGIN
-OPEN curCitas;
-LOOP
-FETCH curCitas INTO tratNom, total;
-EXIT WHEN curCitas%NOTFOUND
+    OPEN curCitas;
+    LOOP
+    FETCH curCitas INTO tratNom, cantidad, precioUnitario, total;
+    EXIT WHEN curCitas%NOTFOUND;
+        dbms_output.put_line(tratNom || '' || cantidad || '' || TO_CHAR(precioUnitario, '999.99') || ' â‚¬' || '' ||TO_CHAR(total, '999.99') || ' â‚¬');
+        sumTotal := sumTotal + total;
+    END LOOP;
+    CLOSE curCitas;
+    dbms_output.put_line('TOTAL BENEFICIOS: ' || TO_CHAR(sumTotal, '999.99') || ' â‚¬');
+END;
 
 
