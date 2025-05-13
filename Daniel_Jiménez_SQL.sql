@@ -3785,10 +3785,175 @@ BEGIN
 END;
 
 
+//VETERINARIA//
+
+-- Creación de tablas
+CREATE TABLE tipo_animal (
+    id NUMBER PRIMARY KEY,
+    descripcion VARCHAR2(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE raza_animal (
+    id NUMBER PRIMARY KEY,
+    descripcion VARCHAR2(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE duenio (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    edad NUMBER,
+    dni VARCHAR2(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE tratamiento (
+    id NUMBER PRIMARY KEY,
+    descripcion VARCHAR2(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE animal (
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    id_tipo NUMBER NOT NULL,
+    id_raza NUMBER,
+    edad NUMBER,
+    peso NUMBER,
+    id_duenio NUMBER NOT NULL,
+    FOREIGN KEY (id_tipo) REFERENCES tipo_animal(id),
+    FOREIGN KEY (id_raza) REFERENCES raza_animal(id),
+    FOREIGN KEY (id_duenio) REFERENCES duenio(id)
+);
+
+CREATE TABLE ingreso (
+    id_animal NUMBER NOT NULL,
+    fecha_ingreso DATE NOT NULL,
+    fecha_salida DATE,
+    id_tratamiento NUMBER NOT NULL,
+    PRIMARY KEY (id_animal, fecha_ingreso),
+    FOREIGN KEY (id_animal) REFERENCES animal(id),
+    FOREIGN KEY (id_tratamiento) REFERENCES tratamiento(id)
+);
+
+-- Tipos de animales
+INSERT INTO tipo_animal (id, descripcion) VALUES (1, 'Perro');
+INSERT INTO tipo_animal (id, descripcion) VALUES (2, 'Gato');
+INSERT INTO tipo_animal (id, descripcion) VALUES (3, 'Conejo');
+
+-- Razas de animales
+INSERT INTO raza_animal (id, descripcion) VALUES (1, 'Labrador Retriever');
+INSERT INTO raza_animal (id, descripcion) VALUES (2, 'Siames');
+INSERT INTO raza_animal (id, descripcion) VALUES (3, 'Persa');
+
+-- Dueños
+INSERT INTO duenio (id, nombre, edad, dni) VALUES (1, 'Juan Pérez', 30, '12345678A');
+INSERT INTO duenio (id, nombre, edad, dni) VALUES (2, 'María García', 25, '87654321B');
+INSERT INTO duenio (id, nombre, edad, dni) VALUES (3, 'Carlos López', 40, '11223344C');
+
+-- Tratamientos
+INSERT INTO tratamiento (id, descripcion) VALUES (1, 'Vacunación anual');
+INSERT INTO tratamiento (id, descripcion) VALUES (2, 'Esterilización');
+INSERT INTO tratamiento (id, descripcion) VALUES (3, 'Cirugía menor');
+
+-- Animales
+INSERT INTO animal VALUES (1, 'Max', 1, 1, 5, 30.5, 1);
+
+INSERT INTO animal VALUES (2, 'Luna', 2, 2, 3, 4.2, 2);
+
+INSERT INTO animal VALUES (3, 'Bugs', 3, null, 2, 2.1, 3);
+
+-- Ingresos
+INSERT INTO ingreso VALUES (1, '10/05/2024', '10/05/2024', 1);
+
+INSERT INTO ingreso VALUES (2, '11/05/2024', '11/05/2024', 2);
+
+INSERT INTO ingreso VALUES (3, '11/05/2024', null, 3);
+
+
+//Ejercicio 3//
+
+CREATE OR REPLACE TRIGGER cambiarNomAnimal 
+AFTER UPDATE OF nombre ON animal FOR EACH ROW
+DECLARE
+BEGIN
+dbms_output.put_line('La mascota llamada ' || :old.nombre || ' pasa a llamarse ' || :new.nombre);
+END cambiarNomAnimal;
+
+UDPATE animal SET nombre = 'Willy' WHERE id= 1;
+
+//Ejercicio 4//
+
+CREATE OR REPLACE TRIGGER cambiarPesoAnimal
+AFTER UPDATE OF peso ON animal FOR EACH ROW
+BEGIN
+IF (:old peso > new.peso) THEN
+dbms_output.put_line(:old.nombre || ' ha perdido ' || (:old.peso-:new.peso) || ' kilos ');
+ELSE IF(:old.peso < :new.peso) THEN
+dbms_output.put_line(:old.nombre || ' ha ganado ' || (:new.peso-:old.peso) || ' kilos ');
+ELSE
+dbms_output.put_line(:old.nombre || ' mantiene el mismo peso ');
+END IF;
+END cambiarPesoAnimal;
+
+UPDATE animal SET peso = 20 WHERE id = 1;
+
+//Ejercicio 5//
+
+CREATE OR REPLACE TRIGGER ingresoSinTratamiento 
+BEFORE INSERT ON ingreso FOR EACH ROW
+BEGIN
+IF (:new.id_tratamiento IS NULL) THEN
+dbms_output.put_line( ' No se ha introducido tratamiento ' );
+END IF;
+END ingresoSinTratamiento;
+
+INSERT INTO ingreso( id_animal, fecha_ingreso, fecha_salida) VALUES (1, ' 16/05/25 ', ' 18/05/25 ');
+
+//Ejercicio 6// INCOMPLETO
+
+CREATE OR REPLACE TRIGGER insertNueMascota 
+AFTER INSERT ON animal FOR EACH ROW
+DECLARE
+fecha DATE;
+BEGIN
+
+END insertNueMascota;
     
-    
-    
-    
+//Ejercicio 7// INCOMPLETO
+
+CREATE TABLE cantidad_animales (
+id_animal NUMBER PRIMARY KEY,
+cantidad NUMBER DEFAULT 0,
+
+CONSTRAINT fk_cantidad_animales_tipo FOREIGN KEY (id_tipo) REFERENCES tipo_animal(id)
+);
+
+CREATE O REPLACE TRIGGER contarAnimales
+AFTER INSERT ON animal FOR EACH ROW
+BEGIN
+IF
+END contarAnimales;
+
+//Ejercicio 8//
+
+CREATE TABLE antiguos_clientes(
+    id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    edad NUMBER,
+    dni VARCHAR2(10) NOT NULL UNIQUE
+);
+
+CREATE OR REPLACE TRIGGER borrarClientes
+AFTER DELETE ON duenio FOR EACH ROW
+BEGIN
+DELETE FROM animal WHERE id_duenio = :old.id;
+INSERT INTO antiguos_clientes VALUES(:old.id, :old.nombre, :old.edad, :old.dni);
+END borrarCliente;
+
+DELETE FROM duenio WHERE id = 1;
+
+
+
+
+
 
 
 
