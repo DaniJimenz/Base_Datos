@@ -1,0 +1,19 @@
+{
+    "productos"[
+        {
+            "nombre": "Portátil Lenovo",
+            "precio": 456.63,
+            "categoría": "Electrónica"
+        },
+        {
+            "nombre": "Portátil Asus",
+            "precio": 346.83,
+            "categoría": "Electrónica"
+        },
+        {
+            "nombre": "Portátil HP",
+            "precio": 591.27,
+            "categoría": "Electrónica"
+        }
+    ]
+}
