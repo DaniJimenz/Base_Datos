@@ -1,0 +1,13 @@
+root:x:0:0:Usuario root:/root:/bin/bash
+daemon:x:1:1:Daemon System:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:Administrador binarios:/bin:/usr/sbin/nologin
+sys:x:3:3:Administrador sistema:/dev:/usr/sbin/nologin
+sync:x:4:65534:Sincronización sistema:/bin:/bin/sync
+alice:x:1001:1001:Alice Johnson:/home/alice:/bin/bash
+bob:x:1002:1002:Bob Williams:/home/bob:/bin/zsh
+carol:x:1003:1003:Carol Davis:/home/carol:/bin/sh
+dave:x:1004:1004:David Miller:/home/dave:/usr/bin/fish
+eve:x:1005:1005:Eve Anderson:/home/eve:/bin/bash
+ftp:x:1006:1006:FTP User:/srv/ftp:/usr/sbin/nologin
+www-data:x:33:33:Web Server:/var/www:/usr/sbin/nologin
+mysql:x:1010:1012:MySQL Server:/var/lib/mysql:/bin/false
